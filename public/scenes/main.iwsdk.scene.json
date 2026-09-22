@@ -48,6 +48,26 @@
   "resources": {},
   "nodes": [
     {
+      "id": "ground-board",
+      "name": "Ground Board",
+      "content": {
+        "type": "asset",
+        "asset": "ground-board",
+        "receiveShadow": true
+      },
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      "framingRole": "support",
+      "components": {
+        "LocomotionEnvironment": {}
+      }
+    },
+    {
       "id": "welcome-panel",
       "name": "Welcome Panel",
       "content": {
