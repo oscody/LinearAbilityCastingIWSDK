@@ -43,3 +43,8 @@ pids/
 .cursor/mcp.json
 .vscode/mcp.json
 .codex/config.toml
+
+# Devlog console captures are evidence for the perf investigation, not noise.
+# Must come after the `*.log` rule above -- a negation only overrides rules
+# that precede it.
+!devlog/**/*.log
