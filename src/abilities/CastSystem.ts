@@ -30,8 +30,9 @@ import { frame } from '../core/FrameUniforms.js';
  */
 export class CastSystem extends createSystem({}) {
   public abilities!: AbilityManager;
+  /** Exposed for telemetry (PerfSystem). */
+  public particles!: ParticleEngine;
 
-  private particles!: ParticleEngine;
   private lights!: LightPool;
   private decals!: DecalSystem;
   private fissures!: FissureSystem;

@@ -11,6 +11,7 @@ import { FrameUniformSystem } from './core/FrameUniformSystem.js';
 import { PanelSystem } from './panel.js';
 import { StageSystem } from './world/StageSystem.js';
 import { CastSystem } from './abilities/CastSystem.js';
+import { PerfSystem } from './core/PerfSystem.js';
 
 World.create(
   document.getElementById('scene-container') as HTMLDivElement,
@@ -21,5 +22,7 @@ World.create(
   world.registerSystem(FrameUniformSystem, { priority: -10 });
   world.registerSystem(StageSystem);
   world.registerSystem(CastSystem);
+  // Last, so its renderer.info read reflects a full frame of work.
+  world.registerSystem(PerfSystem, { priority: 100 });
   world.registerSystem(PanelSystem);
 });
