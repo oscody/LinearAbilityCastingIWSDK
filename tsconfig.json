@@ -9,7 +9,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "skipLibCheck": true,
+    // Ported VFX modules land as untyped .js (plan §2a). They are bundled and
+    // resolved, but deliberately not type-checked: `checkJs` stays off.
+    "allowJs": true,
+    "checkJs": false,
     "types": ["@iwsdk/vite-plugin-dev/client"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.js"]
 }
