@@ -29,25 +29,34 @@ import { settings } from '../config/settings.js';
 export class FrameUniformSystem extends createSystem({}) {
   /** Scaled simulation time, in seconds. Mirrors `frame.uTime.value`. */
   public elapsed = 0;
-  /** Freezes the simulation clock without stopping the indicators. */
+  /**
+   * Player-facing freeze (the source's `P` toggle). Stops the simulation clock
+   * without stopping the indicators, so shapes stay tunable while frozen.
+   */
   public paused = false;
+
+  /** Headset off the face. Tracked separately so it cannot latch `paused`. */
+  private blurred = false;
 
   private drawingBufferSize!: Vector2;
 
   init(): void {
     this.drawingBufferSize = new Vector2();
 
-    // Pause the simulation when the headset is off the face. The project rule
-    // is to stop simulating on blur; the indicators keep their real-time clock.
+    // Stop simulating while the headset is off the face, per the project rule.
+    // This mirrors visibility symmetrically rather than latching: an earlier
+    // version only ever set the flag true, which froze the simulation for good
+    // after the first blur.
     this.cleanupFuncs.push(
       this.visibilityState.subscribe((state) => {
-        if (state === VisibilityState.VisibleBlurred) this.paused = true;
+        this.blurred = state === VisibilityState.VisibleBlurred;
       }),
     );
   }
 
   update(delta: number): void {
-    const dt = this.paused ? 0 : delta * settings.global.timeScale;
+    const frozen = this.paused || this.blurred;
+    const dt = frozen ? 0 : delta * settings.global.timeScale;
     this.elapsed += dt;
 
     frame.uTime.value = this.elapsed;

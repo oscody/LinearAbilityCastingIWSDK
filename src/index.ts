@@ -10,6 +10,7 @@ import projectOptions from 'virtual:iwsdk-project';
 import { FrameUniformSystem } from './core/FrameUniformSystem.js';
 import { PanelSystem } from './panel.js';
 import { StageSystem } from './world/StageSystem.js';
+import { CastSystem } from './abilities/CastSystem.js';
 
 World.create(
   document.getElementById('scene-container') as HTMLDivElement,
@@ -19,5 +20,6 @@ World.create(
   // that samples them.
   world.registerSystem(FrameUniformSystem, { priority: -10 });
   world.registerSystem(StageSystem);
+  world.registerSystem(CastSystem);
   world.registerSystem(PanelSystem);
 });
