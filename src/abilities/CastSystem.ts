@@ -46,6 +46,9 @@ export class CastSystem extends createSystem({}) {
   /** TEMP (Phase 3): auto-fire so the ability can be verified without aiming. */
   private debugCastTimer = 0;
 
+  /** Set by CrystalBench, which owns casting while a benchmark runs. */
+  public benchControlled = false;
+
   init(): void {
     this.origin = new Vector3();
     this.direction = new Vector3();
@@ -128,6 +131,7 @@ export class CastSystem extends createSystem({}) {
    * ported ability can be verified before targeting exists. Deleted in Phase 4.
    */
   private debugCast(delta: number): void {
+    if (this.benchControlled) return;
     this.debugCastTimer -= delta;
     if (this.debugCastTimer > 0) return;
     this.debugCastTimer = 6;
