@@ -9,6 +9,7 @@ import { World } from '@iwsdk/core';
 import projectOptions from 'virtual:iwsdk-project';
 import { FrameUniformSystem } from './core/FrameUniformSystem.js';
 import { PanelSystem } from './panel.js';
+import { StageSystem } from './world/StageSystem.js';
 
 World.create(
   document.getElementById('scene-container') as HTMLDivElement,
@@ -17,5 +18,6 @@ World.create(
   // Shared VFX uniforms and the scaled simulation clock. Runs before anything
   // that samples them.
   world.registerSystem(FrameUniformSystem, { priority: -10 });
+  world.registerSystem(StageSystem);
   world.registerSystem(PanelSystem);
 });

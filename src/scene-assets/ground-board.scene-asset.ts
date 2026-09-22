@@ -6,16 +6,26 @@
  */
 
 import { BoxGeometry, Group, Mesh, MeshStandardMaterial } from '@iwsdk/core';
+import { settings } from '../config/settings.js';
 
 /** Walkable span in meters. */
-const BOARD_SIZE = 15;
+const BOARD_SIZE = 8;
 /** Slab thickness; enough to read as a board from a grazing angle. */
 const BOARD_THICKNESS = 0.08;
 
-const boardMaterial = new MeshStandardMaterial({
-  color: '#8d8f93',
-  roughness: 0.92,
+/**
+ * The stage floor, in the source's palette: dark cinematic stone, so the
+ * elemental VFX stay the brightest thing in the scene.
+ *
+ * Exported so `StageSystem` can keep it synced to `settings.environment` — the
+ * project's central promise is that settings are sampled live, not captured.
+ * There is one placement, so mutating this shared material is intended.
+ */
+export const boardMaterial = new MeshStandardMaterial({
+  color: settings.environment.floorColor,
+  roughness: settings.environment.floorRoughness,
   metalness: 0,
+  dithering: true,
 });
 
 const board = new Group();
