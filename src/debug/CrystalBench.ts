@@ -43,7 +43,8 @@ const CAST_DIRECTION = new Vector3(1, 0, 0);
 
 type ModeName =
   | 'NO_CAST'
-  | 'CRYSTALS_HIDDEN'
+  | 'HIDDEN_ICE_MAT'
+  | 'HIDDEN_SIMPLE_MAT'
   | 'CURRENT'
   | 'SIMPLE_OPAQUE'
   | 'SIMPLE_TRANSPARENT'
@@ -51,28 +52,85 @@ type ModeName =
   | 'ICE_OPAQUE'
   | 'ICE_SINGLE_SIDE';
 
-const MODES: ModeName[] = [
-  'NO_CAST',
-  'CRYSTALS_HIDDEN',
-  'CURRENT',
-  'SIMPLE_OPAQUE',
-  'SIMPLE_TRANSPARENT',
-  'STANDARD_OPAQUE',
-  'ICE_OPAQUE',
-  'ICE_SINGLE_SIDE',
-];
+/** Which prebuilt material a mode assigns. `null` = the ability's own ice material. */
+type MaterialKey =
+  | 'SIMPLE_OPAQUE'
+  | 'SIMPLE_TRANSPARENT'
+  | 'STANDARD_OPAQUE'
+  | 'ICE_OPAQUE'
+  | 'ICE_SINGLE_SIDE';
 
-const WHAT_IT_ISOLATES: Record<ModeName, string> = {
-  NO_CAST: 'floor: no ability at all, in-session reference',
-  CRYSTALS_HIDDEN:
-    'ability simulates, crystals not drawn -> splits CPU/sim from all crystal GPU cost',
-  CURRENT: 'baseline: custom ice shader + transparent + DoubleSide',
-  SIMPLE_OPAQUE: 'floor: cheapest possible fragment, no blend, no lighting',
-  SIMPLE_TRANSPARENT: 'SIMPLE_OPAQUE + blending -> isolates overdraw',
-  STANDARD_OPAQUE: 'stock PBR, opaque -> isolates normal lighting cost',
-  ICE_OPAQUE: 'full ice shader, opaque -> isolates custom shader cost',
-  ICE_SINGLE_SIDE: 'CURRENT but FrontSide -> isolates double-sided fragments',
+interface ModeSpec {
+  /** Are the crystal meshes drawn? */
+  visible: boolean;
+  material: MaterialKey | null;
+  isolates: string;
+}
+
+/**
+ * Step 2 of the breakdown: visibility and material are now **independent axes**.
+ *
+ * Run 1 conflated them. `CRYSTALS_HIDDEN` hid the meshes *and* left the ice
+ * material assigned, while `SIMPLE_OPAQUE` drew them *and* swapped the material
+ * -- so the two could not be compared, and the result was backwards: drawing
+ * cheap crystals (34.6 ms) beat drawing none (46.9 ms).
+ *
+ * `HIDDEN_ICE_MAT` and `HIDDEN_SIMPLE_MAT` differ only in the material assigned
+ * to meshes that are never drawn, which makes the pair a clean test:
+ *
+ *   both ~47 ms  -> run 1's SIMPLE_* numbers were an artefact; re-run them
+ *   ~47 vs ~34   -> the ice material costs ~12 ms/frame **while invisible**,
+ *                   which is a CPU/upload cost and a bug in its own right
+ */
+const MODE_SPECS: Record<ModeName, ModeSpec> = {
+  NO_CAST: {
+    visible: false,
+    material: null,
+    isolates: 'floor: no ability at all, in-session reference',
+  },
+  HIDDEN_ICE_MAT: {
+    visible: false,
+    material: null,
+    isolates: 'not drawn, ice material assigned (run 1 CRYSTALS_HIDDEN)',
+  },
+  HIDDEN_SIMPLE_MAT: {
+    visible: false,
+    material: 'SIMPLE_OPAQUE',
+    isolates: 'not drawn, cheap material assigned -> pairs with HIDDEN_ICE_MAT',
+  },
+  CURRENT: {
+    visible: true,
+    material: null,
+    isolates: 'baseline: custom ice shader + transparent + DoubleSide',
+  },
+  SIMPLE_OPAQUE: {
+    visible: true,
+    material: 'SIMPLE_OPAQUE',
+    isolates: 'cheapest possible fragment, no blend, no lighting',
+  },
+  SIMPLE_TRANSPARENT: {
+    visible: true,
+    material: 'SIMPLE_TRANSPARENT',
+    isolates: 'SIMPLE_OPAQUE + blending -> isolates overdraw',
+  },
+  STANDARD_OPAQUE: {
+    visible: true,
+    material: 'STANDARD_OPAQUE',
+    isolates: 'stock PBR, opaque -> isolates normal lighting cost',
+  },
+  ICE_OPAQUE: {
+    visible: true,
+    material: 'ICE_OPAQUE',
+    isolates: 'full ice shader, opaque -> isolates custom shader cost',
+  },
+  ICE_SINGLE_SIDE: {
+    visible: true,
+    material: 'ICE_SINGLE_SIDE',
+    isolates: 'CURRENT but FrontSide -> isolates double-sided fragments',
+  },
 };
+
+const MODES = Object.keys(MODE_SPECS) as ModeName[];
 
 interface Result {
   mode: ModeName;
@@ -99,10 +157,12 @@ interface Result {
  *
  * Crystal *count* is deliberately not reduced. Cutting it would improve the
  * numbers without explaining them.
+ *
+ * Step 2 adds the HIDDEN_ICE_MAT / HIDDEN_SIMPLE_MAT pair; see MODE_SPECS.
  */
 export class CrystalBench extends createSystem({}) {
   private cast?: CastSystem;
-  private materials = new Map<ModeName, Material>();
+  private materials = new Map<MaterialKey, Material>();
   private results: Result[] = [];
 
   private modeIndex = -1;
@@ -217,13 +277,15 @@ export class CrystalBench extends createSystem({}) {
   }
 
   private applyMode(mode: ModeName): void {
-    const hidden = mode === 'CRYSTALS_HIDDEN' || mode === 'NO_CAST';
+    const spec = MODE_SPECS[mode];
     this.forEachIceInstance((ability) => {
       const material =
-        this.materials.get(mode) ?? (ability.material as Material);
+        spec.material === null
+          ? (ability.material as Material)
+          : this.materials.get(spec.material)!;
       for (const mesh of ability.meshes) {
         mesh.material = material;
-        (mesh as unknown as { visible: boolean }).visible = !hidden;
+        (mesh as unknown as { visible: boolean }).visible = spec.visible;
       }
     });
   }
@@ -254,7 +316,7 @@ export class CrystalBench extends createSystem({}) {
     const mode = MODES[this.modeIndex];
     console.log(
       '[bench] rep' + (this.rep + 1) + ' --> ' + mode +
-        '  (' + WHAT_IT_ISOLATES[mode] + ')',
+        '  (' + MODE_SPECS[mode].isolates + ')',
     );
     this.applyMode(mode);
     this.fireCast();

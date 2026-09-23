@@ -107,18 +107,30 @@ drawn. Candidates: per-frame uniform writes the ability performs regardless of v
 
 ---
 
-## Step 2 — Fix the confound ⬜ NEXT
+## Step 2 — Fix the confound 🔨 IMPLEMENTED, NOT YET RUN
 
-Split `CRYSTALS_HIDDEN` into two modes so visibility and material vary independently:
+Run 1 conflated two axes. `CRYSTALS_HIDDEN` hid the meshes **and** left the ice material
+assigned; `SIMPLE_OPAQUE` drew them **and** swapped the material. So the backwards result —
+drawing cheap crystals (34.6 ms) beating drawing none (46.9 ms) — compared two things that
+differed in two ways at once.
 
-- `HIDDEN_ICE_MAT` — invisible, ice material assigned *(current behaviour)*
-- `HIDDEN_SIMPLE_MAT` — invisible, `MeshBasicMaterial` assigned
+`CrystalBench` now treats visibility and material as **independent axes**, declared in one
+`MODE_SPECS` table rather than inferred from the mode name. Two new modes differ *only* in
+which material is assigned to meshes that are never drawn:
 
-If `HIDDEN_SIMPLE_MAT` ≈ 34 ms and `HIDDEN_ICE_MAT` ≈ 47 ms, the ice **material** costs
-~12 ms per frame *while invisible* — a CPU/upload cost, not a fragment cost, and a bug
-worth fixing on its own.
+| Mode | visible | material |
+|---|---|---|
+| `HIDDEN_ICE_MAT` | ✗ | ability's own ice material *(= run 1's `CRYSTALS_HIDDEN`)* |
+| `HIDDEN_SIMPLE_MAT` | ✗ | `MeshBasicMaterial` |
 
-If both land at ~47 ms, the earlier reading was an artefact and `SIMPLE_*` needs re-running.
+### How to read the outcome
+
+| Result | Meaning |
+|---|---|
+| both ≈ 47 ms | Run 1's `SIMPLE_*` numbers were an artefact. Re-run and re-interpret the whole table. |
+| `HIDDEN_ICE_MAT` ≈ 47, `HIDDEN_SIMPLE_MAT` ≈ 34 | The ice material costs ~12 ms/frame **while invisible** — a CPU/upload cost, not a fragment cost, and a bug worth fixing on its own. |
+
+Run cost: 9 modes × 3 repeats × (1.5 s warmup + 4 s measure) ≈ **150 s**, plus page load.
 
 ## Step 3 — Find the missing ~38 ms ⬜
 
