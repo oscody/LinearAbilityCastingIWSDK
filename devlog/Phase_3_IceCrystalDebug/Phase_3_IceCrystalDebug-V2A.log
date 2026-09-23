@@ -1,0 +1,138 @@
+@iwer-injection-runtime:851 [IWSDK Dev] Configuration: {device: 'metaQuest3', activation: 'localhost', verbose: false, sem: null, ai: null, …}
+@iwsdk_core.js?v=361afaaa:1519                                                  
+▄▄▄▄▄▄  ▄▄      ▄▄   ▄▄▄▄    ▄▄▄▄▄     ▄▄   ▄▄▄ 
+▀▀██▀▀  ██      ██ ▄█▀▀▀▀█   ██▀▀▀██   ██  ██▀  
+  ██    ▀█▄ ██ ▄█▀ ██▄       ██    ██  ██▄██    
+  ██     ██ ██ ██   ▀████▄   ██    ██  █████    
+  ██     ███▀▀███       ▀██  ██    ██  ██  ██▄  
+▄▄██▄▄   ███  ███  █▄▄▄▄▄█▀  ██▄▄▄██   ██   ██▄ 
+▀▀▀▀▀▀   ▀▀▀  ▀▀▀   ▀▀▀▀▀    ▀▀▀▀▀     ▀▀    ▀▀                                                
+===============================================
+Immersive Web SDK v0.5.3
+Three.js r181
+EliCS v3.4.2
+CrystalBench.ts:208 [bench] crystal rendering benchmark: 9 modes x (1.5s warmup + 4s measure)
+CrystalBench.ts:331 [bench] rep1 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:351 [bench] settled NO_CAST -> abilities=0 particles=0 calls=9 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"browser","views":1,"target":"1870x1070","fps":83.7,"msMedian":11.1,"msP95":12.5,"msWorst":150.2,"calls":9,"tris":1542,"points":2600,"programs":11,"geometries":22,"textures":6,"abilities":0,"instances":0,"particles":0,"foveation":null}
+index.ts:17 The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+AudioSystem.onXRSessionStart @ chunk-ZEFKGSF7.js?v=361afaaa:27123
+dispatchEvent @ chunk-ER7ZKBRH.js?v=361afaaa:358
+WebXRManager.setSession @ chunk-ER7ZKBRH.js?v=361afaaa:39595
+await in WebXRManager.setSession
+offer @ chunk-ZEFKGSF7.js?v=361afaaa:107920
+await in offer
+manageOfferFlow @ chunk-ZEFKGSF7.js?v=361afaaa:107941
+(anonymous) @ chunk-ZEFKGSF7.js?v=361afaaa:107736
+Promise.then
+initializeWorld @ chunk-ZEFKGSF7.js?v=361afaaa:107727
+await in initializeWorld
+create @ chunk-ZEFKGSF7.js?v=361afaaa:98199
+await in create
+(anonymous) @ index.ts:17
+index.ts:17 WebGL: INVALID_ENUM: texParameter: invalid parameter
+setTextureParameters @ chunk-ER7ZKBRH.js?v=361afaaa:38165
+setupRenderTarget @ chunk-ER7ZKBRH.js?v=361afaaa:38965
+WebGLRenderer.setRenderTarget @ chunk-ER7ZKBRH.js?v=361afaaa:43683
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:39816
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31415
+XRRequestFrame
+start @ chunk-ER7ZKBRH.js?v=361afaaa:31422
+WebXRManager.setSession @ chunk-ER7ZKBRH.js?v=361afaaa:39593
+await in WebXRManager.setSession
+offer @ chunk-ZEFKGSF7.js?v=361afaaa:107920
+await in offer
+manageOfferFlow @ chunk-ZEFKGSF7.js?v=361afaaa:107941
+(anonymous) @ chunk-ZEFKGSF7.js?v=361afaaa:107736
+Promise.then
+initializeWorld @ chunk-ZEFKGSF7.js?v=361afaaa:107727
+await in initializeWorld
+create @ chunk-ZEFKGSF7.js?v=361afaaa:98199
+await in create
+(anonymous) @ index.ts:17
+CrystalBench.ts:422 [bench] {"mode":"NO_CAST","rep":1,"median":11.1,"p95":16.1,"fps":82,"calls":12,"instances":0}
+CrystalBench.ts:331 [bench] rep1 --> HIDDEN_ICE_MAT  (not drawn, ice material assigned (run 1 CRYSTALS_HIDDEN))
+CrystalBench.ts:351 [bench] settled HIDDEN_ICE_MAT -> abilities=0 particles=0 calls=12 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":67,"msMedian":11.1,"msP95":48.4,"msWorst":127.7,"calls":39,"tris":27502,"points":2600,"programs":27,"geometries":33,"textures":11,"abilities":1,"instances":190,"particles":943,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"HIDDEN_ICE_MAT","rep":1,"median":100,"p95":100.4,"fps":10.1,"calls":37,"instances":190}
+CrystalBench.ts:331 [bench] rep1 --> HIDDEN_SIMPLE_MAT  (not drawn, cheap material assigned -> pairs with HIDDEN_ICE_MAT)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100,"msP95":100.5,"msWorst":100.7,"calls":15,"tris":26982,"points":2600,"programs":27,"geometries":33,"textures":11,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:351 [bench] settled HIDDEN_SIMPLE_MAT -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100,"msP95":100.4,"msWorst":100.5,"calls":44,"tris":27040,"points":2600,"programs":27,"geometries":33,"textures":11,"abilities":1,"instances":190,"particles":301,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"HIDDEN_SIMPLE_MAT","rep":1,"median":100,"p95":100.4,"fps":10,"calls":44,"instances":190}
+CrystalBench.ts:331 [bench] rep1 --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:351 [bench] settled CURRENT -> abilities=0 particles=0 calls=11 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100,"msP95":100.7,"msWorst":101.5,"calls":50,"tris":53640,"points":2600,"programs":31,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":605,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"CURRENT","rep":1,"median":99.7,"p95":100.6,"fps":11.6,"calls":50,"instances":190}
+CrystalBench.ts:331 [bench] rep1 --> SIMPLE_OPAQUE  (cheapest possible fragment, no blend, no lighting)
+CrystalBench.ts:351 [bench] settled SIMPLE_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":36.3,"msMedian":11.5,"msP95":100.1,"msWorst":100.7,"calls":45,"tris":41306,"points":2600,"programs":32,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":1175,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"SIMPLE_OPAQUE","rep":1,"median":100,"p95":100.2,"fps":10.1,"calls":41,"instances":190}
+CrystalBench.ts:331 [bench] rep1 --> SIMPLE_TRANSPARENT  (SIMPLE_OPAQUE + blending -> isolates overdraw)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.6,"msMedian":99.8,"msP95":100.2,"msWorst":100.4,"calls":41,"tris":40328,"points":2600,"programs":32,"geometries":37,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:351 [bench] settled SIMPLE_TRANSPARENT -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":31.7,"msMedian":11.4,"msP95":100.1,"msWorst":100.3,"calls":41,"tris":40328,"points":2600,"programs":33,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":433,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"SIMPLE_TRANSPARENT","rep":1,"median":100,"p95":100.2,"fps":10,"calls":41,"instances":190}
+CrystalBench.ts:331 [bench] rep1 --> STANDARD_OPAQUE  (stock PBR, opaque -> isolates normal lighting cost)
+CrystalBench.ts:351 [bench] settled STANDARD_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":26.9,"msMedian":12.3,"msP95":100.1,"msWorst":100.4,"calls":40,"tris":40326,"points":2600,"programs":34,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":1084,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"STANDARD_OPAQUE","rep":1,"median":99.9,"p95":100.4,"fps":10.2,"calls":40,"instances":190}
+CrystalBench.ts:331 [bench] rep1 --> ICE_OPAQUE  (full ice shader, opaque -> isolates custom shader cost)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.6,"msMedian":79.5,"msP95":100.4,"msWorst":100.8,"calls":15,"tris":26982,"points":2600,"programs":34,"geometries":37,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:351 [bench] settled ICE_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.2,"msMedian":11.9,"msP95":100.2,"msWorst":100.7,"calls":41,"tris":40328,"points":2600,"programs":35,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":348,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"ICE_OPAQUE","rep":1,"median":100,"p95":100.5,"fps":10,"calls":38,"instances":190}
+CrystalBench.ts:331 [bench] rep1 --> ICE_SINGLE_SIDE  (CURRENT but FrontSide -> isolates double-sided fragments)
+CrystalBench.ts:351 [bench] settled ICE_SINGLE_SIDE -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":25.5,"msMedian":11.9,"msP95":100.2,"msWorst":100.8,"calls":40,"tris":40326,"points":2600,"programs":35,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":816,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"ICE_SINGLE_SIDE","rep":1,"median":100,"p95":100.6,"fps":10,"calls":40,"instances":190}
+CrystalBench.ts:331 [bench] rep2 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:351 [bench] settled NO_CAST -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.4,"msMedian":99.9,"msP95":100.5,"msWorst":101.1,"calls":15,"tris":26982,"points":2600,"programs":35,"geometries":37,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":88.6,"msMedian":11.1,"msP95":11.8,"msWorst":66.6,"calls":15,"tris":26982,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"NO_CAST","rep":2,"median":11.1,"p95":11.8,"fps":89.8,"calls":15,"instances":0}
+CrystalBench.ts:331 [bench] rep2 --> HIDDEN_ICE_MAT  (not drawn, ice material assigned (run 1 CRYSTALS_HIDDEN))
+CrystalBench.ts:351 [bench] settled HIDDEN_ICE_MAT -> abilities=0 particles=0 calls=17 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":51.6,"msMedian":11.3,"msP95":100.1,"msWorst":100.5,"calls":38,"tris":27028,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":517,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"HIDDEN_ICE_MAT","rep":2,"median":100.2,"p95":100.6,"fps":10,"calls":38,"instances":190}
+CrystalBench.ts:331 [bench] rep2 --> HIDDEN_SIMPLE_MAT  (not drawn, cheap material assigned -> pairs with HIDDEN_ICE_MAT)
+CrystalBench.ts:351 [bench] settled HIDDEN_SIMPLE_MAT -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100.2,"msP95":100.5,"msWorst":100.7,"calls":45,"tris":27540,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":1205,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"HIDDEN_SIMPLE_MAT","rep":2,"median":100.3,"p95":100.5,"fps":10,"calls":44,"instances":190}
+CrystalBench.ts:331 [bench] rep2 --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100.2,"msP95":100.5,"msWorst":100.7,"calls":15,"tris":26982,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:351 [bench] settled CURRENT -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100.3,"msP95":100.6,"msWorst":101,"calls":50,"tris":53640,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":382,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"CURRENT","rep":2,"median":100.2,"p95":100.6,"fps":10,"calls":50,"instances":190}
+CrystalBench.ts:331 [bench] rep2 --> SIMPLE_OPAQUE  (cheapest possible fragment, no blend, no lighting)
+CrystalBench.ts:351 [bench] settled SIMPLE_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.9,"msMedian":99.9,"msP95":100.6,"msWorst":100.9,"calls":47,"tris":40340,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":868,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"SIMPLE_OPAQUE","rep":2,"median":63.2,"p95":87.2,"fps":15.3,"calls":47,"instances":190}
+CrystalBench.ts:331 [bench] rep2 --> SIMPLE_TRANSPARENT  (SIMPLE_OPAQUE + blending -> isolates overdraw)
+CrystalBench.ts:351 [bench] settled SIMPLE_TRANSPARENT -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":28,"msMedian":12,"msP95":97.8,"msWorst":100.5,"calls":18,"tris":40282,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":3,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.2,"msMedian":99.7,"msP95":100.3,"msWorst":100.4,"calls":41,"tris":40328,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":279,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"SIMPLE_TRANSPARENT","rep":2,"median":100,"p95":100.3,"fps":10,"calls":50,"instances":190}
+CrystalBench.ts:331 [bench] rep2 --> STANDARD_OPAQUE  (stock PBR, opaque -> isolates normal lighting cost)
+CrystalBench.ts:351 [bench] settled STANDARD_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15.8,"msMedian":65.5,"msP95":100.5,"msWorst":100.8,"calls":41,"tris":40328,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":541,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"STANDARD_OPAQUE","rep":2,"median":100.2,"p95":100.8,"fps":10,"calls":38,"instances":190}
+CrystalBench.ts:331 [bench] rep2 --> ICE_OPAQUE  (full ice shader, opaque -> isolates custom shader cost)
+CrystalBench.ts:351 [bench] settled ICE_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.5,"msMedian":53.1,"msP95":100.5,"msWorst":100.8,"calls":45,"tris":40834,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":1203,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"ICE_OPAQUE","rep":2,"median":100,"p95":100.3,"fps":10,"calls":40,"instances":190}
+CrystalBench.ts:331 [bench] rep2 --> ICE_SINGLE_SIDE  (CURRENT but FrontSide -> isolates double-sided fragments)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100,"msP95":100.3,"msWorst":100.7,"calls":15,"tris":26982,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:351 [bench] settled ICE_SINGLE_SIDE -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.5,"msMedian":99.8,"msP95":100.3,"msWorst":100.5,"calls":41,"tris":40328,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":1,"instances":190,"particles":406,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"ICE_SINGLE_SIDE","rep":2,"median":100,"p95":100.3,"fps":10,"calls":41,"instances":190}
+CrystalBench.ts:331 [bench] rep3 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:351 [bench] settled NO_CAST -> abilities=0 particles=0 calls=15 CLEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":40.4,"msMedian":11.3,"msP95":100,"msWorst":100.6,"calls":15,"tris":26982,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:422 [bench] {"mode":"NO_CAST","rep":3,"median":11.1,"p95":11.9,"fps":90,"calls":15,"instances":0}
+CrystalBench.ts:331 [bench] rep3 --> HIDDEN_ICE_MAT  (not drawn, ice material assigned (run 1 CRYSTALS_HIDDEN))
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.9,"msWorst":12.6,"calls":15,"tris":26982,"points":2600,"programs":36,"geometries":38,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:351 [bench] settled HIDDEN_ICE_MAT -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:422 [bench] {"mode":"HIDDEN_ICE_MAT","rep":3,"median":37.9,"p95":87.4,"fps":22.2,"calls":34,"instances":190}
+CrystalBench.ts:331 [bench] rep3 --> HIDDEN_SIMPLE_MAT  (not drawn, cheap material assigned -> pairs with HIDDEN_ICE_MAT)
+CrystalBench.ts:351 [bench] settled HIDDEN_SIMPLE_MAT -> abilities=0 particles=0 calls=12 CLEAN
