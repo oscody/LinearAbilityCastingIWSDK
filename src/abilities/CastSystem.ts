@@ -102,6 +102,29 @@ export class CastSystem extends createSystem({}) {
   }
 
   /**
+   * Retire everything in flight and drop every effect the casts left behind.
+   *
+   * This is the source's `App.clearEffects()`. Without it a benchmark mode
+   * inherits the previous mode's decals, fissures, bursts and still-living
+   * particles, and measures "test A plus leftovers" instead of test B.
+   */
+  clearAll(): void {
+    this.abilities.clear();
+    this.particles.reset();
+    this.decals.clear();
+    this.fissures.clear();
+    this.bursts.clear();
+    this.lights.reset();
+    this.shake.reset();
+    this.flash.reset();
+  }
+
+  /** Live particle count, for drain checks. */
+  liveParticles(): number {
+    return this.particles.countLive(frame.uTime.value);
+  }
+
+  /**
    * Fire the selected ability along a line. This is the signature
    * `AimController` emits in Phase 4, unchanged.
    */

@@ -132,6 +132,47 @@ which material is assigned to meshes that are never drawn:
 
 Run cost: 9 modes × 3 repeats × (1.5 s warmup + 4 s measure) ≈ **150 s**, plus page load.
 
+### Run 2 (V2.log) — invalidated: state leaked between modes
+
+Run 2 is **not usable**. Draw calls at `instances=190`, rep 1:
+
+| mode | calls |
+|---|---|
+| `NO_CAST` | 9 |
+| `HIDDEN_ICE_MAT` | **89** |
+| `HIDDEN_SIMPLE_MAT` | **102** |
+| `CURRENT` | 42 |
+| `SIMPLE_OPAQUE` | 56 |
+
+The two HIDDEN modes drew *more* than `CURRENT` while drawing **no crystals at all**. That
+can only be the previous mode's decals, fissures, bursts and still-living particles carried
+over. Every mode was measuring the one before it, plus leftovers.
+
+**Fix (implemented):** each mode now begins with a full teardown and an empty-scene settle
+window before anything is cast.
+
+- `CastSystem.clearAll()` — the source's `App.clearEffects()`: retires abilities and clears
+  particles, decals, fissures, bursts, lights, shake and flash.
+- `CrystalBench` gains a `settle` phase (`SETTLE_SECONDS = 1.5`) that runs *before* the
+  cast, with auto-refire suppressed, so the scene is genuinely empty.
+- The drained state is **logged** before every measurement —
+  `settled <MODE> -> abilities=0 particles=0 calls=N CLEAN` — so a failed drain is visible
+  rather than silently poisoning the numbers again.
+- `finish()` also clears, so the app is left in a clean state.
+
+Run cost rises to 9 modes × 3 repeats × (1.5 settle + 1.5 warmup + 4 measure) ≈ **190 s**.
+
+### Second confound in V2 — a hard 100 ms floor
+
+Unrelated to leftovers, and unresolved: many V2 modes pinned at **100.2–100.4 ms**, i.e.
+almost exactly 10 fps, with p95 sitting on the same number. A clamp that flat is not GPU
+cost — it looks like requestAnimationFrame throttling, which Chrome applies to a
+backgrounded or occluded window.
+
+If that is what happened, V2 measured the throttle, not the scene. **Before trusting run 3,
+confirm the managed browser window is foregrounded and visible for the whole run**, and
+treat any mode reporting ~100 ms with a p95 equal to its median as suspect.
+
 ## Step 3 — Find the missing ~38 ms ⬜
 
 With crystals confirmed irrelevant, the cast's cost is elsewhere. Bisect by disabling one

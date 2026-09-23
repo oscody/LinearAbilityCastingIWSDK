@@ -23,6 +23,16 @@ import { patchOnBeforeCompile } from '../utils/shaderPatch.js';
 /** Flip to false to run the app normally on this branch. */
 const BENCH_ENABLED = true;
 
+/**
+ * Every effect is torn down and the scene left empty for this long before the
+ * next mode casts.
+ *
+ * Run 2 showed why this is mandatory: the two HIDDEN modes reported **89 and 102
+ * draw calls** while drawing no crystals at all, against 42 for CURRENT. Those
+ * were the previous mode's decals, fissures, bursts and still-living particles
+ * carried over. Each mode was measuring "the mode before it, plus leftovers".
+ */
+const SETTLE_SECONDS = 1.5;
 /** Discarded after a material swap, so shader compile never lands in a sample. */
 const WARMUP_SECONDS = 1.5;
 /** Sampled per mode, per repeat. */
@@ -159,6 +169,10 @@ interface Result {
  * numbers without explaining them.
  *
  * Step 2 adds the HIDDEN_ICE_MAT / HIDDEN_SIMPLE_MAT pair; see MODE_SPECS.
+ *
+ * Every mode is preceded by a full teardown (`CastSystem.clearAll()`) and a
+ * settle window with an empty scene, so no mode inherits the previous one's
+ * leftovers. The drained state is logged before each measurement.
  */
 export class CrystalBench extends createSystem({}) {
   private cast?: CastSystem;
@@ -167,7 +181,7 @@ export class CrystalBench extends createSystem({}) {
 
   private modeIndex = -1;
   private rep = 0;
-  private phase: 'idle' | 'warmup' | 'measure' | 'done' = 'idle';
+  private phase: 'idle' | 'settle' | 'warmup' | 'measure' | 'done' = 'idle';
   private phaseTime = 0;
   private samples!: Float32Array;
   private sorted!: Float32Array;
@@ -318,26 +332,50 @@ export class CrystalBench extends createSystem({}) {
       '[bench] rep' + (this.rep + 1) + ' --> ' + mode +
         '  (' + MODE_SPECS[mode].isolates + ')',
     );
+
+    // Clean slate. Nothing from the previous mode may survive into this one.
+    this.cast!.clearAll();
     this.applyMode(mode);
-    this.fireCast();
-    this.phase = 'warmup';
+    this.phase = 'settle';
     this.phaseTime = 0;
     this.count = 0;
     this.frames = 0;
   }
 
+  /** Logged at the end of every settle, so a failed drain is visible, not silent. */
+  private reportDrain(mode: ModeName): void {
+    const active = this.cast!.abilities.active.length;
+    const particles = this.cast!.liveParticles();
+    const calls = this.renderer.info.render.calls;
+    const clean = active === 0 && particles === 0;
+    console.log(
+      '[bench] settled ' + mode + ' -> abilities=' + active +
+        ' particles=' + particles + ' calls=' + calls +
+        (clean ? ' CLEAN' : ' *** NOT CLEAN ***'),
+    );
+  }
+
   update(delta: number): void {
     if (this.phase === 'idle' || this.phase === 'done') return;
 
-    // Keep exactly one field standing for the whole window.
-    if (
-      MODES[this.modeIndex] !== 'NO_CAST' &&
-      this.cast!.abilities.active.length === 0
-    ) {
-      this.fireCast();
+    const mode = MODES[this.modeIndex];
+    this.phaseTime += delta;
+
+    // Empty scene, nothing cast, nothing re-fired: let the previous mode drain.
+    if (this.phase === 'settle') {
+      if (this.phaseTime >= SETTLE_SECONDS) {
+        this.reportDrain(mode);
+        this.fireCast();
+        this.phase = 'warmup';
+        this.phaseTime = 0;
+      }
+      return;
     }
 
-    this.phaseTime += delta;
+    // Keep exactly one field standing for the rest of the window.
+    if (mode !== 'NO_CAST' && this.cast!.abilities.active.length === 0) {
+      this.fireCast();
+    }
 
     if (this.phase === 'warmup') {
       if (this.phaseTime >= WARMUP_SECONDS) {
@@ -386,6 +424,7 @@ export class CrystalBench extends createSystem({}) {
 
   private finish(): void {
     this.phase = 'done';
+    this.cast!.clearAll();
     this.applyMode('CURRENT');
     this.restoreRandom();
     if (this.cast) this.cast.benchControlled = false;
