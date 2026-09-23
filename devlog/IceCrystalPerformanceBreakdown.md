@@ -173,22 +173,49 @@ If that is what happened, V2 measured the throttle, not the scene. **Before trus
 confirm the managed browser window is foregrounded and visible for the whole run**, and
 treat any mode reporting ~100 ms with a p95 equal to its median as suspect.
 
-## Step 3 — Find the missing ~38 ms ⬜
+## Step 3 — Find the missing ~38 ms 🔨 IMPLEMENTED, NOT YET RUN
 
-With crystals confirmed irrelevant, the cast's cost is elsewhere. Bisect by disabling one
-subsystem at a time, crystals hidden throughout, same harness:
+Crystals are ruled out, so every Step 3 mode runs with them **hidden** and removes one
+subsystem at a time. The reference is `HIDDEN_ICE_MAT` — the same cast, nothing suppressed.
 
-| Mode to add | Disables |
-|---|---|
-| `NO_PARTICLES` | ice mist / glitter / chips emitters |
-| `NO_DECALS` | `DecalSystem` |
-| `NO_FISSURES` | `FissureSystem` |
-| `NO_BURSTS` | `BurstSystem` |
-| `NO_SIM` | `IceAbility.update()` body — the 190-record matrix composition and instanced-attribute upload |
+| Mode | Removes | How |
+|---|---|---|
+| `NO_PARTICLES` | all emission | `settings.global.particleCount = 0`, `emissionRate = 0` |
+| `NO_DECALS` | ground decals | `ctx.decals` → no-op stub |
+| `NO_BURSTS` | burst spheres | `ctx.bursts` → no-op stub |
+| `NO_SIM` | `_updateSpikes` | own-property no-op shadowing the prototype method |
+| `NO_ANYTHING` | all four | whatever remains is unaccounted for |
 
-`NO_SIM` is the one I would run first. 190 records × 3 `InstancedMesh`es recomposed and
-re-uploaded every frame is the largest per-frame CPU work in the cast, and it is paid
-whether or not anything is visible — which fits the `CRYSTALS_HIDDEN` result exactly.
+### Two things the code had to work around
+
+**Particles cannot be stubbed through `ctx`.** `IceAbility.createParticles()` caches its
+system references (`this.mist`, `this.shards`, `this.glitter`) at construction, so swapping
+`ctx.particles` afterwards changes nothing. But every emit is
+`Math.round(N * g.particleCount)`, so zeroing the source's own global multiplier is exact —
+and idiomatic to the architecture rather than a hack around it.
+
+Decals and bursts *are* read from `ctx` at call time, so stubs work there.
+
+**`NO_FISSURES` was dropped.** The plan sketched it, but `IceAbility` never references
+`ctx.fissures` — the mode would have measured nothing. `FissureSystem.update()` still ticks
+from `CastSystem` every frame with an empty pool; if that turns out to matter it belongs in
+a separate "idle service tick" test, not here.
+
+### Reading the outcome
+
+Subtract each mode from `HIDDEN_ICE_MAT` to get that subsystem's per-frame cost. The
+prediction on record is that **`NO_SIM` accounts for most of it**: 190 records recomposed
+into instance matrices and re-uploaded every frame is the largest per-frame CPU work in a
+cast, and it is paid whether or not anything is drawn — which is precisely the shape of the
+Step 1 result.
+
+If `NO_ANYTHING` is still far above `NO_CAST`, the cost is in something none of these modes
+touches — `Ability.update()`'s own bookkeeping, the light pool, or per-frame uniform writes.
+
+`NO_SIM` reports `instances: 0` by design; the counter lives inside the method being
+suppressed.
+
+Run cost: 14 modes × 3 repeats × 7 s ≈ **5 minutes**.
 
 ## Step 4 — Re-run on Quest ⬜
 

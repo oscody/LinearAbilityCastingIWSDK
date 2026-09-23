@@ -49,6 +49,18 @@ export class CastSystem extends createSystem({}) {
   /** Set by CrystalBench, which owns casting while a benchmark runs. */
   public benchControlled = false;
 
+  /**
+   * The shared-service context handed to every ability.
+   *
+   * Exposed so the benchmark can swap individual services for no-op stubs.
+   * Abilities read `this.ctx.decals` / `.bursts` / `.shake` / `.flash` at call
+   * time, so replacing a property here suppresses that effect without touching
+   * ported files. (`particles` is the exception -- abilities cache their system
+   * references in `createParticles()`, so it must be suppressed via
+   * `settings.global.particleCount` instead.)
+   */
+  public ctx!: Record<string, unknown>;
+
   init(): void {
     this.origin = new Vector3();
     this.direction = new Vector3();
@@ -73,7 +85,7 @@ export class CastSystem extends createSystem({}) {
     // haptics, which is the honest VR translation of the same intent.
     this.shake = new CameraShake({ shakeOffset: new Vector3(), shakeRoll: 0 });
 
-    this.abilities = new AbilityManager({
+    this.ctx = {
       scene: vfxScene,
       camera: this.camera,
       // `Environment.registerShadowCasterWithPatch` is a 3-line wrapper around
@@ -89,7 +101,9 @@ export class CastSystem extends createSystem({}) {
       bursts: this.bursts,
       shake: this.shake,
       flash: this.flash,
-    });
+    };
+
+    this.abilities = new AbilityManager(this.ctx);
 
     this.cleanupFuncs.push(() => {
       this.abilities.dispose();

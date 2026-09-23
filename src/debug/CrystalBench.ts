@@ -17,6 +17,7 @@ import {
   Vector3,
 } from '@iwsdk/core';
 import { CastSystem } from '../abilities/CastSystem.js';
+import { settings } from '../config/settings.js';
 import { createIceMaterial } from '../materials/IceMaterial.js';
 import { patchOnBeforeCompile } from '../utils/shaderPatch.js';
 
@@ -53,6 +54,11 @@ const CAST_DIRECTION = new Vector3(1, 0, 0);
 
 type ModeName =
   | 'NO_CAST'
+  | 'NO_PARTICLES'
+  | 'NO_DECALS'
+  | 'NO_BURSTS'
+  | 'NO_SIM'
+  | 'NO_ANYTHING'
   | 'HIDDEN_ICE_MAT'
   | 'HIDDEN_SIMPLE_MAT'
   | 'CURRENT'
@@ -70,11 +76,33 @@ type MaterialKey =
   | 'ICE_OPAQUE'
   | 'ICE_SINGLE_SIDE';
 
+/**
+ * Step 3 axis: what the cast is forbidden to do this mode.
+ *
+ *  `particles` — zeroes `settings.global.particleCount` / `emissionRate`. Every
+ *                emit in IceAbility is `Math.round(N * g.particleCount)`, so this
+ *                is exact. It has to go through settings rather than a ctx stub
+ *                because `createParticles()` caches its system references.
+ *  `decals`    — swaps `ctx.decals` for a no-op; read at call time.
+ *  `bursts`    — swaps `ctx.bursts` for a no-op; read at call time.
+ *  `sim`       — no-ops `_updateSpikes`, the per-frame recomposition of up to 190
+ *                instance matrices and their instanced-attribute upload. This is
+ *                the largest per-frame CPU work in a cast and is paid whether or
+ *                not anything is drawn -- which is exactly the shape of the
+ *                result we are chasing. Reported `instances` drops to 0 by
+ *                design, since that counter is maintained inside the method.
+ *
+ * `fissures` is deliberately absent: `IceAbility` never spawns one, so the mode
+ * the plan sketched would have measured nothing.
+ */
+type Suppress = 'particles' | 'decals' | 'bursts' | 'sim';
+
 interface ModeSpec {
   /** Are the crystal meshes drawn? */
   visible: boolean;
   material: MaterialKey | null;
   isolates: string;
+  suppress?: Suppress[];
 }
 
 /**
@@ -138,6 +166,40 @@ const MODE_SPECS: Record<ModeName, ModeSpec> = {
     material: 'ICE_SINGLE_SIDE',
     isolates: 'CURRENT but FrontSide -> isolates double-sided fragments',
   },
+
+  // --- Step 3: crystals hidden throughout, one subsystem removed at a time.
+  // Compare each against HIDDEN_ICE_MAT, which is the same cast with nothing
+  // suppressed.
+  NO_PARTICLES: {
+    visible: false,
+    material: null,
+    isolates: 'hidden + no particle emission',
+    suppress: ['particles'],
+  },
+  NO_DECALS: {
+    visible: false,
+    material: null,
+    isolates: 'hidden + no ground decals',
+    suppress: ['decals'],
+  },
+  NO_BURSTS: {
+    visible: false,
+    material: null,
+    isolates: 'hidden + no burst spheres',
+    suppress: ['bursts'],
+  },
+  NO_SIM: {
+    visible: false,
+    material: null,
+    isolates: 'hidden + no _updateSpikes (190 matrices + attribute upload)',
+    suppress: ['sim'],
+  },
+  NO_ANYTHING: {
+    visible: false,
+    material: null,
+    isolates: 'hidden + all of the above -> what remains is unaccounted',
+    suppress: ['particles', 'decals', 'bursts', 'sim'],
+  },
 };
 
 const MODES = Object.keys(MODE_SPECS) as ModeName[];
@@ -189,6 +251,13 @@ export class CrystalBench extends createSystem({}) {
   private frames = 0;
 
   private origin!: Vector3;
+
+  /** Saved originals, restored at the end of every mode. */
+  private savedDecals: unknown = null;
+  private savedBursts: unknown = null;
+  private savedParticleCount = 1;
+  private savedEmissionRate = 1;
+  private simSuppressed = false;
   private realRandom?: () => number;
   private seed = 0;
 
@@ -216,7 +285,10 @@ export class CrystalBench extends createSystem({}) {
     );
     this.nextMode();
 
-    this.cleanupFuncs.push(() => this.restoreRandom());
+    this.cleanupFuncs.push(() => {
+      this.restoreRandom();
+      this.restoreSuppression();
+    });
   }
 
   /* ---------------------------------------------------------------- */
@@ -290,6 +362,56 @@ export class CrystalBench extends createSystem({}) {
     if (pool) for (const a of pool.free) fn(a as never);
   }
 
+  /**
+   * Undo every suppression. Always run before applying the next mode's, so a
+   * mode can never inherit the previous one's stubs.
+   */
+  private restoreSuppression(): void {
+    if (this.savedDecals) {
+      this.cast!.ctx.decals = this.savedDecals;
+      this.savedDecals = null;
+    }
+    if (this.savedBursts) {
+      this.cast!.ctx.bursts = this.savedBursts;
+      this.savedBursts = null;
+    }
+    settings.global.particleCount = this.savedParticleCount;
+    settings.global.emissionRate = this.savedEmissionRate;
+    if (this.simSuppressed) {
+      this.forEachIceInstance((ability) => {
+        delete (ability as unknown as Record<string, unknown>)._updateSpikes;
+      });
+      this.simSuppressed = false;
+    }
+  }
+
+  private applySuppression(mode: ModeName): void {
+    const list = MODE_SPECS[mode].suppress;
+    if (!list) return;
+
+    for (const what of list) {
+      if (what === 'particles') {
+        this.savedParticleCount = settings.global.particleCount;
+        this.savedEmissionRate = settings.global.emissionRate;
+        settings.global.particleCount = 0;
+        settings.global.emissionRate = 0;
+      } else if (what === 'decals') {
+        this.savedDecals = this.cast!.ctx.decals;
+        this.cast!.ctx.decals = { spawn: () => {} };
+      } else if (what === 'bursts') {
+        this.savedBursts = this.cast!.ctx.bursts;
+        this.cast!.ctx.bursts = { spawn: () => {} };
+      } else if (what === 'sim') {
+        // Own-property no-op shadows the prototype method; `delete` restores it.
+        this.forEachIceInstance((ability) => {
+          (ability as unknown as Record<string, unknown>)._updateSpikes =
+            () => {};
+        });
+        this.simSuppressed = true;
+      }
+    }
+  }
+
   private applyMode(mode: ModeName): void {
     const spec = MODE_SPECS[mode];
     this.forEachIceInstance((ability) => {
@@ -312,8 +434,13 @@ export class CrystalBench extends createSystem({}) {
     this.player.getWorldPosition(this.origin);
     this.origin.y = 0;
     this.cast!.cast(this.origin, CAST_DIRECTION, CAST_DISTANCE);
-    // The pool may have grown a fresh instance on that cast; re-apply.
+    // The pool may have grown a fresh instance on that cast; re-apply both axes.
     this.applyMode(MODES[this.modeIndex]);
+    if (MODE_SPECS[MODES[this.modeIndex]].suppress?.includes('sim')) {
+      this.forEachIceInstance((ability) => {
+        (ability as unknown as Record<string, unknown>)._updateSpikes = () => {};
+      });
+    }
   }
 
   private nextMode(): void {
@@ -333,9 +460,12 @@ export class CrystalBench extends createSystem({}) {
         '  (' + MODE_SPECS[mode].isolates + ')',
     );
 
-    // Clean slate. Nothing from the previous mode may survive into this one.
+    // Clean slate. Nothing from the previous mode may survive into this one --
+    // neither its effects nor its suppressions.
+    this.restoreSuppression();
     this.cast!.clearAll();
     this.applyMode(mode);
+    this.applySuppression(mode);
     this.phase = 'settle';
     this.phaseTime = 0;
     this.count = 0;
@@ -424,6 +554,7 @@ export class CrystalBench extends createSystem({}) {
 
   private finish(): void {
     this.phase = 'done';
+    this.restoreSuppression();
     this.cast!.clearAll();
     this.applyMode('CURRENT');
     this.restoreRandom();
