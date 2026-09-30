@@ -66,9 +66,15 @@ type ModeName =
   | 'NO_GLITTER'
   | 'MIST_QUARTER_RATE'
   | 'MIST_HALF_LIFE'
+  | 'MIST_LIFE_70'
+  | 'MIST_LIFE_85'
   | 'MIST_HALF_SIZE'
   | 'MIST_SMALL_END'
   | 'MIST_LEAN'
+  | 'BURST_NONE'
+  | 'BURST_THIRD_COUNT'
+  | 'BURST_HALF_SIZE'
+  | 'BURST_HALF_LIFE'
   | 'NO_DECALS'
   | 'NO_BURSTS'
   | 'NO_SIM'
@@ -136,6 +142,14 @@ interface MistTune {
   size?: number;
   life?: number;
   endSize?: number;
+  /**
+   * The one-off burst of 90 large puffs (`IceAbility.js` ~line 712: size 1.6,
+   * life `mistLifetime * 1.5`). Hardcoded there, so it is intercepted at
+   * `mist.emit` rather than through settings; `mistRate` never touches it.
+   */
+  burstCount?: number;
+  burstSize?: number;
+  burstLife?: number;
 }
 
 interface ModeSpec {
@@ -248,6 +262,18 @@ const MODE_SPECS: Record<ModeName, ModeSpec> = {
     isolates: 'CURRENT with mist lifetime x0.5 (half the live sprites)',
     mist: { life: 0.5 },
   },
+  MIST_LIFE_70: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with mist lifetime x0.7 (lifetime sweep)',
+    mist: { life: 0.7 },
+  },
+  MIST_LIFE_85: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with mist lifetime x0.85 (lifetime sweep)',
+    mist: { life: 0.85 },
+  },
   MIST_HALF_SIZE: {
     visible: true,
     material: null,
@@ -265,6 +291,30 @@ const MODE_SPECS: Record<ModeName, ModeSpec> = {
     material: null,
     isolates: 'CURRENT with rate x0.5, life x0.7, size x0.7, end size x0.6 combined',
     mist: { rate: 0.5, life: 0.7, size: 0.7, endSize: 0.6 },
+  },
+  BURST_NONE: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with the 90-puff burst removed (upper bound for burst fixes)',
+    mist: { burstCount: 0 },
+  },
+  BURST_THIRD_COUNT: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with the burst at 30 puffs instead of 90',
+    mist: { burstCount: 1 / 3 },
+  },
+  BURST_HALF_SIZE: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with burst puffs at size 0.8 instead of 1.6',
+    mist: { burstSize: 0.5 },
+  },
+  BURST_HALF_LIFE: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with burst life x0.75 instead of x1.5 mistLifetime',
+    mist: { burstLife: 0.5 },
   },
   NO_DECALS: {
     visible: false,
@@ -292,7 +342,23 @@ const MODE_SPECS: Record<ModeName, ModeSpec> = {
   },
 };
 
-const MODES = Object.keys(MODE_SPECS) as ModeName[];
+/**
+ * Trimmed list for the mist investigation: V5 ran 22 modes for ~10 minutes and
+ * the headset degraded partway through (CURRENT 38 -> 78 ms). Set to `null` to
+ * run every mode.
+ */
+const RUN_ONLY: ModeName[] | null = [
+  'NO_CAST',
+  'CURRENT',
+  'MIST_HALF_LIFE',
+  'MIST_LIFE_70',
+  'MIST_LIFE_85',
+  'MIST_QUARTER_RATE', // re-check: V5 said it barely helps, V6 says lifetime fixes all
+  'NO_ANYTHING',
+];
+
+const MODES: ModeName[] =
+  RUN_ONLY ?? (Object.keys(MODE_SPECS) as ModeName[]);
 
 interface Result {
   mode: ModeName;
@@ -609,6 +675,43 @@ export class CrystalBench extends createSystem({}) {
     });
   }
 
+  /**
+   * Wraps `mist.emit` so the burst call (identified by its unique size 1.6) is
+   * scaled. `_emit` is a shared mutable object, so it is restored after the call.
+   */
+  private wrapBurstEmit(tune: MistTune): void {
+    this.forEachIceInstance((ability) => {
+      const mist = (ability as unknown as Record<string, unknown>).mist as
+        | {
+            emit: (count: number, p: { size: number; life: number }) => void;
+          }
+        | undefined;
+      if (!mist) return;
+      const original = Object.getPrototypeOf(mist).emit as (
+        this: unknown,
+        count: number,
+        p: { size: number; life: number },
+      ) => void;
+      (mist as Record<string, unknown>).emit = (
+        count: number,
+        p: { size: number; life: number },
+      ) => {
+        if (Math.abs(p.size - 1.6) > 1e-6) {
+          original.call(mist, count, p);
+          return;
+        }
+        const size = p.size;
+        const life = p.life;
+        p.size = size * (tune.burstSize ?? 1);
+        p.life = life * (tune.burstLife ?? 1);
+        original.call(mist, Math.round(count * (tune.burstCount ?? 1)), p);
+        p.size = size;
+        p.life = life;
+      };
+    });
+    this.emitStubbed = true;
+  }
+
   private applyMistTune(mode: ModeName): void {
     const tune = MODE_SPECS[mode].mist;
     if (!tune) return;
@@ -621,6 +724,17 @@ export class CrystalBench extends createSystem({}) {
     settings.ice.mistSize = base.size * (tune.size ?? 1);
     settings.ice.mistLifetime = base.life * (tune.life ?? 1);
     if (tune.endSize !== undefined) this.setMistEndSize(tune.endSize);
+    this.wrapBurstIfNeeded(tune);
+  }
+
+  private wrapBurstIfNeeded(tune: MistTune): void {
+    if (
+      tune.burstCount !== undefined ||
+      tune.burstSize !== undefined ||
+      tune.burstLife !== undefined
+    ) {
+      this.wrapBurstEmit(tune);
+    }
   }
 
   /**
@@ -696,6 +810,8 @@ export class CrystalBench extends createSystem({}) {
     // A pooled instance may have been rebuilt; the uniform must be re-scaled.
     const endSize = MODE_SPECS[MODES[this.modeIndex]].mist?.endSize;
     if (endSize !== undefined) this.setMistEndSize(endSize);
+    const tune = MODE_SPECS[MODES[this.modeIndex]].mist;
+    if (tune) this.wrapBurstIfNeeded(tune);
   }
 
   private nextMode(): void {

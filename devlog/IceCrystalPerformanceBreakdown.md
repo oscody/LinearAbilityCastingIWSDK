@@ -311,9 +311,44 @@ Mean ms, rep 3 (rep 1):
    setting never touches. `mistLifetime` scales it.
 4. `MIST_LEAN` is no better than `MIST_HALF_LIFE` alone.
 
-**Next:** rerun a trimmed list (`NO_CAST`, `CURRENT`, `NO_MIST`, `MIST_*`) with the headset
-cooled, and add burst-targeting modes (count 90 → 30, size 1.6 → 0.8, life ×1.5 → ×0.75).
-Judge the look of `MIST_HALF_LIFE` in the headset before choosing.
+> **Correction (see V6):** finding 3 above, the burst theory, was wrong.
+
+### V6 — burst-targeting modes (Quest, clean run)
+
+Trimmed to 11 modes (~5 min) and run with the headset cooled. The run was clean: spreads
+0.05–2 ms on the winning modes, every settle `CLEAN`. That V5's degradation did not recur
+suggests it was headset heat, not an app leak, but this is unconfirmed.
+
+Mean ms, median of 3 reps (target 11.1):
+
+| Mode | Change | Mean ms | % slow |
+|---|---|---|---|
+| `NO_CAST` | floor | 11.1 | 0 |
+| **`MIST_HALF_LIFE`** | lifetime ×0.5 | **11.15** | 0.3 |
+| **`MIST_LEAN`** | combined | **11.2** | 1.7 |
+| `NO_ANYTHING` | | 11.4 | 2.8 |
+| `NO_MIST` | | 11.7 | 9.4 |
+| `MIST_HALF_SIZE` | size ×0.5 | 14.7 | 29 |
+| `BURST_HALF_SIZE` | burst puffs 0.8 | 18.7 | 30 |
+| `BURST_THIRD_COUNT` | burst 30 puffs | 19.0 | 44 |
+| `BURST_NONE` | burst removed | 19.5 | 34 |
+| `BURST_HALF_LIFE` | burst life ×0.5 | 19.6 | 38 |
+| `CURRENT` | baseline | 20.9 | 46 |
+
+1. **`mistLifetime` ×0.5 is the fix.** It reaches the floor with the mist still present.
+2. **The burst theory is refuted.** Removing the burst entirely saves only 1.3 ms.
+3. **Screen coverage helps partway.** Half size gives ~6 ms back, less than lifetime.
+4. **Unexplained:** V5 saw `MIST_QUARTER_RATE` barely help, yet halving lifetime fixes
+   everything, though both cut the live puff count. V5 was noisy, so that result may be
+   wrong. It is re-tested in the next run.
+
+Note `CURRENT` read 20.9 ms here against 38 ms in V4 for the same config: absolute levels
+drift between sessions, so compare modes only within one run.
+
+**Next:** run the lifetime sweep (`MIST_LIFE_70`, `MIST_LIFE_85` alongside `MIST_HALF_LIFE`)
+plus a `MIST_QUARTER_RATE` re-check, to find the mildest lifetime cut that reaches 90 fps.
+The user must judge the look in the headset before `mistLifetime` in `settings.js` is
+changed.
 
 ## Step 4 — Re-run on Quest ✅ DONE
 
