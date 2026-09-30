@@ -177,7 +177,7 @@ If that is what happened, V2 measured the throttle, not the scene. **Before trus
 confirm the managed browser window is foregrounded and visible for the whole run**, and
 treat any mode reporting ~100 ms with a p95 equal to its median as suspect.
 
-## Step 3 — Find the missing ~38 ms ⚠️ ANSWERED FOR THE STATIC BENCH ONLY (V3-A, V4): the mist — but see V8, live play disagrees
+## Step 3 — Find the missing ~38 ms ⚠️ STATIC BENCH SAID MIST (V3-A, V4); LIVE PLAY SAYS GROUND DECALS (V9)
 
 Crystals are ruled out, so every Step 3 mode runs with them **hidden** and removes one
 subsystem at a time. The reference is `HIDDEN_ICE_MAT` — the same cast, nothing suppressed.
@@ -438,6 +438,53 @@ not established as *the* cost.
 switched off while the game casts normally — nothing, mist, all particles, decals, bursts,
 everything, plus a no-cast control — each in a 30 s window, repeated in reverse to expose
 drift. Whichever removal brings live play near the floor is the real cost.
+
+### V9 — subtraction in live play (Quest): the ground decals
+
+Each 20 s window removes one thing while the game casts on its own (first 3 s of each window
+discarded; list run forward then reversed). Quest 3, `xr`, 1680×1760, user moving. Crystals
+stay visible except in `NO_CRYSTALS` / `NO_ANYTHING`. Mean ms, average of 2 windows (w1 / w2):
+
+| Condition | Mean ms | w1 / w2 | Idle-frame ms |
+|---|---|---|---|
+| `NO_CAST` | 11.1 | 11.12 / 11.12 | 11.1 |
+| `NO_ANYTHING` | 11.1 | 11.13 / 11.11 | 11.1 |
+| **`NO_DECALS`** | **18.5** | **19.4 / 17.6** | **11.2** |
+| `NO_BURSTS` | 43.7 | 38.6 / 48.8 | 59 |
+| `NO_MIST` | 44.8 | 41.3 / 48.3 | 60 |
+| `NO_PARTICLES` | 49.8 | 55.0 / 44.6 | 100 |
+| `CURRENT` | 55.9 | 78.5 / 33.2 | 47 |
+| `NO_CRYSTALS` | 96.1 | 96.1 / 96.1 | 100 |
+
+1. **Ground decals are the dominant live cost.** Removing them alone takes 56 → 18.5 ms,
+   reproducibly. No other single removal comes close.
+2. **This overturns the static-bench conclusion.** There decals only cut draw calls
+   (40 → 17) with no reliable fps gain, and mist looked like the whole cost. The static bench
+   (one seeded field, player still, one cast per window) does not reproduce the load that
+   matters.
+3. **It explains V8's "slow with no active cast".** With decals removed, idle frames are the
+   11.2 ms floor; with them present the game stays slow after the spell ends, because
+   frost patches live for `frostLife` = 7 s while casts come every 6 s, so decals from
+   consecutive casts overlap.
+4. **Mist, bursts, particles are secondary** (each ~6–12 ms, inside the noise: `CURRENT`
+   swung 78 → 33 ms between windows). `NO_DECALS` still leaves ~7 ms above the floor.
+5. **Nothing else in the scene is slow:** `NO_CAST` and `NO_ANYTHING` sit exactly on the
+   floor.
+6. **Unexplained:** `NO_CRYSTALS` is the slowest condition (96 ms, both windows), slower
+   than drawing the crystals. This echoes Step 1's unexplained anomaly. Hypothesis, not
+   measured: drawn crystals occlude the fog/decals behind them, so hiding them lets more of
+   those fragments through.
+
+**Why decals are expensive (from reading `GroundDecals.js` / `IceAbility.js`, not measured):**
+each decal is a large ground quad, transparent, `depthWrite: false`, with a procedural
+multi-scale noise fragment shader. The ice cast lays `frostRate` (3.6) patches per metre of
+front travel, each of radius `halfWidth × frostSpread (1.35)` and life `frostLife` (7 s),
+plus a broad patch under the burst (`frostSpread × 2.2`, life ×1.3). Rendered once per eye,
+overlapping each other and the previous cast's patches.
+
+**Next (V10):** live-play tests of decal fixes — fewer patches (`frostRate`), shorter life
+(`frostLife` below the 6 s cast interval so casts stop overlapping), smaller radius
+(`frostSpread`), and a combination — against `CURRENT` and `NO_DECALS`.
 
 ## Step 4 — Re-run on Quest ✅ DONE
 

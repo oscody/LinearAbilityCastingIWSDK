@@ -40,9 +40,42 @@ const BENCH_ENABLED = true;
  */
 const BENCH_MODE: 'controlled' | 'live' = 'live';
 
-/** Mist lifetime multipliers tested in live mode; cycle 2 runs them reversed to expose drift. */
-const LIVE_MULTS = [1, 0.85, 0.7, 0.5];
-const LIVE_WINDOW_SECONDS = 30;
+/**
+ * V9 -- subtract in live play. Each window removes one thing while the game
+ * casts on its own, so the condition that brings live play near the 11.1 ms floor
+ * is the real cost. V8 showed lifetime x0.5 only takes ~76 -> ~53 ms live.
+ *
+ * Unlike the static bench's NO_* modes these keep the crystals VISIBLE (except
+ * NO_CRYSTALS / NO_ANYTHING), so each result is player-facing. Cycle 2 runs the
+ * list reversed to expose drift.
+ */
+interface LiveCondition {
+  name: string;
+  visible: boolean;
+  suppress: Suppress[];
+  /** False = the game never casts in this window (control). */
+  casts: boolean;
+}
+
+const LIVE_CONDITIONS: LiveCondition[] = [
+  { name: 'CURRENT', visible: true, suppress: [], casts: true },
+  { name: 'NO_MIST', visible: true, suppress: ['mist'], casts: true },
+  { name: 'NO_PARTICLES', visible: true, suppress: ['particles'], casts: true },
+  { name: 'NO_DECALS', visible: true, suppress: ['decals'], casts: true },
+  { name: 'NO_BURSTS', visible: true, suppress: ['bursts'], casts: true },
+  { name: 'NO_CRYSTALS', visible: false, suppress: [], casts: true },
+  {
+    name: 'NO_ANYTHING',
+    visible: false,
+    suppress: ['particles', 'decals', 'bursts', 'sim'],
+    casts: true,
+  },
+  { name: 'NO_CAST', visible: false, suppress: [], casts: false },
+];
+
+const LIVE_WINDOW_SECONDS = 20;
+/** Discarded at the start of each window while the previous condition's leftovers clear. */
+const LIVE_SKIP_SECONDS = 3;
 const LIVE_LOG_SECONDS = 2;
 
 /**
@@ -971,51 +1004,64 @@ export class CrystalBench extends createSystem({}) {
   /* ---------------------------------------------------------------- */
 
   private liveDone = false;
-  private liveWindow = 0; // index into the LIVE_MULTS x 2 cycles sequence
-  private liveTime = 0; // seconds into the current window
+  private liveWindow = 0;
+  private liveTime = 0;
   private liveLogTime = 0;
-  private liveFrames = 0;
-  private liveSlow = 0;
-  private liveCastFrames = 0;
   private liveCastSum = 0;
   private liveIdleSum = 0;
+  private liveCastFrames = 0;
+  private liveSlow = 0;
   private liveWorst = 0;
   private liveSum = 0;
-  private liveCount = 0; // frames in the whole window
+  private liveCount = 0;
   private liveWin!: Float32Array;
-  private subCount = 0; // frames in the 2 s sub-window
+  private subCount = 0;
   private subSum = 0;
   private subWorst = 0;
-  private liveResults: Array<{ mult: number; mean: number; p95: number; slowPct: number; worst: number; castMean: number; idleMean: number }> = [];
+  private liveLastActive: unknown = null;
+  private liveResults: Array<{
+    name: string;
+    mean: number;
+    p95: number;
+    slowPct: number;
+    worst: number;
+    castMean: number;
+    idleMean: number;
+  }> = [];
   private liveHead!: Vector3;
   private liveDir!: Vector3;
-  private liveLifeBase = 0;
 
-  private liveMult(): number {
-    const n = LIVE_MULTS.length;
+  private liveCond(): LiveCondition {
+    const n = LIVE_CONDITIONS.length;
     const w = this.liveWindow;
-    return w < n ? LIVE_MULTS[w] : LIVE_MULTS[2 * n - 1 - w];
+    return w < n ? LIVE_CONDITIONS[w] : LIVE_CONDITIONS[2 * n - 1 - w];
   }
 
   private initLive(): void {
     this.liveWin = new Float32Array(8192);
     this.liveHead = new Vector3();
     this.liveDir = new Vector3();
-    this.liveLifeBase = settings.ice.mistLifetime;
-    this.beginLiveWindow();
     this.cleanupFuncs.push(() => {
-      settings.ice.mistLifetime = this.liveLifeBase;
+      this.restoreSuppression();
+      if (this.cast) this.cast.benchControlled = false;
     });
     console.log(
-      '[live] real-play probe: ' + LIVE_MULTS.length * 2 + ' windows x ' +
-        LIVE_WINDOW_SECONDS + 's. Move and look around normally. Base mistLifetime ' +
-        this.liveLifeBase,
+      '[live] subtraction probe: ' + LIVE_CONDITIONS.length * 2 + ' windows x ' +
+        LIVE_WINDOW_SECONDS + 's (first ' + LIVE_SKIP_SECONDS +
+        's of each discarded). Move and look around normally.',
     );
+    this.beginLiveWindow();
   }
 
+  /** Tear down the previous condition, then apply this window's. */
   private beginLiveWindow(): void {
-    const mult = this.liveMult();
-    settings.ice.mistLifetime = this.liveLifeBase * mult;
+    const cond = this.liveCond();
+    this.restoreSuppression();
+    this.cast!.clearAll();
+    this.cast!.benchControlled = !cond.casts;
+    this.liveLastActive = null;
+    this.liveApply(cond);
+
     this.liveTime = 0;
     this.liveLogTime = 0;
     this.liveCount = 0;
@@ -1028,18 +1074,47 @@ export class CrystalBench extends createSystem({}) {
     this.subCount = 0;
     this.subSum = 0;
     this.subWorst = 0;
-    this.setLivePhase('measure', mult);
+    this.setLivePhase('measure', cond.name);
     console.log(
-      '[live] ## WINDOW ' + (this.liveWindow + 1) + '/' + LIVE_MULTS.length * 2 +
-        ' mist life x' + mult,
+      '[live] ## WINDOW ' + (this.liveWindow + 1) + '/' + LIVE_CONDITIONS.length * 2 +
+        ' ' + cond.name,
     );
+    this.drawLiveBadge(11.1);
   }
 
-  private setLivePhase(phase: 'measure' | 'done', mult: number): void {
+  /**
+   * Applies the condition to every ice instance. Called at window start and
+   * again whenever the game activates a new ability (pooled instances change).
+   */
+  private liveApply(cond: LiveCondition): void {
+    this.forEachIceInstance((ability) => {
+      for (const mesh of (ability as unknown as { meshes: Array<{ visible: boolean }> }).meshes) {
+        mesh.visible = cond.visible;
+      }
+    });
+    const list = cond.suppress;
+    if (list.includes('particles')) {
+      this.savedParticleCount = settings.global.particleCount;
+      this.savedEmissionRate = settings.global.emissionRate;
+      settings.global.particleCount = 0;
+      settings.global.emissionRate = 0;
+    }
+    if (list.includes('decals') && !this.savedDecals) {
+      this.savedDecals = this.cast!.ctx.decals;
+      this.cast!.ctx.decals = { spawn: () => {} };
+    }
+    if (list.includes('bursts') && !this.savedBursts) {
+      this.savedBursts = this.cast!.ctx.bursts;
+      this.cast!.ctx.bursts = { spawn: () => {} };
+    }
+    this.stubInstances(list);
+  }
+
+  private setLivePhase(phase: 'measure' | 'done', name: string): void {
     (globalThis as { __benchStatus?: unknown }).__benchStatus = {
       live: true,
       phase,
-      mult,
+      condition: name,
       window: this.liveWindow + 1,
     };
   }
@@ -1047,24 +1122,34 @@ export class CrystalBench extends createSystem({}) {
   private liveUpdate(delta: number): void {
     if (this.liveDone) return;
     const ms = delta * 1000;
-    const casting = this.cast!.abilities.active.length > 0;
+    const active = this.cast!.abilities.active as unknown[];
+    const casting = active.length > 0;
 
-    if (this.liveCount < this.liveWin.length) this.liveWin[this.liveCount++] = ms;
-    this.liveSum += ms;
-    if (ms > SLOW_MS) this.liveSlow++;
-    if (ms > this.liveWorst) this.liveWorst = ms;
-    if (casting) {
-      this.liveCastFrames++;
-      this.liveCastSum += ms;
-    } else {
-      this.liveIdleSum += ms;
+    // A new ability may be a fresh pooled instance: re-apply the condition.
+    const first = casting ? active[0] : null;
+    if (first !== this.liveLastActive) {
+      this.liveLastActive = first;
+      if (first) this.liveApply(this.liveCond());
+    }
+
+    this.liveTime += delta;
+    this.liveLogTime += delta;
+
+    if (this.liveTime >= LIVE_SKIP_SECONDS) {
+      if (this.liveCount < this.liveWin.length) this.liveWin[this.liveCount++] = ms;
+      this.liveSum += ms;
+      if (ms > SLOW_MS) this.liveSlow++;
+      if (ms > this.liveWorst) this.liveWorst = ms;
+      if (casting) {
+        this.liveCastFrames++;
+        this.liveCastSum += ms;
+      } else {
+        this.liveIdleSum += ms;
+      }
     }
     this.subCount++;
     this.subSum += ms;
     if (ms > this.subWorst) this.subWorst = ms;
-
-    this.liveTime += delta;
-    this.liveLogTime += delta;
 
     if (this.liveLogTime >= LIVE_LOG_SECONDS) {
       const mean = this.subSum / this.subCount;
@@ -1075,8 +1160,9 @@ export class CrystalBench extends createSystem({}) {
       console.log(
         '[live] ' + JSON.stringify({
           w: this.liveWindow + 1,
-          mult: this.liveMult(),
+          cond: this.liveCond().name,
           t: +this.liveTime.toFixed(1),
+          scored: this.liveTime >= LIVE_SKIP_SECONDS,
           fps: +(1000 / mean).toFixed(1),
           ms: +mean.toFixed(1),
           worst: +this.subWorst.toFixed(1),
@@ -1110,12 +1196,11 @@ export class CrystalBench extends createSystem({}) {
       ctx.fillText('DONE', 256, 150);
     } else {
       ctx.font = 'bold 56px sans-serif';
-      ctx.fillText('LIVE ' + (this.liveWindow + 1) + '/' + LIVE_MULTS.length * 2, 256, 62);
-      ctx.font = 'bold 76px sans-serif';
-      ctx.fillText('life x' + this.liveMult(), 256, 150);
+      ctx.fillText('LIVE ' + (this.liveWindow + 1) + '/' + LIVE_CONDITIONS.length * 2, 256, 62);
+      this.fitText(this.liveCond().name, 256, 150, 76);
       ctx.font = '42px sans-serif';
       ctx.fillText(
-        Math.round(1000 / meanMs) + ' fps   ' + Math.round(LIVE_WINDOW_SECONDS - this.liveTime) + ' s left',
+        Math.round(1000 / meanMs) + ' fps   ' + Math.max(0, Math.round(LIVE_WINDOW_SECONDS - this.liveTime)) + ' s left',
         256,
         216,
       );
@@ -1125,46 +1210,52 @@ export class CrystalBench extends createSystem({}) {
 
   private endLiveWindow(): void {
     const n = this.liveCount;
-    this.sorted.set(this.liveWin.subarray(0, Math.min(n, this.sorted.length)));
     const m = Math.min(n, this.sorted.length);
+    this.sorted.set(this.liveWin.subarray(0, m));
     const view = this.sorted.subarray(0, m);
     view.sort();
-    const castFrames = this.liveCastFrames;
-    const idleFrames = n - castFrames;
+    const idleFrames = n - this.liveCastFrames;
     const r = {
-      mult: this.liveMult(),
+      name: this.liveCond().name,
       mean: +(this.liveSum / n).toFixed(2),
       p95: +view[Math.floor(m * 0.95)].toFixed(2),
       slowPct: +((this.liveSlow / n) * 100).toFixed(1),
       worst: +this.liveWorst.toFixed(1),
-      castMean: castFrames ? +(this.liveCastSum / castFrames).toFixed(2) : 0,
+      castMean: this.liveCastFrames ? +(this.liveCastSum / this.liveCastFrames).toFixed(2) : 0,
       idleMean: idleFrames ? +(this.liveIdleSum / idleFrames).toFixed(2) : 0,
     };
     this.liveResults.push(r);
     console.log('[live] WINDOW RESULT ' + JSON.stringify(r));
 
     this.liveWindow++;
-    if (this.liveWindow >= LIVE_MULTS.length * 2) {
+    if (this.liveWindow >= LIVE_CONDITIONS.length * 2) {
       this.liveDone = true;
-      settings.ice.mistLifetime = this.liveLifeBase;
-      const rows = LIVE_MULTS.map((mult) => {
-        const rs = this.liveResults.filter((x) => x.mult === mult);
-        const avg = (k: 'mean' | 'p95' | 'slowPct' | 'castMean' | 'idleMean') =>
-          +(rs.reduce((a, x) => a + x[k], 0) / rs.length).toFixed(2);
+      this.restoreSuppression();
+      this.cast!.clearAll();
+      this.cast!.benchControlled = false;
+      const base = LIVE_CONDITIONS[0].name;
+      const avg = (rs: typeof this.liveResults, k: 'mean' | 'p95' | 'slowPct' | 'castMean' | 'idleMean') =>
+        +(rs.reduce((a, x) => a + x[k], 0) / rs.length).toFixed(2);
+      const rows = LIVE_CONDITIONS.map((c) => {
+        const rs = this.liveResults.filter((x) => x.name === c.name);
         return {
-          mult,
-          mean: avg('mean'),
-          p95: avg('p95'),
-          slowPct: avg('slowPct'),
-          castMean: avg('castMean'),
-          idleMean: avg('idleMean'),
+          name: c.name,
+          mean: avg(rs, 'mean'),
+          p95: avg(rs, 'p95'),
+          slowPct: avg(rs, 'slowPct'),
+          castMean: avg(rs, 'castMean'),
+          idleMean: avg(rs, 'idleMean'),
           worst: Math.max(...rs.map((x) => x.worst)),
           windows: rs.map((x) => x.mean),
         };
       });
+      const baseMean = rows.find((x) => x.name === base)!.mean;
+      for (const row of rows) {
+        Object.assign(row, { vsCurrent: +(row.mean - baseMean).toFixed(2) });
+      }
       (globalThis as { __bench?: unknown }).__bench = rows;
       console.log('[live] RESULTS ' + JSON.stringify(rows));
-      this.setLivePhase('done', 1);
+      this.setLivePhase('done', 'done');
       this.drawLiveBadge(11);
       return;
     }
