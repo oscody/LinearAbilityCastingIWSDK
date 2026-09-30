@@ -107,7 +107,11 @@ drawn. Candidates: per-frame uniform writes the ability performs regardless of v
 
 ---
 
-## Step 2 — Fix the confound 🔨 IMPLEMENTED, NOT YET RUN
+## Step 2 — Fix the confound ✅ RUN (V2, V2A; see below)
+
+> Superseded in practice by Step 3: V2 was invalidated by state leaking between modes
+> (fixed with the settle phase), and the Quest run in V4 showed the hidden-material pair
+> makes little difference (33 vs 38 ms).
 
 Run 1 conflated two axes. `CRYSTALS_HIDDEN` hid the meshes **and** left the ice material
 assigned; `SIMPLE_OPAQUE` drew them **and** swapped the material. So the backwards result —
@@ -173,7 +177,7 @@ If that is what happened, V2 measured the throttle, not the scene. **Before trus
 confirm the managed browser window is foregrounded and visible for the whole run**, and
 treat any mode reporting ~100 ms with a p95 equal to its median as suspect.
 
-## Step 3 — Find the missing ~38 ms 🔨 IMPLEMENTED, NOT YET RUN
+## Step 3 — Find the missing ~38 ms ✅ ANSWERED (V3-A, V4): it is the mist
 
 Crystals are ruled out, so every Step 3 mode runs with them **hidden** and removes one
 subsystem at a time. The reference is `HIDDEN_ICE_MAT` — the same cast, nothing suppressed.
@@ -217,25 +221,101 @@ suppressed.
 
 Run cost: 14 modes × 3 repeats × 7 s ≈ **5 minutes**.
 
-## Step 4 — Re-run on Quest ⬜
+### Results — V3-A (Quest, first run) and V4 (Quest, corrected harness)
 
-Everything above is desktop, one view. Blocked on the retrieval gap in port-plan §12: the
-MCP bridge cannot see the Quest browser's console, and `adb devices` is empty. Needs adb
-over Wi-Fi, or the Phase 6 spatial HUD so the headset can report to itself.
+**V3-A** was the first complete run on the headset. It was too noisy to rank modes: rep 1
+was slow everywhere (shader compile), rep 3 degraded again, and the median hid hitches
+(`CURRENT` rep 3: 11.2 ms median at 15.6 fps). Two things it did show reliably: only
+`NO_PARTICLES` and `NO_ANYTHING` returned to ~90 fps, and `NO_SIM` did **not** help — the
+prediction above was wrong.
 
-## Step 5 — Only then, optimise ⬜
+The harness was then changed before V4:
 
-Do not cut visual features until Steps 2–4 name the cost. Note that D2 still applies:
-no re-tuning of emissive or `global.glow` while the post stack is deferred.
+- Ranked on **mean frame time** and **% frames over 13.9 ms**, not the median.
+- A full **discarded warm-up pass** runs before rep 1.
+- `NO_PARTICLES` split into `NO_MIST`, `NO_SHARDS`, `NO_GLITTER` (each shadows `emit` on
+  one system).
+- A head-locked in-headset badge shows rep, phase (settle/warmup/measure) and mode.
+
+**V4 — mean frame time on Quest 3, 2 views, 1680×1760, median of 3 reps.** Target is
+11.1 ms (90 fps).
+
+| Mode | Mean ms | % slow | Spread ms |
+|---|---|---|---|
+| `NO_CAST` (floor) | 11.1 | 0 | 0 |
+| **`NO_MIST`** | **11.1** | **0** | **0.02** |
+| `NO_PARTICLES` | 11.2 | 0.8 | 0.6 |
+| `NO_ANYTHING` | 11.2 | 0.8 | 0.05 |
+| `NO_GLITTER` | 25.7 | 67 | 1.0 |
+| `NO_SHARDS` | 28.2 | 84 | 9.8 |
+| `NO_SIM` | 21.9 | 50 | 7.0 |
+| `NO_BURSTS` | 23.2 | 50 | 9.4 |
+| `NO_DECALS` | 24.5 | 53 | 11.9 |
+| `HIDDEN_ICE_MAT` (nothing removed) | 33.2 | 87 | 28.0 |
+| `HIDDEN_SIMPLE_MAT` | 37.8 | 100 | 31.8 |
+| `CURRENT` | 37.8 | 100 | 16.4 |
+| `SIMPLE_OPAQUE` / `SIMPLE_TRANSPARENT` | 38.1 / 37.1 | 100 | 14.4 / 12.5 |
+| `STANDARD_OPAQUE` / `ICE_OPAQUE` | 39.3 / 40.1 | 100 | 30.6 / 14.6 |
+| `ICE_SINGLE_SIDE` | 37.1 | 100 | 16.1 |
+
+### Conclusions
+
+1. **`ice.mist` is the cost.** Removing it alone returns the cast to the floor (11.1 ms, 0%
+   slow, 0.02 ms spread). Removing glitter or shards alone helps only partially and never
+   approaches 90 fps.
+2. **Nothing is unaccounted for.** `NO_ANYTHING` equals `NO_CAST`, so `Ability.update()`
+   bookkeeping, the light pool and uniform writes are not a factor.
+3. **The crystals are cheap.** Drawing them adds ~4–5 ms (`HIDDEN_ICE_MAT` 33 vs `CURRENT`
+   38). All five material variants land within 37–40 ms, so the ice shader, blending and
+   double-sided rendering are not the problem.
+4. **`NO_SIM` prediction refuted.** Recomposing the 190 instance matrices is not the main
+   cost.
+5. **Unexplained:** `NO_DECALS`, `NO_BURSTS` and `NO_SIM` each cut ~9–11 ms although mist is
+   still running. Their spreads (7–12 ms) are as large as the effect, so this is probably
+   noise or general load relief. Do not read anything into it.
+
+### Hypothesis, not measured
+
+Mist is the only system of large, soft, overlapping translucent sprites: ~260/s, ~2.8 s
+lifetime, growing to 3.4× size, drawn once per eye. That points at **overdraw / fill rate**.
+This is in tension with Step 1's desktop result, which ruled overdraw out for the
+*crystals*; that finding was about the crystal meshes, not particles, and the desktop camera
+was a different view. Confirm before tuning — see Step 5.
+
+## Step 4 — Re-run on Quest ✅ DONE
+
+The retrieval gap is closed. `adb devices` sees the headset, and the console log is
+captured by hand from the Quest browser. V3-A and V4 are both Quest runs
+(`mode:"xr"`, 1680×1760).
+
+Access from the headset: `adb reverse tcp:8081 tcp:8081`, then open
+`https://localhost:8081/` in the Quest Browser.
+
+## Step 5 — Only then, optimise ⬜ NEXT
+
+The cost is now named, so this step is unblocked. Do it one lever at a time, re-measuring
+each on the Quest, in this order:
+
+1. Confirm it is fill rate: shrink `mistSize` / end size (`uEndSize` 3.4) and see if the
+   time falls with sprite area, not particle count.
+2. Lower `mistRate` (260/s).
+3. Shorten `mistLifetime` (2.8 s).
+4. Fewer, larger puffs.
+
+Note that D2 still applies: no re-tuning of emissive or `global.glow` while the post stack is
+deferred. Add a mist-tuning mode to `CrystalBench` so each change is measured, not guessed.
 
 ---
 
 ## Caveats on every number here
 
-- Desktop, one view, **inside the managed browser with the editor running in the same
-  window**. Relative comparisons only.
+- **Step 1 numbers** are desktop, one view, inside the managed browser with the editor
+  running in the same window. Relative comparisons only.
+- **V3-A and V4 numbers** are Quest 3, two views. They include one constant extra draw call
+  from the in-headset badge in every mode, so relative comparisons hold and absolute `calls`
+  read 1 higher.
 - A field stands continuously for the whole window. Real play is occasional casts, so this
   is closer to worst case.
-- The camera sits close to the field, which maximises screen coverage — that inflates
-  overdraw-bound measurements specifically. Given Step 1 ruled overdraw out, this matters
-  less than it would have.
+- The camera sits close to the field, which maximises screen coverage and so inflates
+  overdraw-bound costs specifically. That matters for the mist hypothesis: re-test at a
+  realistic distance before deciding how much to cut.

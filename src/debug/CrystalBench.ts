@@ -52,12 +52,18 @@ const MEASURE_SECONDS = 4;
 const REPEATS = 3;
 
 /** Fixed cast, identical for every mode. */
+/** A frame this long has missed the 90 Hz budget (11.1 ms) by a visible margin. */
+const SLOW_MS = 13.9;
+
 const CAST_DISTANCE = 6;
 const CAST_DIRECTION = new Vector3(1, 0, 0);
 
 type ModeName =
   | 'NO_CAST'
   | 'NO_PARTICLES'
+  | 'NO_MIST'
+  | 'NO_SHARDS'
+  | 'NO_GLITTER'
   | 'NO_DECALS'
   | 'NO_BURSTS'
   | 'NO_SIM'
@@ -98,7 +104,17 @@ type MaterialKey =
  * `fissures` is deliberately absent: `IceAbility` never spawns one, so the mode
  * the plan sketched would have measured nothing.
  */
-type Suppress = 'particles' | 'decals' | 'bursts' | 'sim';
+type Suppress =
+  | 'particles'
+  | 'mist'
+  | 'shards'
+  | 'glitter'
+  | 'decals'
+  | 'bursts'
+  | 'sim';
+
+/** Particle systems that can be silenced one at a time by shadowing `emit`. */
+const PARTICLE_SYSTEMS = ['mist', 'shards', 'glitter'] as const;
 
 interface ModeSpec {
   /** Are the crystal meshes drawn? */
@@ -179,6 +195,24 @@ const MODE_SPECS: Record<ModeName, ModeSpec> = {
     isolates: 'hidden + no particle emission',
     suppress: ['particles'],
   },
+  NO_MIST: {
+    visible: false,
+    material: null,
+    isolates: 'hidden + no mist emission (ice.mist only)',
+    suppress: ['mist'],
+  },
+  NO_SHARDS: {
+    visible: false,
+    material: null,
+    isolates: 'hidden + no shard emission (ice.shards only)',
+    suppress: ['shards'],
+  },
+  NO_GLITTER: {
+    visible: false,
+    material: null,
+    isolates: 'hidden + no glitter emission (ice.glitter only)',
+    suppress: ['glitter'],
+  },
   NO_DECALS: {
     visible: false,
     material: null,
@@ -213,6 +247,10 @@ interface Result {
   median: number;
   p95: number;
   fps: number;
+  /** Mean frame time -- unlike the median, it does not hide hitches. */
+  mean: number;
+  /** Percent of frames over SLOW_MS. The stutter signal. */
+  slowPct: number;
   calls: number;
   instances: number;
 }
@@ -245,7 +283,8 @@ export class CrystalBench extends createSystem({}) {
   private results: Result[] = [];
 
   private modeIndex = -1;
-  private rep = 0;
+  /** -1 is a discarded warm-up pass: shaders compile, caches fill, results dropped. */
+  private rep = -1;
   private phase: 'idle' | 'settle' | 'warmup' | 'measure' | 'done' = 'idle';
   private phaseTime = 0;
 
@@ -254,8 +293,8 @@ export class CrystalBench extends createSystem({}) {
     this.phase = phase;
     this.phaseTime = 0;
     const mode = MODES[this.modeIndex];
-    const step = this.rep * MODES.length + this.modeIndex + 1;
-    const total = REPEATS * MODES.length;
+    const step = (this.rep + 1) * MODES.length + this.modeIndex + 1;
+    const total = (REPEATS + 1) * MODES.length;
     this.drawBadge(phase, mode, step, total);
     (globalThis as { __benchStatus?: unknown }).__benchStatus = {
       phase,
@@ -267,7 +306,7 @@ export class CrystalBench extends createSystem({}) {
     if (phase !== 'done') {
       console.log(
         '[bench] ## ' + phase.toUpperCase() + ' ' + mode +
-          ' (rep' + (this.rep + 1) + ', ' + step + '/' + total + ')',
+          ' (' + this.repLabel() + ', ' + step + '/' + total + ')',
       );
     }
   }
@@ -327,13 +366,21 @@ export class CrystalBench extends createSystem({}) {
       ctx.fillText('DONE', 256, 150);
     } else {
       ctx.font = 'bold 84px sans-serif';
-      ctx.fillText('REP ' + (this.rep + 1) + '/' + REPEATS, 256, 90);
+      ctx.fillText(
+        this.rep < 0 ? 'WARM-UP' : 'REP ' + (this.rep + 1) + '/' + REPEATS,
+        256,
+        90,
+      );
       ctx.font = 'bold 60px sans-serif';
       ctx.fillText(phase.toUpperCase(), 256, 165);
       ctx.font = '38px sans-serif';
       ctx.fillText(mode + '  ' + step + '/' + total, 256, 225);
     }
     this.badgeTex.needsUpdate = true;
+  }
+
+  private repLabel(): string {
+    return this.rep < 0 ? 'WARM-UP PASS' : 'rep' + (this.rep + 1);
   }
 
   private samples!: Float32Array;
@@ -349,6 +396,7 @@ export class CrystalBench extends createSystem({}) {
   private savedParticleCount = 1;
   private savedEmissionRate = 1;
   private simSuppressed = false;
+  private emitStubbed = false;
   private realRandom?: () => number;
   private seed = 0;
 
@@ -475,6 +523,38 @@ export class CrystalBench extends createSystem({}) {
       });
       this.simSuppressed = false;
     }
+    if (this.emitStubbed) {
+      this.forEachIceInstance((ability) => {
+        for (const key of PARTICLE_SYSTEMS) {
+          const system = (ability as unknown as Record<string, object | undefined>)[key];
+          if (system) delete (system as Record<string, unknown>).emit;
+        }
+      });
+      this.emitStubbed = false;
+    }
+  }
+
+  /**
+   * Own-property no-ops that shadow prototype methods, so `delete` restores them.
+   * Re-run after every cast: the pool may hand back a fresh instance.
+   */
+  private stubInstances(list: Suppress[]): void {
+    const systems = PARTICLE_SYSTEMS.filter((k) => list.includes(k));
+    if (systems.length) {
+      this.forEachIceInstance((ability) => {
+        for (const key of systems) {
+          const system = (ability as unknown as Record<string, object | undefined>)[key];
+          if (system) (system as Record<string, unknown>).emit = () => {};
+        }
+      });
+      this.emitStubbed = true;
+    }
+    if (list.includes('sim')) {
+      this.forEachIceInstance((ability) => {
+        (ability as unknown as Record<string, unknown>)._updateSpikes = () => {};
+      });
+      this.simSuppressed = true;
+    }
   }
 
   private applySuppression(mode: ModeName): void {
@@ -493,15 +573,9 @@ export class CrystalBench extends createSystem({}) {
       } else if (what === 'bursts') {
         this.savedBursts = this.cast!.ctx.bursts;
         this.cast!.ctx.bursts = { spawn: () => {} };
-      } else if (what === 'sim') {
-        // Own-property no-op shadows the prototype method; `delete` restores it.
-        this.forEachIceInstance((ability) => {
-          (ability as unknown as Record<string, unknown>)._updateSpikes =
-            () => {};
-        });
-        this.simSuppressed = true;
       }
     }
+    this.stubInstances(list);
   }
 
   private applyMode(mode: ModeName): void {
@@ -528,11 +602,8 @@ export class CrystalBench extends createSystem({}) {
     this.cast!.cast(this.origin, CAST_DIRECTION, CAST_DISTANCE);
     // The pool may have grown a fresh instance on that cast; re-apply both axes.
     this.applyMode(MODES[this.modeIndex]);
-    if (MODE_SPECS[MODES[this.modeIndex]].suppress?.includes('sim')) {
-      this.forEachIceInstance((ability) => {
-        (ability as unknown as Record<string, unknown>)._updateSpikes = () => {};
-      });
-    }
+    const suppress = MODE_SPECS[MODES[this.modeIndex]].suppress;
+    if (suppress) this.stubInstances(suppress);
   }
 
   private nextMode(): void {
@@ -548,7 +619,7 @@ export class CrystalBench extends createSystem({}) {
     }
     const mode = MODES[this.modeIndex];
     console.log(
-      '[bench] rep' + (this.rep + 1) + ' --> ' + mode +
+      '[bench] ' + this.repLabel() + ' --> ' + mode +
         '  (' + MODE_SPECS[mode].isolates + ')',
     );
 
@@ -628,17 +699,30 @@ export class CrystalBench extends createSystem({}) {
       instances += a.instanceCount;
     }
 
+    let sum = 0;
+    let slow = 0;
+    for (let i = 0; i < n; i++) {
+      sum += view[i];
+      if (view[i] > SLOW_MS) slow++;
+    }
+
     const result: Result = {
       mode: MODES[this.modeIndex],
       rep: this.rep + 1,
+      mean: +(sum / n).toFixed(2),
+      slowPct: +((slow / n) * 100).toFixed(1),
       median: +view[Math.floor(n * 0.5)].toFixed(2),
       p95: +view[Math.floor(n * 0.95)].toFixed(2),
       fps: +(this.frames / this.phaseTime).toFixed(1),
       calls: this.renderer.info.render.calls,
       instances,
     };
-    this.results.push(result);
-    console.log('[bench] ' + JSON.stringify(result));
+    // The warm-up pass (rep -1 -> reported as rep 0) is logged but never scored.
+    if (this.rep >= 0) this.results.push(result);
+    console.log(
+      '[bench] ' + (this.rep < 0 ? '(warm-up, discarded) ' : '') +
+        JSON.stringify(result),
+    );
   }
 
   private finish(): void {
@@ -649,27 +733,33 @@ export class CrystalBench extends createSystem({}) {
     this.restoreRandom();
     if (this.cast) this.cast.benchControlled = false;
 
-    // Median of each mode's per-repeat medians, with the spread kept visible --
-    // a single number here would hide exactly the noise that made run 1 useless.
+    // Ranked on mean frame time and % slow frames, not the median: a mode that
+    // is fast 80% of the time and hitches the rest has a good median and a
+    // terrible experience (V3-A: CURRENT rep 3 was 11.2 ms median at 15.6 fps).
     const mid = (xs: number[]) =>
       xs.slice().sort((a, b) => a - b)[Math.floor(xs.length / 2)];
 
     const rows = MODES.map((mode) => {
-      const ms = this.results.filter((r) => r.mode === mode).map((r) => r.median);
+      const rs = this.results.filter((r) => r.mode === mode);
+      const mean = rs.map((r) => r.mean);
+      const slow = rs.map((r) => r.slowPct);
       return {
         mode,
-        median: +mid(ms).toFixed(2),
-        min: +Math.min(...ms).toFixed(2),
-        max: +Math.max(...ms).toFixed(2),
-        spread: +(Math.max(...ms) - Math.min(...ms)).toFixed(2),
-        reps: ms.length,
+        meanMs: +mid(mean).toFixed(2),
+        slowPct: +mid(slow).toFixed(1),
+        minMs: +Math.min(...mean).toFixed(2),
+        maxMs: +Math.max(...mean).toFixed(2),
+        spreadMs: +(Math.max(...mean) - Math.min(...mean)).toFixed(2),
+        reps: rs.length,
       };
     });
-    const base = rows.find((r) => r.mode === 'CURRENT')?.median ?? 0;
+    const base = rows.find((r) => r.mode === 'CURRENT')?.meanMs ?? 0;
+    const hidden = rows.find((r) => r.mode === 'HIDDEN_ICE_MAT')?.meanMs ?? 0;
     for (const r of rows) {
-      (r as unknown as { vsCurrent: number }).vsCurrent = base
-        ? +(r.median - base).toFixed(2)
-        : 0;
+      Object.assign(r, {
+        vsCurrent: base ? +(r.meanMs - base).toFixed(2) : 0,
+        vsHidden: hidden ? +(r.meanMs - hidden).toFixed(2) : 0,
+      });
     }
 
     (globalThis as { __bench?: unknown }).__bench = rows;
