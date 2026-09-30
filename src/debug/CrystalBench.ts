@@ -8,12 +8,15 @@
  */
 
 import {
+  CanvasTexture,
   createSystem,
   DoubleSide,
   FrontSide,
   Material,
+  Mesh,
   MeshBasicMaterial,
   MeshStandardMaterial,
+  PlaneGeometry,
   Vector3,
 } from '@iwsdk/core';
 import { CastSystem } from '../abilities/CastSystem.js';
@@ -245,6 +248,94 @@ export class CrystalBench extends createSystem({}) {
   private rep = 0;
   private phase: 'idle' | 'settle' | 'warmup' | 'measure' | 'done' = 'idle';
   private phaseTime = 0;
+
+  /** Every phase change is logged so the console shows exactly where each mode's window starts and ends. */
+  private setPhase(phase: 'settle' | 'warmup' | 'measure' | 'done'): void {
+    this.phase = phase;
+    this.phaseTime = 0;
+    const mode = MODES[this.modeIndex];
+    const step = this.rep * MODES.length + this.modeIndex + 1;
+    const total = REPEATS * MODES.length;
+    this.drawBadge(phase, mode, step, total);
+    (globalThis as { __benchStatus?: unknown }).__benchStatus = {
+      phase,
+      mode,
+      rep: this.rep + 1,
+      step,
+      total,
+    };
+    if (phase !== 'done') {
+      console.log(
+        '[bench] ## ' + phase.toUpperCase() + ' ' + mode +
+          ' (rep' + (this.rep + 1) + ', ' + step + '/' + total + ')',
+      );
+    }
+  }
+  /* Head-locked status badge. Redrawn only on a phase change, never per frame.
+   * It adds one constant draw call to every mode, so relative results hold. */
+  private badgeCtx?: CanvasRenderingContext2D;
+  private badgeTex?: CanvasTexture;
+  private badge?: Mesh;
+
+  private static readonly PHASE_COLOR = {
+    settle: '#c2410c',
+    warmup: '#a16207',
+    measure: '#15803d',
+    done: '#1d4ed8',
+  } as const;
+
+  private buildBadge(): void {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 256;
+    this.badgeCtx = canvas.getContext('2d')!;
+    this.badgeTex = new CanvasTexture(canvas);
+    const material = new MeshBasicMaterial({
+      map: this.badgeTex,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      toneMapped: false,
+    });
+    this.badge = new Mesh(new PlaneGeometry(0.2, 0.1), material);
+    this.badge.renderOrder = 9999;
+    this.badge.frustumCulled = false;
+    this.badge.position.set(0, -0.16, -0.6);
+    this.player.head.add(this.badge);
+    this.cleanupFuncs.push(() => {
+      this.badge?.removeFromParent();
+      this.badge?.geometry.dispose();
+      material.dispose();
+      this.badgeTex?.dispose();
+    });
+  }
+
+  private drawBadge(
+    phase: 'settle' | 'warmup' | 'measure' | 'done',
+    mode: string,
+    step: number,
+    total: number,
+  ): void {
+    const ctx = this.badgeCtx;
+    if (!ctx || !this.badgeTex) return;
+    ctx.fillStyle = CrystalBench.PHASE_COLOR[phase];
+    ctx.fillRect(0, 0, 512, 256);
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    if (phase === 'done') {
+      ctx.font = 'bold 120px sans-serif';
+      ctx.fillText('DONE', 256, 150);
+    } else {
+      ctx.font = 'bold 84px sans-serif';
+      ctx.fillText('REP ' + (this.rep + 1) + '/' + REPEATS, 256, 90);
+      ctx.font = 'bold 60px sans-serif';
+      ctx.fillText(phase.toUpperCase(), 256, 165);
+      ctx.font = '38px sans-serif';
+      ctx.fillText(mode + '  ' + step + '/' + total, 256, 225);
+    }
+    this.badgeTex.needsUpdate = true;
+  }
+
   private samples!: Float32Array;
   private sorted!: Float32Array;
   private count = 0;
@@ -273,6 +364,7 @@ export class CrystalBench extends createSystem({}) {
     this.cast.benchControlled = true;
     this.installSeededRandom();
     this.buildMaterials();
+    this.buildBadge();
 
     console.log(
       '[bench] crystal rendering benchmark: ' +
@@ -466,8 +558,7 @@ export class CrystalBench extends createSystem({}) {
     this.cast!.clearAll();
     this.applyMode(mode);
     this.applySuppression(mode);
-    this.phase = 'settle';
-    this.phaseTime = 0;
+    this.setPhase('settle');
     this.count = 0;
     this.frames = 0;
   }
@@ -496,8 +587,7 @@ export class CrystalBench extends createSystem({}) {
       if (this.phaseTime >= SETTLE_SECONDS) {
         this.reportDrain(mode);
         this.fireCast();
-        this.phase = 'warmup';
-        this.phaseTime = 0;
+        this.setPhase('warmup');
       }
       return;
     }
@@ -509,8 +599,7 @@ export class CrystalBench extends createSystem({}) {
 
     if (this.phase === 'warmup') {
       if (this.phaseTime >= WARMUP_SECONDS) {
-        this.phase = 'measure';
-        this.phaseTime = 0;
+        this.setPhase('measure');
       }
       return;
     }
@@ -553,7 +642,7 @@ export class CrystalBench extends createSystem({}) {
   }
 
   private finish(): void {
-    this.phase = 'done';
+    this.setPhase('done');
     this.restoreSuppression();
     this.cast!.clearAll();
     this.applyMode('CURRENT');
