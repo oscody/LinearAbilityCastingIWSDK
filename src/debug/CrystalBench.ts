@@ -51,6 +51,13 @@ const MEASURE_SECONDS = 4;
  */
 const REPEATS = 3;
 
+/**
+ * After the first scored rep's measure window, the field keeps standing for this
+ * long with nothing being sampled, so the fog can be judged by eye. Purple badge.
+ * Skipped for the warm-up pass and later reps (heat) and for NO_CAST (nothing to see).
+ */
+const LOOK_SECONDS = 12;
+
 /** Fixed cast, identical for every mode. */
 /** A frame this long has missed the 90 Hz budget (11.1 ms) by a visible margin. */
 const SLOW_MS = 13.9;
@@ -404,11 +411,11 @@ export class CrystalBench extends createSystem({}) {
   private modeIndex = -1;
   /** -1 is a discarded warm-up pass: shaders compile, caches fill, results dropped. */
   private rep = -1;
-  private phase: 'idle' | 'settle' | 'warmup' | 'measure' | 'done' = 'idle';
+  private phase: 'idle' | 'settle' | 'warmup' | 'measure' | 'look' | 'done' = 'idle';
   private phaseTime = 0;
 
   /** Every phase change is logged so the console shows exactly where each mode's window starts and ends. */
-  private setPhase(phase: 'settle' | 'warmup' | 'measure' | 'done'): void {
+  private setPhase(phase: 'settle' | 'warmup' | 'measure' | 'look' | 'done'): void {
     this.phase = phase;
     this.phaseTime = 0;
     const mode = MODES[this.modeIndex];
@@ -439,6 +446,7 @@ export class CrystalBench extends createSystem({}) {
     settle: '#c2410c',
     warmup: '#a16207',
     measure: '#15803d',
+    look: '#7e22ce',
     done: '#1d4ed8',
   } as const;
 
@@ -469,7 +477,7 @@ export class CrystalBench extends createSystem({}) {
   }
 
   private drawBadge(
-    phase: 'settle' | 'warmup' | 'measure' | 'done',
+    phase: 'settle' | 'warmup' | 'measure' | 'look' | 'done',
     mode: string,
     step: number,
     total: number,
@@ -484,18 +492,48 @@ export class CrystalBench extends createSystem({}) {
       ctx.font = 'bold 120px sans-serif';
       ctx.fillText('DONE', 256, 150);
     } else {
-      ctx.font = 'bold 84px sans-serif';
+      ctx.font = 'bold 60px sans-serif';
       ctx.fillText(
         this.rep < 0 ? 'WARM-UP' : 'REP ' + (this.rep + 1) + '/' + REPEATS,
         256,
-        90,
+        62,
       );
-      ctx.font = 'bold 60px sans-serif';
-      ctx.fillText(phase.toUpperCase(), 256, 165);
-      ctx.font = '38px sans-serif';
-      ctx.fillText(mode + '  ' + step + '/' + total, 256, 225);
+      ctx.font = 'bold 52px sans-serif';
+      ctx.fillText(phase.toUpperCase(), 256, 120);
+      this.fitText(mode + '  ' + step + '/' + total, 256, 172, 38);
+      // The actual setting, so 0.5 / 0.7 / 0.85 can be told apart by eye.
+      this.fitText(this.tuneLabel(MODES[this.modeIndex]), 256, 226, 42);
     }
     this.badgeTex.needsUpdate = true;
+  }
+
+  /** Human-readable setting for the current mode, e.g. `mist lifetime x0.7`. */
+  private tuneLabel(mode: ModeName): string {
+    const parts: string[] = [];
+    const t = MODE_SPECS[mode].mist;
+    if (t) {
+      if (t.rate !== undefined) parts.push('rate x' + +t.rate.toFixed(2));
+      if (t.life !== undefined) parts.push('life x' + +t.life.toFixed(2));
+      if (t.size !== undefined) parts.push('size x' + +t.size.toFixed(2));
+      if (t.endSize !== undefined) parts.push('end x' + +t.endSize.toFixed(2));
+      if (t.burstCount !== undefined) parts.push('burst n x' + +t.burstCount.toFixed(2));
+      if (t.burstSize !== undefined) parts.push('burst size x' + +t.burstSize.toFixed(2));
+      if (t.burstLife !== undefined) parts.push('burst life x' + +t.burstLife.toFixed(2));
+    }
+    if (parts.length) return parts.join(', ');
+    return MODE_SPECS[mode].suppress ? 'removed: ' + MODE_SPECS[mode].suppress.join('+') : 'unchanged';
+  }
+
+  /** Draws centred text, shrinking the font until it fits the 512 px badge. */
+  private fitText(text: string, x: number, y: number, size: number): void {
+    const ctx = this.badgeCtx!;
+    let px = size;
+    ctx.font = 'bold ' + px + 'px sans-serif';
+    while (ctx.measureText(text).width > 490 && px > 18) {
+      px -= 2;
+      ctx.font = 'bold ' + px + 'px sans-serif';
+    }
+    ctx.fillText(text, x, y);
   }
 
   private repLabel(): string {
@@ -884,6 +922,11 @@ export class CrystalBench extends createSystem({}) {
       return;
     }
 
+    if (this.phase === 'look') {
+      if (this.phaseTime >= LOOK_SECONDS) this.nextMode();
+      return;
+    }
+
     if (this.count < this.samples.length) {
       this.samples[this.count++] = delta * 1000;
     }
@@ -891,7 +934,8 @@ export class CrystalBench extends createSystem({}) {
 
     if (this.phaseTime >= MEASURE_SECONDS) {
       this.record();
-      this.nextMode();
+      if (this.rep === 0 && mode !== 'NO_CAST') this.setPhase('look');
+      else this.nextMode();
     }
   }
 

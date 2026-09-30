@@ -350,6 +350,51 @@ plus a `MIST_QUARTER_RATE` re-check, to find the mildest lifetime cut that reach
 The user must judge the look in the headset before `mistLifetime` in `settings.js` is
 changed.
 
+### V7 — lifetime sweep (Quest, slow-state session)
+
+Adds `MIST_LIFE_70` / `MIST_LIFE_85` and a re-check of `MIST_QUARTER_RATE`, plus a 12 s
+purple "LOOK" pause after each mode's first scored measure window (unsampled, so it cannot
+affect the numbers) and a badge line showing the actual setting.
+
+Mean ms, median of 3 reps (target 11.1):
+
+| Mode | Mean ms | % slow |
+|---|---|---|
+| `NO_CAST` / `NO_ANYTHING` | 11.1 / 11.1 | 0 |
+| `MIST_HALF_LIFE` (×0.5) | 36.8 | 100 |
+| `MIST_LIFE_70` (×0.7) | 47.4 | 100 |
+| `MIST_LIFE_85` (×0.85) | 59.3 | 100 |
+| `MIST_QUARTER_RATE` | 65.3 | 100 |
+| `CURRENT` | 74.2 | 100 |
+
+1. **Lifetime is a monotonic dial:** each step down improves things (×0.85 → ×0.7 → ×0.5).
+2. **The V5 rate result was real:** emission rate helps (−9 ms) but far less than lifetime.
+3. **No lifetime setting reached the floor in this session.** `MIST_HALF_LIFE` was 11.15 ms
+   in V6 and 36.8 ms here; `CURRENT` was 20.9 ms in V6 and 74 ms here.
+
+### Validity — the runs so far do NOT establish a fix
+
+- **Absolute level swings between sessions** (V4, V6 fast; V5, V7 slow) by up to ~3.5× for the
+  same config. Only rankings *within* one run are meaningful. Cause unknown: headset heat,
+  or where the player stood/looked (the cast fires from the player position in a fixed
+  direction, so fog screen coverage changes with pose). Neither is logged.
+- **The user still experiences problems in VR**, including after runs that read as fast.
+  So the benchmark has not been validated against felt performance, and the "fast" runs
+  (V4/V6) should not be read as "the game is fine at ×0.5". The benchmark holds one static
+  field with the player standing still; real play differs (repeated casts, head/hand motion,
+  overlapping fields, other systems running).
+- **Not established:** that mist is the *only* cost in real play, or that any lifetime value
+  is a sufficient fix. What is established is a relative ranking inside each run: mist is the
+  dominant subsystem and lifetime is the strongest of the levers tried.
+
+**Next:**
+1. Log head position and gaze direction at each measure window, so a slow session can be
+   explained instead of guessed at.
+2. Judge the look at ×0.5 / ×0.7 / ×0.85 in the headset (not yet recorded).
+3. Measure real play — repeated casts, while moving — not just the static bench. Consider
+   the Quest's own GPU/CPU counters (`mcp__metavr__` tools; adb is now connected) as an
+   independent check on the in-page timings.
+
 ## Step 4 — Re-run on Quest ✅ DONE
 
 The retrieval gap is closed. `adb devices` sees the headset, and the console log is

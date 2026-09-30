@@ -1,0 +1,278 @@
+@iwer-injection-runtime:851 [IWSDK Dev] Configuration: {device: 'metaQuest3', activation: 'localhost', verbose: false, sem: null, ai: null, …}
+@iwsdk_core.js?v=361afaaa:1519                                                  
+▄▄▄▄▄▄  ▄▄      ▄▄   ▄▄▄▄    ▄▄▄▄▄     ▄▄   ▄▄▄ 
+▀▀██▀▀  ██      ██ ▄█▀▀▀▀█   ██▀▀▀██   ██  ██▀  
+  ██    ▀█▄ ██ ▄█▀ ██▄       ██    ██  ██▄██    
+  ██     ██ ██ ██   ▀████▄   ██    ██  █████    
+  ██     ███▀▀███       ▀██  ██    ██  ██  ██▄  
+▄▄██▄▄   ███  ███  █▄▄▄▄▄█▀  ██▄▄▄██   ██   ██▄ 
+▀▀▀▀▀▀   ▀▀▀  ▀▀▀   ▀▀▀▀▀    ▀▀▀▀▀     ▀▀    ▀▀                                                
+===============================================
+Immersive Web SDK v0.5.3
+Three.js r181
+EliCS v3.4.2
+CrystalBench.ts:576 [bench] crystal rendering benchmark: 7 modes x (1.5s warmup + 4s measure)
+CrystalBench.ts:867 [bench] WARM-UP PASS --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:433 [bench] ## SETTLE NO_CAST (WARM-UP PASS, 1/28)
+CrystalBench.ts:890 [bench] settled NO_CAST -> abilities=0 particles=0 calls=10 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP NO_CAST (WARM-UP PASS, 1/28)
+CrystalBench.ts:433 [bench] ## MEASURE NO_CAST (WARM-UP PASS, 1/28)
+index.ts:17 The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+AudioSystem.onXRSessionStart @ chunk-ZEFKGSF7.js?v=361afaaa:27123
+dispatchEvent @ chunk-ER7ZKBRH.js?v=361afaaa:358
+WebXRManager.setSession @ chunk-ER7ZKBRH.js?v=361afaaa:39595
+await in WebXRManager.setSession
+offer @ chunk-ZEFKGSF7.js?v=361afaaa:107920
+await in offer
+manageOfferFlow @ chunk-ZEFKGSF7.js?v=361afaaa:107941
+(anonymous) @ chunk-ZEFKGSF7.js?v=361afaaa:107736
+Promise.then
+initializeWorld @ chunk-ZEFKGSF7.js?v=361afaaa:107727
+await in initializeWorld
+create @ chunk-ZEFKGSF7.js?v=361afaaa:98199
+await in create
+(anonymous) @ index.ts:17
+index.ts:17 WebGL: INVALID_ENUM: texParameter: invalid parameter
+setTextureParameters @ chunk-ER7ZKBRH.js?v=361afaaa:38165
+setupRenderTarget @ chunk-ER7ZKBRH.js?v=361afaaa:38965
+WebGLRenderer.setRenderTarget @ chunk-ER7ZKBRH.js?v=361afaaa:43683
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:39816
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31415
+XRRequestFrame
+start @ chunk-ER7ZKBRH.js?v=361afaaa:31422
+WebXRManager.setSession @ chunk-ER7ZKBRH.js?v=361afaaa:39593
+await in WebXRManager.setSession
+offer @ chunk-ZEFKGSF7.js?v=361afaaa:107920
+await in offer
+manageOfferFlow @ chunk-ZEFKGSF7.js?v=361afaaa:107941
+(anonymous) @ chunk-ZEFKGSF7.js?v=361afaaa:107736
+Promise.then
+initializeWorld @ chunk-ZEFKGSF7.js?v=361afaaa:107727
+await in initializeWorld
+create @ chunk-ZEFKGSF7.js?v=361afaaa:98199
+await in create
+(anonymous) @ index.ts:17
+CrystalBench.ts:975 [bench] (warm-up, discarded) {"mode":"NO_CAST","rep":0,"mean":13.58,"slowPct":24.4,"median":11.9,"p95":16.2,"fps":73.6,"calls":15,"instances":0}
+CrystalBench.ts:867 [bench] WARM-UP PASS --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:433 [bench] ## SETTLE CURRENT (WARM-UP PASS, 2/28)
+CrystalBench.ts:890 [bench] settled CURRENT -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP CURRENT (WARM-UP PASS, 2/28)
+CrystalBench.ts:433 [bench] ## MEASURE CURRENT (WARM-UP PASS, 2/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":64.5,"msMedian":11.2,"msP95":44.9,"msWorst":111.2,"calls":48,"tris":54108,"points":2600,"programs":31,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":1101,"foveation":1}
+CrystalBench.ts:975 [bench] (warm-up, discarded) {"mode":"CURRENT","rep":0,"mean":83.11,"slowPct":100,"median":81.5,"p95":99.1,"fps":12,"calls":46,"instances":190}
+CrystalBench.ts:867 [bench] WARM-UP PASS --> MIST_HALF_LIFE  (CURRENT with mist lifetime x0.5 (half the live sprites))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_HALF_LIFE (WARM-UP PASS, 3/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19.4,"msMedian":74.2,"msP95":99.1,"msWorst":99.9,"calls":16,"tris":26984,"points":2600,"programs":31,"geometries":37,"textures":12,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:890 [bench] settled MIST_HALF_LIFE -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_HALF_LIFE (WARM-UP PASS, 3/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_HALF_LIFE (WARM-UP PASS, 3/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":29.1,"msMedian":38.7,"msP95":99.8,"msWorst":100.5,"calls":48,"tris":53636,"points":2600,"programs":31,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":241,"foveation":1}
+CrystalBench.ts:975 [bench] (warm-up, discarded) {"mode":"MIST_HALF_LIFE","rep":0,"mean":45.48,"slowPct":100,"median":40.3,"p95":87.5,"fps":22,"calls":42,"instances":190}
+CrystalBench.ts:867 [bench] WARM-UP PASS --> MIST_LIFE_70  (CURRENT with mist lifetime x0.7 (lifetime sweep))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_LIFE_70 (WARM-UP PASS, 4/28)
+CrystalBench.ts:890 [bench] settled MIST_LIFE_70 -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_LIFE_70 (WARM-UP PASS, 4/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_LIFE_70 (WARM-UP PASS, 4/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":32.4,"msMedian":11.7,"msP95":100,"msWorst":100.3,"calls":45,"tris":53630,"points":2600,"programs":31,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":499,"foveation":1}
+CrystalBench.ts:975 [bench] (warm-up, discarded) {"mode":"MIST_LIFE_70","rep":0,"mean":78.45,"slowPct":100,"median":99.7,"p95":100.3,"fps":12.7,"calls":44,"instances":190}
+CrystalBench.ts:867 [bench] WARM-UP PASS --> MIST_LIFE_85  (CURRENT with mist lifetime x0.85 (lifetime sweep))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_LIFE_85 (WARM-UP PASS, 5/28)
+CrystalBench.ts:890 [bench] settled MIST_LIFE_85 -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_LIFE_85 (WARM-UP PASS, 5/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":33.9,"msMedian":11.6,"msP95":100,"msWorst":100.5,"calls":47,"tris":49810,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1173,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE MIST_LIFE_85 (WARM-UP PASS, 5/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10.4,"msMedian":99.9,"msP95":100.3,"msWorst":100.6,"calls":45,"tris":49308,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":212,"foveation":1}
+CrystalBench.ts:975 [bench] (warm-up, discarded) {"mode":"MIST_LIFE_85","rep":0,"mean":97.92,"slowPct":100,"median":100,"p95":100.3,"fps":10.2,"calls":45,"instances":190}
+CrystalBench.ts:867 [bench] WARM-UP PASS --> MIST_QUARTER_RATE  (CURRENT with mist emission rate x0.25 (quarter the sprites))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_QUARTER_RATE (WARM-UP PASS, 6/28)
+CrystalBench.ts:890 [bench] settled MIST_QUARTER_RATE -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_QUARTER_RATE (WARM-UP PASS, 6/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_QUARTER_RATE (WARM-UP PASS, 6/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":31,"msMedian":11.6,"msP95":99.9,"msWorst":100.3,"calls":45,"tris":53630,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":436,"foveation":1}
+CrystalBench.ts:975 [bench] (warm-up, discarded) {"mode":"MIST_QUARTER_RATE","rep":0,"mean":77.39,"slowPct":100,"median":75.7,"p95":100,"fps":12.9,"calls":45,"instances":190}
+CrystalBench.ts:867 [bench] WARM-UP PASS --> NO_ANYTHING  (hidden + all of the above -> what remains is unaccounted)
+CrystalBench.ts:433 [bench] ## SETTLE NO_ANYTHING (WARM-UP PASS, 7/28)
+CrystalBench.ts:890 [bench] settled NO_ANYTHING -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP NO_ANYTHING (WARM-UP PASS, 7/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":53.3,"msMedian":11.2,"msP95":71.1,"msWorst":97.5,"calls":16,"tris":26984,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE NO_ANYTHING (WARM-UP PASS, 7/28)
+CrystalBench.ts:975 [bench] (warm-up, discarded) {"mode":"NO_ANYTHING","rep":0,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.7,"fps":90,"calls":15,"instances":190}
+CrystalBench.ts:867 [bench] rep1 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:433 [bench] ## SETTLE NO_CAST (rep1, 8/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.7,"msWorst":12.6,"calls":15,"tris":22660,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:890 [bench] settled NO_CAST -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP NO_CAST (rep1, 8/28)
+CrystalBench.ts:433 [bench] ## MEASURE NO_CAST (rep1, 8/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.9,"msWorst":12.5,"calls":15,"tris":22660,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"NO_CAST","rep":1,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.9,"fps":90,"calls":15,"instances":0}
+CrystalBench.ts:867 [bench] rep1 --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:433 [bench] ## SETTLE CURRENT (rep1, 9/28)
+CrystalBench.ts:890 [bench] settled CURRENT -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP CURRENT (rep1, 9/28)
+CrystalBench.ts:433 [bench] ## MEASURE CURRENT (rep1, 9/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":56.9,"msMedian":11.1,"msP95":62.7,"msWorst":240.9,"calls":43,"tris":49304,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":707,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"CURRENT","rep":1,"mean":80.22,"slowPct":100,"median":78.8,"p95":100.3,"fps":12.5,"calls":37,"instances":190}
+CrystalBench.ts:433 [bench] ## LOOK CURRENT (rep1, 9/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.3,"msMedian":77.3,"msP95":100.1,"msWorst":101.9,"calls":49,"tris":49316,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1029,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.8,"msMedian":69.8,"msP95":100.1,"msWorst":185.4,"calls":75,"tris":49368,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1283,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13,"msMedian":79,"msP95":99,"msWorst":162.8,"calls":84,"tris":49884,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1343,"foveation":1}
+CrystalBench.ts:867 [bench] rep1 --> MIST_HALF_LIFE  (CURRENT with mist lifetime x0.5 (half the live sprites))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_HALF_LIFE (rep1, 10/28)
+CrystalBench.ts:890 [bench] settled MIST_HALF_LIFE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_HALF_LIFE (rep1, 10/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_HALF_LIFE (rep1, 10/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":40.3,"msMedian":11.4,"msP95":86.6,"msWorst":100.5,"calls":44,"tris":49306,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":284,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_HALF_LIFE","rep":1,"mean":36.55,"slowPct":100,"median":32.8,"p95":63.4,"fps":27.4,"calls":38,"instances":190}
+CrystalBench.ts:433 [bench] ## LOOK MIST_HALF_LIFE (rep1, 10/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":20.4,"msMedian":39.9,"msP95":99.8,"msWorst":100.4,"calls":47,"tris":49312,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":325,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19.1,"msMedian":41.5,"msP95":100,"msWorst":100.5,"calls":50,"tris":49318,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":498,"foveation":1}
+CrystalBench.ts:867 [bench] rep1 --> MIST_LIFE_70  (CURRENT with mist lifetime x0.7 (lifetime sweep))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_LIFE_70 (rep1, 11/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":28.7,"msMedian":31.9,"msP95":97.3,"msWorst":100.6,"calls":15,"tris":22660,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:890 [bench] settled MIST_LIFE_70 -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_LIFE_70 (rep1, 11/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_LIFE_70 (rep1, 11/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":28.4,"msMedian":14.2,"msP95":99.5,"msWorst":241.8,"calls":44,"tris":49306,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":261,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_LIFE_70","rep":1,"mean":55.09,"slowPct":100,"median":50.1,"p95":100,"fps":18.2,"calls":38,"instances":190}
+CrystalBench.ts:433 [bench] ## LOOK MIST_LIFE_70 (rep1, 11/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15.6,"msMedian":57.6,"msP95":100.1,"msWorst":100.2,"calls":49,"tris":49316,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":287,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":16.7,"msMedian":56.6,"msP95":100,"msWorst":100.1,"calls":49,"tris":49316,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":358,"foveation":1}
+CrystalBench.ts:867 [bench] rep1 --> MIST_LIFE_85  (CURRENT with mist lifetime x0.85 (lifetime sweep))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_LIFE_85 (rep1, 12/28)
+CrystalBench.ts:890 [bench] settled MIST_LIFE_85 -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_LIFE_85 (rep1, 12/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":40.9,"msMedian":11.6,"msP95":73.9,"msWorst":98.8,"calls":42,"tris":53936,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":441,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE MIST_LIFE_85 (rep1, 12/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15.5,"msMedian":54.5,"msP95":100.2,"msWorst":247,"calls":44,"tris":49306,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":228,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_LIFE_85","rep":1,"mean":67.03,"slowPct":100,"median":54.1,"p95":100.2,"fps":14.9,"calls":44,"instances":190}
+CrystalBench.ts:433 [bench] ## LOOK MIST_LIFE_85 (rep1, 12/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.4,"msMedian":65.9,"msP95":100.2,"msWorst":135.9,"calls":44,"tris":49306,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":272,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.5,"msMedian":65.2,"msP95":99.9,"msWorst":100,"calls":49,"tris":49316,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":296,"foveation":1}
+CrystalBench.ts:867 [bench] rep1 --> MIST_QUARTER_RATE  (CURRENT with mist emission rate x0.25 (quarter the sprites))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_QUARTER_RATE (rep1, 13/28)
+CrystalBench.ts:890 [bench] settled MIST_QUARTER_RATE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_QUARTER_RATE (rep1, 13/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":37.7,"msMedian":11.5,"msP95":84.7,"msWorst":131.2,"calls":45,"tris":49806,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":1129,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE MIST_QUARTER_RATE (rep1, 13/28)
+CrystalBench.ts:975 [bench] {"mode":"MIST_QUARTER_RATE","rep":1,"mean":74.5,"slowPct":100,"median":75.9,"p95":100.1,"fps":13.4,"calls":44,"instances":190}
+CrystalBench.ts:433 [bench] ## LOOK MIST_QUARTER_RATE (rep1, 13/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.7,"msMedian":73.4,"msP95":99.9,"msWorst":126.9,"calls":71,"tris":49858,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":1233,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":16.1,"msMedian":64.1,"msP95":82.5,"msWorst":103.4,"calls":61,"tris":49340,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":354,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15.2,"msMedian":63.9,"msP95":90.1,"msWorst":100.6,"calls":46,"tris":49310,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":257,"foveation":1}
+CrystalBench.ts:867 [bench] rep1 --> NO_ANYTHING  (hidden + all of the above -> what remains is unaccounted)
+CrystalBench.ts:433 [bench] ## SETTLE NO_ANYTHING (rep1, 14/28)
+CrystalBench.ts:890 [bench] settled NO_ANYTHING -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP NO_ANYTHING (rep1, 14/28)
+CrystalBench.ts:433 [bench] ## MEASURE NO_ANYTHING (rep1, 14/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":69.5,"msMedian":11.2,"msP95":42.9,"msWorst":124.9,"calls":15,"tris":22660,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"NO_ANYTHING","rep":1,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.7,"fps":90,"calls":15,"instances":190}
+CrystalBench.ts:433 [bench] ## LOOK NO_ANYTHING (rep1, 14/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.7,"msWorst":12.3,"calls":18,"tris":27300,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":0,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":89.4,"msMedian":11.1,"msP95":11.9,"msWorst":48.5,"calls":15,"tris":22660,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":0,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.8,"msWorst":12.5,"calls":20,"tris":27776,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:867 [bench] rep2 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:433 [bench] ## SETTLE NO_CAST (rep2, 15/28)
+CrystalBench.ts:890 [bench] settled NO_CAST -> abilities=0 particles=0 calls=20 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP NO_CAST (rep2, 15/28)
+CrystalBench.ts:433 [bench] ## MEASURE NO_CAST (rep2, 15/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":89.8,"msMedian":11.1,"msP95":11.7,"msWorst":22.5,"calls":20,"tris":27776,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"NO_CAST","rep":2,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.8,"fps":90,"calls":18,"instances":0}
+CrystalBench.ts:867 [bench] rep2 --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:433 [bench] ## SETTLE CURRENT (rep2, 16/28)
+CrystalBench.ts:890 [bench] settled CURRENT -> abilities=0 particles=0 calls=20 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP CURRENT (rep2, 16/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":73.9,"msMedian":11.1,"msP95":28.9,"msWorst":94.2,"calls":48,"tris":54420,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":1089,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE CURRENT (rep2, 16/28)
+CrystalBench.ts:975 [bench] {"mode":"CURRENT","rep":2,"mean":74.16,"slowPct":100,"median":76.1,"p95":100.1,"fps":13.5,"calls":48,"instances":190}
+CrystalBench.ts:867 [bench] rep2 --> MIST_HALF_LIFE  (CURRENT with mist lifetime x0.5 (half the live sprites))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_HALF_LIFE (rep2, 17/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23,"msMedian":46.4,"msP95":100,"msWorst":100.4,"calls":17,"tris":23136,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:890 [bench] settled MIST_HALF_LIFE -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_HALF_LIFE (rep2, 17/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_HALF_LIFE (rep2, 17/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":34.4,"msMedian":29.5,"msP95":73.9,"msWorst":99.9,"calls":47,"tris":49784,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":238,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_HALF_LIFE","rep":2,"mean":36.79,"slowPct":100,"median":32.9,"p95":63.1,"fps":27.2,"calls":41,"instances":190}
+CrystalBench.ts:867 [bench] rep2 --> MIST_LIFE_70  (CURRENT with mist lifetime x0.7 (lifetime sweep))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_LIFE_70 (rep2, 18/28)
+CrystalBench.ts:890 [bench] settled MIST_LIFE_70 -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_LIFE_70 (rep2, 18/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_LIFE_70 (rep2, 18/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":35.7,"msMedian":11.5,"msP95":100.1,"msWorst":193.4,"calls":46,"tris":49782,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":568,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_LIFE_70","rep":2,"mean":47.43,"slowPct":100,"median":39.9,"p95":100.1,"fps":21.1,"calls":43,"instances":190}
+CrystalBench.ts:867 [bench] rep2 --> MIST_LIFE_85  (CURRENT with mist lifetime x0.85 (lifetime sweep))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_LIFE_85 (rep2, 19/28)
+CrystalBench.ts:890 [bench] settled MIST_LIFE_85 -> abilities=0 particles=0 calls=20 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_LIFE_85 (rep2, 19/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":41.9,"msMedian":12,"msP95":55.3,"msWorst":92.4,"calls":43,"tris":54410,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":376,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE MIST_LIFE_85 (rep2, 19/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.2,"msMedian":51.9,"msP95":100,"msWorst":100.3,"calls":49,"tris":54422,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":224,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_LIFE_85","rep":2,"mean":59.29,"slowPct":100,"median":54.6,"p95":100,"fps":16.9,"calls":43,"instances":190}
+CrystalBench.ts:867 [bench] rep2 --> MIST_QUARTER_RATE  (CURRENT with mist emission rate x0.25 (quarter the sprites))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_QUARTER_RATE (rep2, 20/28)
+CrystalBench.ts:890 [bench] settled MIST_QUARTER_RATE -> abilities=0 particles=0 calls=20 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_QUARTER_RATE (rep2, 20/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_QUARTER_RATE (rep2, 20/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":38.3,"msMedian":11.6,"msP95":74,"msWorst":97.2,"calls":48,"tris":54420,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":471,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_QUARTER_RATE","rep":2,"mean":65.26,"slowPct":100,"median":65.3,"p95":88.8,"fps":15.3,"calls":48,"instances":190}
+CrystalBench.ts:867 [bench] rep2 --> NO_ANYTHING  (hidden + all of the above -> what remains is unaccounted)
+CrystalBench.ts:433 [bench] ## SETTLE NO_ANYTHING (rep2, 21/28)
+CrystalBench.ts:890 [bench] settled NO_ANYTHING -> abilities=0 particles=0 calls=20 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP NO_ANYTHING (rep2, 21/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":49.6,"msMedian":11.3,"msP95":65.4,"msWorst":98.7,"calls":20,"tris":27776,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE NO_ANYTHING (rep2, 21/28)
+CrystalBench.ts:975 [bench] {"mode":"NO_ANYTHING","rep":2,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.6,"fps":90,"calls":20,"instances":190}
+CrystalBench.ts:867 [bench] rep3 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:433 [bench] ## SETTLE NO_CAST (rep3, 22/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.6,"msWorst":12.5,"calls":20,"tris":27776,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:890 [bench] settled NO_CAST -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP NO_CAST (rep3, 22/28)
+CrystalBench.ts:433 [bench] ## MEASURE NO_CAST (rep3, 22/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.8,"msWorst":12.3,"calls":17,"tris":23136,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"NO_CAST","rep":3,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.8,"fps":90,"calls":18,"instances":0}
+CrystalBench.ts:867 [bench] rep3 --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:433 [bench] ## SETTLE CURRENT (rep3, 23/28)
+CrystalBench.ts:890 [bench] settled CURRENT -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP CURRENT (rep3, 23/28)
+CrystalBench.ts:433 [bench] ## MEASURE CURRENT (rep3, 23/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":60.3,"msMedian":11.2,"msP95":63.6,"msWorst":100,"calls":48,"tris":49796,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":811,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"CURRENT","rep":3,"mean":74.16,"slowPct":100,"median":75.7,"p95":100.1,"fps":13.5,"calls":47,"instances":190}
+CrystalBench.ts:867 [bench] rep3 --> MIST_HALF_LIFE  (CURRENT with mist lifetime x0.5 (half the live sprites))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_HALF_LIFE (rep3, 24/28)
+CrystalBench.ts:890 [bench] settled MIST_HALF_LIFE -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_HALF_LIFE (rep3, 24/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":34,"msMedian":11.3,"msP95":99.9,"msWorst":172.5,"calls":33,"tris":49756,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":160,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE MIST_HALF_LIFE (rep3, 24/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":25.1,"msMedian":33.8,"msP95":77.3,"msWorst":100.1,"calls":49,"tris":54422,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":199,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_HALF_LIFE","rep":3,"mean":36.91,"slowPct":100,"median":33.6,"p95":64.7,"fps":27.1,"calls":43,"instances":190}
+CrystalBench.ts:867 [bench] rep3 --> MIST_LIFE_70  (CURRENT with mist lifetime x0.7 (lifetime sweep))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_LIFE_70 (rep3, 25/28)
+CrystalBench.ts:890 [bench] settled MIST_LIFE_70 -> abilities=0 particles=0 calls=20 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_LIFE_70 (rep3, 25/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_LIFE_70 (rep3, 25/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":34.8,"msMedian":11.3,"msP95":100.2,"msWorst":111.8,"calls":50,"tris":54424,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":322,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_LIFE_70","rep":3,"mean":46.14,"slowPct":100,"median":37.4,"p95":100.2,"fps":21.7,"calls":41,"instances":190}
+CrystalBench.ts:867 [bench] rep3 --> MIST_LIFE_85  (CURRENT with mist lifetime x0.85 (lifetime sweep))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_LIFE_85 (rep3, 26/28)
+CrystalBench.ts:890 [bench] settled MIST_LIFE_85 -> abilities=0 particles=0 calls=20 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_LIFE_85 (rep3, 26/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":42.8,"msMedian":11.9,"msP95":60.3,"msWorst":91.6,"calls":50,"tris":54922,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":1193,"foveation":1}
+CrystalBench.ts:433 [bench] ## MEASURE MIST_LIFE_85 (rep3, 26/28)
+CrystalBench.ts:975 [bench] {"mode":"MIST_LIFE_85","rep":3,"mean":55.31,"slowPct":100,"median":44,"p95":93,"fps":18.1,"calls":42,"instances":190}
+CrystalBench.ts:867 [bench] rep3 --> MIST_QUARTER_RATE  (CURRENT with mist emission rate x0.25 (quarter the sprites))
+CrystalBench.ts:433 [bench] ## SETTLE MIST_QUARTER_RATE (rep3, 27/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":21.6,"msMedian":42.5,"msP95":93.3,"msWorst":100.1,"calls":20,"tris":27776,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:890 [bench] settled MIST_QUARTER_RATE -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP MIST_QUARTER_RATE (rep3, 27/28)
+CrystalBench.ts:433 [bench] ## MEASURE MIST_QUARTER_RATE (rep3, 27/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":36.1,"msMedian":11.8,"msP95":66,"msWorst":71.7,"calls":49,"tris":54422,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":354,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"MIST_QUARTER_RATE","rep":3,"mean":56.38,"slowPct":100,"median":55.8,"p95":71.7,"fps":17.7,"calls":43,"instances":190}
+CrystalBench.ts:867 [bench] rep3 --> NO_ANYTHING  (hidden + all of the above -> what remains is unaccounted)
+CrystalBench.ts:433 [bench] ## SETTLE NO_ANYTHING (rep3, 28/28)
+CrystalBench.ts:890 [bench] settled NO_ANYTHING -> abilities=0 particles=0 calls=20 CLEAN
+CrystalBench.ts:433 [bench] ## WARMUP NO_ANYTHING (rep3, 28/28)
+CrystalBench.ts:433 [bench] ## MEASURE NO_ANYTHING (rep3, 28/28)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":61.9,"msMedian":11.3,"msP95":48.9,"msWorst":96.6,"calls":20,"tris":27776,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:975 [bench] {"mode":"NO_ANYTHING","rep":3,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.8,"fps":90,"calls":20,"instances":190}
+CrystalBench.ts:1019 [bench] RESULTS [{"mode":"NO_CAST","meanMs":11.11,"slowPct":0,"minMs":11.11,"maxMs":11.11,"spreadMs":0,"reps":3,"vsCurrent":-63.05,"vsHidden":0},{"mode":"CURRENT","meanMs":74.16,"slowPct":100,"minMs":74.16,"maxMs":80.22,"spreadMs":6.06,"reps":3,"vsCurrent":0,"vsHidden":0},{"mode":"MIST_HALF_LIFE","meanMs":36.79,"slowPct":100,"minMs":36.55,"maxMs":36.91,"spreadMs":0.36,"reps":3,"vsCurrent":-37.37,"vsHidden":0},{"mode":"MIST_LIFE_70","meanMs":47.43,"slowPct":100,"minMs":46.14,"maxMs":55.09,"spreadMs":8.95,"reps":3,"vsCurrent":-26.73,"vsHidden":0},{"mode":"MIST_LIFE_85","meanMs":59.29,"slowPct":100,"minMs":55.31,"maxMs":67.03,"spreadMs":11.72,"reps":3,"vsCurrent":-14.87,"vsHidden":0},{"mode":"MIST_QUARTER_RATE","meanMs":65.26,"slowPct":100,"minMs":56.38,"maxMs":74.5,"spreadMs":18.12,"reps":3,"vsCurrent":-8.9,"vsHidden":0},{"mode":"NO_ANYTHING","meanMs":11.11,"slowPct":0,"minMs":11.11,"maxMs":11.11,"spreadMs":0,"reps":3,"vsCurrent":-63.05,"vsHidden":0}]
+CrystalBench.ts:1020 [bench] done -- results also on window.__bench
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":71.6,"msMedian":11.2,"msP95":29.8,"msWorst":88.5,"calls":47,"tris":49794,"points":2600,"programs":33,"geometries":39,"textures":14,"abilities":1,"instances":190,"particles":1108,"foveation":1}
