@@ -64,6 +64,11 @@ type ModeName =
   | 'NO_MIST'
   | 'NO_SHARDS'
   | 'NO_GLITTER'
+  | 'MIST_QUARTER_RATE'
+  | 'MIST_HALF_LIFE'
+  | 'MIST_HALF_SIZE'
+  | 'MIST_SMALL_END'
+  | 'MIST_LEAN'
   | 'NO_DECALS'
   | 'NO_BURSTS'
   | 'NO_SIM'
@@ -116,7 +121,25 @@ type Suppress =
 /** Particle systems that can be silenced one at a time by shadowing `emit`. */
 const PARTICLE_SYSTEMS = ['mist', 'shards', 'glitter'] as const;
 
+/**
+ * Step 5: multipliers on the mist's own settings, applied on top of CURRENT.
+ * Crystals stay visible, so each result is the real player-facing cost and is
+ * compared against CURRENT, not HIDDEN_ICE_MAT.
+ *
+ * Fill-rate test: `MIST_HALF_SIZE` (quarter the sprite area) vs
+ * `MIST_QUARTER_RATE` (quarter the sprite count) remove the same amount of
+ * fill. If both recover similar time, the cost is overdraw. If only the count
+ * change helps, it is per-particle CPU/upload cost instead.
+ */
+interface MistTune {
+  rate?: number;
+  size?: number;
+  life?: number;
+  endSize?: number;
+}
+
 interface ModeSpec {
+  mist?: MistTune;
   /** Are the crystal meshes drawn? */
   visible: boolean;
   material: MaterialKey | null;
@@ -212,6 +235,36 @@ const MODE_SPECS: Record<ModeName, ModeSpec> = {
     material: null,
     isolates: 'hidden + no glitter emission (ice.glitter only)',
     suppress: ['glitter'],
+  },
+  MIST_QUARTER_RATE: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with mist emission rate x0.25 (quarter the sprites)',
+    mist: { rate: 0.25 },
+  },
+  MIST_HALF_LIFE: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with mist lifetime x0.5 (half the live sprites)',
+    mist: { life: 0.5 },
+  },
+  MIST_HALF_SIZE: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with mist size x0.5 (quarter the sprite area)',
+    mist: { size: 0.5 },
+  },
+  MIST_SMALL_END: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with mist end size x0.5 (stops growing to 3.4x)',
+    mist: { endSize: 0.5 },
+  },
+  MIST_LEAN: {
+    visible: true,
+    material: null,
+    isolates: 'CURRENT with rate x0.5, life x0.7, size x0.7, end size x0.6 combined',
+    mist: { rate: 0.5, life: 0.7, size: 0.7, endSize: 0.6 },
   },
   NO_DECALS: {
     visible: false,
@@ -397,6 +450,8 @@ export class CrystalBench extends createSystem({}) {
   private savedEmissionRate = 1;
   private simSuppressed = false;
   private emitStubbed = false;
+  private mistBase?: { rate: number; size: number; life: number };
+  private endSizeBase?: number;
   private realRandom?: () => number;
   private seed = 0;
 
@@ -523,6 +578,12 @@ export class CrystalBench extends createSystem({}) {
       });
       this.simSuppressed = false;
     }
+    if (this.mistBase) {
+      settings.ice.mistRate = this.mistBase.rate;
+      settings.ice.mistSize = this.mistBase.size;
+      settings.ice.mistLifetime = this.mistBase.life;
+    }
+    if (this.endSizeBase !== undefined) this.setMistEndSize(1);
     if (this.emitStubbed) {
       this.forEachIceInstance((ability) => {
         for (const key of PARTICLE_SYSTEMS) {
@@ -532,6 +593,34 @@ export class CrystalBench extends createSystem({}) {
       });
       this.emitStubbed = false;
     }
+  }
+
+  /** Scales the mist's `uEndSize` from its original value; `1` restores it. */
+  private setMistEndSize(mult: number): void {
+    this.forEachIceInstance((ability) => {
+      const mist = (ability as unknown as {
+        mist?: { uniforms: { uEndSize: { value: number } } };
+      }).mist;
+      if (!mist) return;
+      if (this.endSizeBase === undefined) {
+        this.endSizeBase = mist.uniforms.uEndSize.value;
+      }
+      mist.uniforms.uEndSize.value = this.endSizeBase * mult;
+    });
+  }
+
+  private applyMistTune(mode: ModeName): void {
+    const tune = MODE_SPECS[mode].mist;
+    if (!tune) return;
+    const base = (this.mistBase ??= {
+      rate: settings.ice.mistRate,
+      size: settings.ice.mistSize,
+      life: settings.ice.mistLifetime,
+    });
+    settings.ice.mistRate = base.rate * (tune.rate ?? 1);
+    settings.ice.mistSize = base.size * (tune.size ?? 1);
+    settings.ice.mistLifetime = base.life * (tune.life ?? 1);
+    if (tune.endSize !== undefined) this.setMistEndSize(tune.endSize);
   }
 
   /**
@@ -604,6 +693,9 @@ export class CrystalBench extends createSystem({}) {
     this.applyMode(MODES[this.modeIndex]);
     const suppress = MODE_SPECS[MODES[this.modeIndex]].suppress;
     if (suppress) this.stubInstances(suppress);
+    // A pooled instance may have been rebuilt; the uniform must be re-scaled.
+    const endSize = MODE_SPECS[MODES[this.modeIndex]].mist?.endSize;
+    if (endSize !== undefined) this.setMistEndSize(endSize);
   }
 
   private nextMode(): void {
@@ -629,6 +721,7 @@ export class CrystalBench extends createSystem({}) {
     this.cast!.clearAll();
     this.applyMode(mode);
     this.applySuppression(mode);
+    this.applyMistTune(mode);
     this.setPhase('settle');
     this.count = 0;
     this.frames = 0;

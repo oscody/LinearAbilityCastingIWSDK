@@ -1,0 +1,715 @@
+@iwer-injection-runtime:851 [IWSDK Dev] Configuration: {device: 'metaQuest3', activation: 'localhost', verbose: false, sem: null, ai: null, …}
+@iwsdk_core.js?v=361afaaa:1519                                                  
+▄▄▄▄▄▄  ▄▄      ▄▄   ▄▄▄▄    ▄▄▄▄▄     ▄▄   ▄▄▄ 
+▀▀██▀▀  ██      ██ ▄█▀▀▀▀█   ██▀▀▀██   ██  ██▀  
+  ██    ▀█▄ ██ ▄█▀ ██▄       ██    ██  ██▄██    
+  ██     ██ ██ ██   ▀████▄   ██    ██  █████    
+  ██     ███▀▀███       ▀██  ██    ██  ██  ██▄  
+▄▄██▄▄   ███  ███  █▄▄▄▄▄█▀  ██▄▄▄██   ██   ██▄ 
+▀▀▀▀▀▀   ▀▀▀  ▀▀▀   ▀▀▀▀▀    ▀▀▀▀▀     ▀▀    ▀▀                                                
+===============================================
+Immersive Web SDK v0.5.3
+Three.js r181
+EliCS v3.4.2
+CrystalBench.ts:472 [bench] crystal rendering benchmark: 22 modes x (1.5s warmup + 4s measure)
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:360 [bench] ## SETTLE NO_CAST (WARM-UP PASS, 1/88)
+CrystalBench.ts:736 [bench] settled NO_CAST -> abilities=0 particles=0 calls=10 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_CAST (WARM-UP PASS, 1/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_CAST (WARM-UP PASS, 1/88)
+PerfSystem.ts:127 [perf] {"mode":"browser","views":1,"target":"1308x950","fps":67.8,"msMedian":13.9,"msP95":15.3,"msWorst":150.8,"calls":10,"tris":1544,"points":2600,"programs":12,"geometries":23,"textures":7,"abilities":0,"instances":0,"particles":0,"foveation":null}
+index.ts:17 The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+AudioSystem.onXRSessionStart @ chunk-ZEFKGSF7.js?v=361afaaa:27123
+dispatchEvent @ chunk-ER7ZKBRH.js?v=361afaaa:358
+WebXRManager.setSession @ chunk-ER7ZKBRH.js?v=361afaaa:39595
+await in WebXRManager.setSession
+offer @ chunk-ZEFKGSF7.js?v=361afaaa:107920
+await in offer
+manageOfferFlow @ chunk-ZEFKGSF7.js?v=361afaaa:107941
+(anonymous) @ chunk-ZEFKGSF7.js?v=361afaaa:107736
+Promise.then
+initializeWorld @ chunk-ZEFKGSF7.js?v=361afaaa:107727
+await in initializeWorld
+create @ chunk-ZEFKGSF7.js?v=361afaaa:98199
+await in create
+(anonymous) @ index.ts:17
+chunk-ER7ZKBRH.js?v=361afaaa:265 THREE.WebGLRenderer: Can't change size while VR device is presenting.
+warn @ chunk-ER7ZKBRH.js?v=361afaaa:265
+WebGLRenderer.setSize @ chunk-ER7ZKBRH.js?v=361afaaa:42678
+onWindowResize @ chunk-ZEFKGSF7.js?v=361afaaa:108062
+index.ts:17 WebGL: INVALID_ENUM: texParameter: invalid parameter
+setTextureParameters @ chunk-ER7ZKBRH.js?v=361afaaa:38165
+setupRenderTarget @ chunk-ER7ZKBRH.js?v=361afaaa:38965
+WebGLRenderer.setRenderTarget @ chunk-ER7ZKBRH.js?v=361afaaa:43683
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:39816
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31415
+XRRequestFrame
+start @ chunk-ER7ZKBRH.js?v=361afaaa:31422
+WebXRManager.setSession @ chunk-ER7ZKBRH.js?v=361afaaa:39593
+await in WebXRManager.setSession
+offer @ chunk-ZEFKGSF7.js?v=361afaaa:107920
+await in offer
+manageOfferFlow @ chunk-ZEFKGSF7.js?v=361afaaa:107941
+(anonymous) @ chunk-ZEFKGSF7.js?v=361afaaa:107736
+Promise.then
+initializeWorld @ chunk-ZEFKGSF7.js?v=361afaaa:107727
+await in initializeWorld
+create @ chunk-ZEFKGSF7.js?v=361afaaa:98199
+await in create
+(anonymous) @ index.ts:17
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_CAST","rep":0,"mean":14.52,"slowPct":38.8,"median":13.8,"p95":17.6,"fps":68.9,"calls":16,"instances":0}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> HIDDEN_ICE_MAT  (not drawn, ice material assigned (run 1 CRYSTALS_HIDDEN))
+CrystalBench.ts:360 [bench] ## SETTLE HIDDEN_ICE_MAT (WARM-UP PASS, 2/88)
+CrystalBench.ts:736 [bench] settled HIDDEN_ICE_MAT -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP HIDDEN_ICE_MAT (WARM-UP PASS, 2/88)
+CrystalBench.ts:360 [bench] ## MEASURE HIDDEN_ICE_MAT (WARM-UP PASS, 2/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":42.4,"msMedian":11.3,"msP95":100.2,"msWorst":125.7,"calls":39,"tris":27030,"points":2600,"programs":29,"geometries":35,"textures":13,"abilities":1,"instances":190,"particles":547,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"HIDDEN_ICE_MAT","rep":0,"mean":100.21,"slowPct":100,"median":100.2,"p95":100.6,"fps":10,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> HIDDEN_SIMPLE_MAT  (not drawn, cheap material assigned -> pairs with HIDDEN_ICE_MAT)
+CrystalBench.ts:360 [bench] ## SETTLE HIDDEN_SIMPLE_MAT (WARM-UP PASS, 3/88)
+CrystalBench.ts:736 [bench] settled HIDDEN_SIMPLE_MAT -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP HIDDEN_SIMPLE_MAT (WARM-UP PASS, 3/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100.2,"msP95":100.6,"msWorst":100.8,"calls":49,"tris":28020,"points":2600,"programs":29,"geometries":35,"textures":13,"abilities":1,"instances":190,"particles":1195,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE HIDDEN_SIMPLE_MAT (WARM-UP PASS, 3/88)
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"HIDDEN_SIMPLE_MAT","rep":0,"mean":75.52,"slowPct":100,"median":81.1,"p95":100.4,"fps":13.2,"calls":45,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:360 [bench] ## SETTLE CURRENT (WARM-UP PASS, 4/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.7,"msMedian":88.7,"msP95":100.3,"msWorst":100.5,"calls":16,"tris":26984,"points":2600,"programs":29,"geometries":35,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled CURRENT -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP CURRENT (WARM-UP PASS, 4/88)
+CrystalBench.ts:360 [bench] ## MEASURE CURRENT (WARM-UP PASS, 4/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":37.9,"msMedian":11.4,"msP95":88.9,"msWorst":100.3,"calls":45,"tris":53630,"points":2600,"programs":31,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":417,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"CURRENT","rep":0,"mean":68.33,"slowPct":100,"median":67.7,"p95":95.5,"fps":14.6,"calls":50,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> SIMPLE_OPAQUE  (cheapest possible fragment, no blend, no lighting)
+CrystalBench.ts:360 [bench] ## SETTLE SIMPLE_OPAQUE (WARM-UP PASS, 5/88)
+CrystalBench.ts:736 [bench] settled SIMPLE_OPAQUE -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP SIMPLE_OPAQUE (WARM-UP PASS, 5/88)
+CrystalBench.ts:360 [bench] ## MEASURE SIMPLE_OPAQUE (WARM-UP PASS, 5/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":26.4,"msMedian":32.3,"msP95":72.3,"msWorst":100.3,"calls":43,"tris":40804,"points":2600,"programs":32,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1054,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"SIMPLE_OPAQUE","rep":0,"mean":78.5,"slowPct":100,"median":97.4,"p95":100.3,"fps":12.7,"calls":48,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> SIMPLE_TRANSPARENT  (SIMPLE_OPAQUE + blending -> isolates overdraw)
+CrystalBench.ts:360 [bench] ## SETTLE SIMPLE_TRANSPARENT (WARM-UP PASS, 6/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.3,"msMedian":50.9,"msP95":100.2,"msWorst":100.5,"calls":18,"tris":27460,"points":2600,"programs":32,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled SIMPLE_TRANSPARENT -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP SIMPLE_TRANSPARENT (WARM-UP PASS, 6/88)
+CrystalBench.ts:360 [bench] ## MEASURE SIMPLE_TRANSPARENT (WARM-UP PASS, 6/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.5,"msMedian":48.1,"msP95":100.1,"msWorst":100.3,"calls":45,"tris":40568,"points":2600,"programs":33,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":326,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"SIMPLE_TRANSPARENT","rep":0,"mean":70.59,"slowPct":100,"median":60.9,"p95":100.2,"fps":14.2,"calls":45,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> STANDARD_OPAQUE  (stock PBR, opaque -> isolates normal lighting cost)
+CrystalBench.ts:360 [bench] ## SETTLE STANDARD_OPAQUE (WARM-UP PASS, 7/88)
+CrystalBench.ts:736 [bench] settled STANDARD_OPAQUE -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP STANDARD_OPAQUE (WARM-UP PASS, 7/88)
+CrystalBench.ts:360 [bench] ## MEASURE STANDARD_OPAQUE (WARM-UP PASS, 7/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":42.3,"msMedian":11.4,"msP95":94.4,"msWorst":100.3,"calls":43,"tris":40564,"points":2600,"programs":34,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":624,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"STANDARD_OPAQUE","rep":0,"mean":89.66,"slowPct":100,"median":99.9,"p95":100.3,"fps":11.2,"calls":43,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> ICE_OPAQUE  (full ice shader, opaque -> isolates custom shader cost)
+CrystalBench.ts:360 [bench] ## SETTLE ICE_OPAQUE (WARM-UP PASS, 8/88)
+CrystalBench.ts:736 [bench] settled ICE_OPAQUE -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP ICE_OPAQUE (WARM-UP PASS, 8/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":39.4,"msMedian":11.3,"msP95":100,"msWorst":100.6,"calls":45,"tris":41066,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1161,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE ICE_OPAQUE (WARM-UP PASS, 8/88)
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"ICE_OPAQUE","rep":0,"mean":79.14,"slowPct":100,"median":97.7,"p95":100.3,"fps":12.6,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> ICE_SINGLE_SIDE  (CURRENT but FrontSide -> isolates double-sided fragments)
+CrystalBench.ts:360 [bench] ## SETTLE ICE_SINGLE_SIDE (WARM-UP PASS, 9/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.1,"msMedian":61.9,"msP95":100.2,"msWorst":100.4,"calls":40,"tris":27264,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled ICE_SINGLE_SIDE -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP ICE_SINGLE_SIDE (WARM-UP PASS, 9/88)
+CrystalBench.ts:360 [bench] ## MEASURE ICE_SINGLE_SIDE (WARM-UP PASS, 9/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":32.1,"msMedian":16.3,"msP95":100,"msWorst":100.2,"calls":42,"tris":40330,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":431,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"ICE_SINGLE_SIDE","rep":0,"mean":83.82,"slowPct":100,"median":99.7,"p95":100.2,"fps":11.9,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_PARTICLES  (hidden + no particle emission)
+CrystalBench.ts:360 [bench] ## SETTLE NO_PARTICLES (WARM-UP PASS, 10/88)
+CrystalBench.ts:736 [bench] settled NO_PARTICLES -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_PARTICLES (WARM-UP PASS, 10/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_PARTICLES (WARM-UP PASS, 10/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":36.1,"msMedian":18.6,"msP95":93.3,"msWorst":100.3,"calls":39,"tris":27030,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_PARTICLES","rep":0,"mean":17.46,"slowPct":100,"median":17.1,"p95":21.3,"fps":57.3,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_MIST  (hidden + no mist emission (ice.mist only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_MIST (WARM-UP PASS, 11/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":63.1,"msMedian":16.1,"msP95":21,"msWorst":26.5,"calls":18,"tris":27460,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled NO_MIST -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_MIST (WARM-UP PASS, 11/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_MIST (WARM-UP PASS, 11/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":69.4,"msMedian":14,"msP95":20.8,"msWorst":25.3,"calls":41,"tris":27506,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":237,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_MIST","rep":0,"mean":17.69,"slowPct":89.9,"median":16.6,"p95":23.2,"fps":56.5,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_SHARDS  (hidden + no shard emission (ice.shards only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_SHARDS (WARM-UP PASS, 12/88)
+CrystalBench.ts:736 [bench] settled NO_SHARDS -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_SHARDS (WARM-UP PASS, 12/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_SHARDS (WARM-UP PASS, 12/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":48.7,"msMedian":11.4,"msP95":88.5,"msWorst":100.3,"calls":39,"tris":27030,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":542,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_SHARDS","rep":0,"mean":99.1,"slowPct":100,"median":100,"p95":100.3,"fps":10.1,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_GLITTER  (hidden + no glitter emission (ice.glitter only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_GLITTER (WARM-UP PASS, 13/88)
+CrystalBench.ts:736 [bench] settled NO_GLITTER -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_GLITTER (WARM-UP PASS, 13/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":25.2,"msMedian":11.5,"msP95":100.2,"msWorst":100.4,"calls":41,"tris":27532,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":999,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_GLITTER (WARM-UP PASS, 13/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.5,"msMedian":99.7,"msP95":100.3,"msWorst":100.4,"calls":39,"tris":27030,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":57,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_GLITTER","rep":0,"mean":99.57,"slowPct":100,"median":100,"p95":100.3,"fps":10,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> MIST_QUARTER_RATE  (CURRENT with mist emission rate x0.25 (quarter the sprites))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_QUARTER_RATE (WARM-UP PASS, 14/88)
+CrystalBench.ts:736 [bench] settled MIST_QUARTER_RATE -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_QUARTER_RATE (WARM-UP PASS, 14/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_QUARTER_RATE (WARM-UP PASS, 14/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":31.2,"msMedian":14.3,"msP95":100,"msWorst":100.6,"calls":47,"tris":54106,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":438,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"MIST_QUARTER_RATE","rep":0,"mean":72.33,"slowPct":100,"median":71.7,"p95":99.9,"fps":13.8,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> MIST_HALF_LIFE  (CURRENT with mist lifetime x0.5 (half the live sprites))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_HALF_LIFE (WARM-UP PASS, 15/88)
+CrystalBench.ts:736 [bench] settled MIST_HALF_LIFE -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_HALF_LIFE (WARM-UP PASS, 15/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":30,"msMedian":22.8,"msP95":89,"msWorst":100.1,"calls":45,"tris":53630,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":903,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE MIST_HALF_LIFE (WARM-UP PASS, 15/88)
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"MIST_HALF_LIFE","rep":0,"mean":18.31,"slowPct":87.7,"median":15.3,"p95":40.4,"fps":54.6,"calls":46,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> MIST_HALF_SIZE  (CURRENT with mist size x0.5 (quarter the sprite area))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_HALF_SIZE (WARM-UP PASS, 16/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":57.9,"msMedian":15,"msP95":38.7,"msWorst":83.7,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled MIST_HALF_SIZE -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_HALF_SIZE (WARM-UP PASS, 16/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_HALF_SIZE (WARM-UP PASS, 16/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":41.6,"msMedian":20.8,"msP95":51.2,"msWorst":68.1,"calls":47,"tris":54106,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":349,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"MIST_HALF_SIZE","rep":0,"mean":33.62,"slowPct":100,"median":28.1,"p95":55.1,"fps":29.7,"calls":47,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> MIST_SMALL_END  (CURRENT with mist end size x0.5 (stops growing to 3.4x))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_SMALL_END (WARM-UP PASS, 17/88)
+CrystalBench.ts:736 [bench] settled MIST_SMALL_END -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_SMALL_END (WARM-UP PASS, 17/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_SMALL_END (WARM-UP PASS, 17/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":53.8,"msMedian":11.7,"msP95":38.4,"msWorst":61.4,"calls":47,"tris":54106,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":735,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"MIST_SMALL_END","rep":0,"mean":39.86,"slowPct":100,"median":37.1,"p95":56.1,"fps":25.1,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> MIST_LEAN  (CURRENT with rate x0.5, life x0.7, size x0.7, end size x0.6 combined)
+CrystalBench.ts:360 [bench] ## SETTLE MIST_LEAN (WARM-UP PASS, 18/88)
+CrystalBench.ts:736 [bench] settled MIST_LEAN -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_LEAN (WARM-UP PASS, 18/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":48,"msMedian":11.7,"msP95":47.8,"msWorst":56.1,"calls":48,"tris":54366,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":947,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE MIST_LEAN (WARM-UP PASS, 18/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":40.7,"msMedian":21.3,"msP95":43.1,"msWorst":50.9,"calls":45,"tris":53630,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":191,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"MIST_LEAN","rep":0,"mean":24.23,"slowPct":100,"median":21.2,"p95":41.8,"fps":41.3,"calls":41,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_DECALS  (hidden + no ground decals)
+CrystalBench.ts:360 [bench] ## SETTLE NO_DECALS (WARM-UP PASS, 19/88)
+CrystalBench.ts:736 [bench] settled NO_DECALS -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_DECALS (WARM-UP PASS, 19/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_DECALS (WARM-UP PASS, 19/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":42.9,"msMedian":11.3,"msP95":91.2,"msWorst":100.1,"calls":18,"tris":27460,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":481,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_DECALS","rep":0,"mean":36.44,"slowPct":79.1,"median":22,"p95":97.5,"fps":27.4,"calls":18,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_BURSTS  (hidden + no burst spheres)
+CrystalBench.ts:360 [bench] ## SETTLE NO_BURSTS (WARM-UP PASS, 20/88)
+CrystalBench.ts:736 [bench] settled NO_BURSTS -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_BURSTS (WARM-UP PASS, 20/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":53.4,"msMedian":11.4,"msP95":58.8,"msWorst":96.6,"calls":42,"tris":27508,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1138,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_BURSTS (WARM-UP PASS, 20/88)
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_BURSTS","rep":0,"mean":99.99,"slowPct":100,"median":100,"p95":100.3,"fps":10,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_SIM  (hidden + no _updateSpikes (190 matrices + attribute upload))
+CrystalBench.ts:360 [bench] ## SETTLE NO_SIM (WARM-UP PASS, 21/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10.1,"msMedian":100,"msP95":100.3,"msWorst":100.4,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled NO_SIM -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_SIM (WARM-UP PASS, 21/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_SIM (WARM-UP PASS, 21/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":27.8,"msMedian":11.8,"msP95":100.1,"msWorst":100.7,"calls":39,"tris":27030,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":351,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_SIM","rep":0,"mean":98.17,"slowPct":100,"median":100,"p95":100.3,"fps":10.2,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] WARM-UP PASS --> NO_ANYTHING  (hidden + all of the above -> what remains is unaccounted)
+CrystalBench.ts:360 [bench] ## SETTLE NO_ANYTHING (WARM-UP PASS, 22/88)
+CrystalBench.ts:736 [bench] settled NO_ANYTHING -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_ANYTHING (WARM-UP PASS, 22/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_ANYTHING (WARM-UP PASS, 22/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":68.5,"msMedian":11.1,"msP95":15,"msWorst":100.3,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] (warm-up, discarded) {"mode":"NO_ANYTHING","rep":0,"mean":11.12,"slowPct":0.3,"median":11.1,"p95":12,"fps":90,"calls":16,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:360 [bench] ## SETTLE NO_CAST (rep1, 23/88)
+CrystalBench.ts:736 [bench] settled NO_CAST -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_CAST (rep1, 23/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.9,"msWorst":12.7,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_CAST (rep1, 23/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.9,"msWorst":12.6,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_CAST","rep":1,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.9,"fps":90,"calls":16,"instances":0}
+CrystalBench.ts:713 [bench] rep1 --> HIDDEN_ICE_MAT  (not drawn, ice material assigned (run 1 CRYSTALS_HIDDEN))
+CrystalBench.ts:360 [bench] ## SETTLE HIDDEN_ICE_MAT (rep1, 24/88)
+CrystalBench.ts:736 [bench] settled HIDDEN_ICE_MAT -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP HIDDEN_ICE_MAT (rep1, 24/88)
+CrystalBench.ts:360 [bench] ## MEASURE HIDDEN_ICE_MAT (rep1, 24/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":44.1,"msMedian":11.3,"msP95":100,"msWorst":100.5,"calls":39,"tris":27030,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":488,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"HIDDEN_ICE_MAT","rep":1,"mean":100.13,"slowPct":100,"median":100.2,"p95":100.4,"fps":10,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> HIDDEN_SIMPLE_MAT  (not drawn, cheap material assigned -> pairs with HIDDEN_ICE_MAT)
+CrystalBench.ts:360 [bench] ## SETTLE HIDDEN_SIMPLE_MAT (rep1, 25/88)
+CrystalBench.ts:736 [bench] settled HIDDEN_SIMPLE_MAT -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP HIDDEN_SIMPLE_MAT (rep1, 25/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":24.7,"msMedian":19.5,"msP95":100.3,"msWorst":100.4,"calls":38,"tris":27028,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1105,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE HIDDEN_SIMPLE_MAT (rep1, 25/88)
+CrystalBench.ts:815 [bench] {"mode":"HIDDEN_SIMPLE_MAT","rep":1,"mean":99.99,"slowPct":100,"median":100,"p95":100.4,"fps":10,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:360 [bench] ## SETTLE CURRENT (rep1, 26/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10.4,"msMedian":100,"msP95":100.4,"msWorst":100.5,"calls":18,"tris":27460,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled CURRENT -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP CURRENT (rep1, 26/88)
+CrystalBench.ts:360 [bench] ## MEASURE CURRENT (rep1, 26/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":34,"msMedian":12.3,"msP95":73.3,"msWorst":99.2,"calls":47,"tris":54106,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":344,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"CURRENT","rep":1,"mean":45.77,"slowPct":100,"median":39,"p95":86.1,"fps":21.8,"calls":50,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> SIMPLE_OPAQUE  (cheapest possible fragment, no blend, no lighting)
+CrystalBench.ts:360 [bench] ## SETTLE SIMPLE_OPAQUE (rep1, 27/88)
+CrystalBench.ts:736 [bench] settled SIMPLE_OPAQUE -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP SIMPLE_OPAQUE (rep1, 27/88)
+CrystalBench.ts:360 [bench] ## MEASURE SIMPLE_OPAQUE (rep1, 27/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":41.5,"msMedian":15.8,"msP95":59.1,"msWorst":79.8,"calls":45,"tris":40808,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":804,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"SIMPLE_OPAQUE","rep":1,"mean":58.32,"slowPct":100,"median":56.9,"p95":95.2,"fps":17.1,"calls":42,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> SIMPLE_TRANSPARENT  (SIMPLE_OPAQUE + blending -> isolates overdraw)
+CrystalBench.ts:360 [bench] ## SETTLE SIMPLE_TRANSPARENT (rep1, 28/88)
+CrystalBench.ts:736 [bench] settled SIMPLE_TRANSPARENT -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP SIMPLE_TRANSPARENT (rep1, 28/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":37.9,"msMedian":11.9,"msP95":88.4,"msWorst":99.8,"calls":27,"tris":40772,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":54,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE SIMPLE_TRANSPARENT (rep1, 28/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":18.3,"msMedian":66.5,"msP95":89.3,"msWorst":98.1,"calls":43,"tris":40804,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":298,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"SIMPLE_TRANSPARENT","rep":1,"mean":64.09,"slowPct":100,"median":68,"p95":89.6,"fps":15.6,"calls":45,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> STANDARD_OPAQUE  (stock PBR, opaque -> isolates normal lighting cost)
+CrystalBench.ts:360 [bench] ## SETTLE STANDARD_OPAQUE (rep1, 29/88)
+CrystalBench.ts:736 [bench] settled STANDARD_OPAQUE -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP STANDARD_OPAQUE (rep1, 29/88)
+CrystalBench.ts:360 [bench] ## MEASURE STANDARD_OPAQUE (rep1, 29/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.1,"msMedian":33.1,"msP95":100,"msWorst":100.6,"calls":44,"tris":40806,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":506,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"STANDARD_OPAQUE","rep":1,"mean":89.41,"slowPct":100,"median":99.9,"p95":100.3,"fps":11.2,"calls":46,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> ICE_OPAQUE  (full ice shader, opaque -> isolates custom shader cost)
+CrystalBench.ts:360 [bench] ## SETTLE ICE_OPAQUE (rep1, 30/88)
+CrystalBench.ts:736 [bench] settled ICE_OPAQUE -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP ICE_OPAQUE (rep1, 30/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19,"msMedian":38,"msP95":100.2,"msWorst":100.6,"calls":45,"tris":40834,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1162,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE ICE_OPAQUE (rep1, 30/88)
+CrystalBench.ts:815 [bench] {"mode":"ICE_OPAQUE","rep":1,"mean":74.74,"slowPct":100,"median":77.8,"p95":100.3,"fps":13.4,"calls":43,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> ICE_SINGLE_SIDE  (CURRENT but FrontSide -> isolates double-sided fragments)
+CrystalBench.ts:360 [bench] ## SETTLE ICE_SINGLE_SIDE (rep1, 31/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19,"msMedian":47.4,"msP95":100.1,"msWorst":100.6,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled ICE_SINGLE_SIDE -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP ICE_SINGLE_SIDE (rep1, 31/88)
+CrystalBench.ts:360 [bench] ## MEASURE ICE_SINGLE_SIDE (rep1, 31/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":36.9,"msMedian":11.3,"msP95":99.9,"msWorst":101.1,"calls":42,"tris":40330,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":382,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"ICE_SINGLE_SIDE","rep":1,"mean":85.25,"slowPct":100,"median":99.1,"p95":100.3,"fps":11.7,"calls":42,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_PARTICLES  (hidden + no particle emission)
+CrystalBench.ts:360 [bench] ## SETTLE NO_PARTICLES (rep1, 32/88)
+CrystalBench.ts:736 [bench] settled NO_PARTICLES -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_PARTICLES (rep1, 32/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_PARTICLES (rep1, 32/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":63.3,"msMedian":11.3,"msP95":54.3,"msWorst":100.2,"calls":39,"tris":27030,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_PARTICLES","rep":1,"mean":15.33,"slowPct":73.2,"median":15.4,"p95":18.1,"fps":65.2,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_MIST  (hidden + no mist emission (ice.mist only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_MIST (rep1, 33/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":70.4,"msMedian":14.5,"msP95":18,"msWorst":23.6,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled NO_MIST -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_MIST (rep1, 33/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_MIST (rep1, 33/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":67.6,"msMedian":14.9,"msP95":18.7,"msWorst":20,"calls":39,"tris":27030,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":228,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_MIST","rep":1,"mean":16.74,"slowPct":92.1,"median":16.8,"p95":19.7,"fps":59.7,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_SHARDS  (hidden + no shard emission (ice.shards only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_SHARDS (rep1, 34/88)
+CrystalBench.ts:736 [bench] settled NO_SHARDS -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_SHARDS (rep1, 34/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_SHARDS (rep1, 34/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":48.2,"msMedian":11.4,"msP95":84.8,"msWorst":100.2,"calls":39,"tris":27030,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":481,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_SHARDS","rep":1,"mean":91.31,"slowPct":100,"median":100,"p95":100.2,"fps":11,"calls":42,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_GLITTER  (hidden + no glitter emission (ice.glitter only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_GLITTER (rep1, 35/88)
+CrystalBench.ts:736 [bench] settled NO_GLITTER -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_GLITTER (rep1, 35/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.6,"msMedian":26.3,"msP95":100.1,"msWorst":100.5,"calls":42,"tris":27534,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":958,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_GLITTER (rep1, 35/88)
+CrystalBench.ts:815 [bench] {"mode":"NO_GLITTER","rep":1,"mean":91.25,"slowPct":100,"median":100,"p95":100.3,"fps":11,"calls":43,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> MIST_QUARTER_RATE  (CURRENT with mist emission rate x0.25 (quarter the sprites))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_QUARTER_RATE (rep1, 36/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13,"msMedian":99.7,"msP95":100.2,"msWorst":100.3,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled MIST_QUARTER_RATE -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_QUARTER_RATE (rep1, 36/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_QUARTER_RATE (rep1, 36/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":21.4,"msMedian":36.7,"msP95":94,"msWorst":100.3,"calls":47,"tris":53634,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":382,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_QUARTER_RATE","rep":1,"mean":60.11,"slowPct":100,"median":59.3,"p95":94.9,"fps":16.6,"calls":43,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> MIST_HALF_LIFE  (CURRENT with mist lifetime x0.5 (half the live sprites))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_HALF_LIFE (rep1, 37/88)
+CrystalBench.ts:736 [bench] settled MIST_HALF_LIFE -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_HALF_LIFE (rep1, 37/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_HALF_LIFE (rep1, 37/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":38.5,"msMedian":15.6,"msP95":60.1,"msWorst":99.4,"calls":47,"tris":54106,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":696,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_HALF_LIFE","rep":1,"mean":13.05,"slowPct":12.1,"median":11.2,"p95":30.8,"fps":76.6,"calls":50,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> MIST_HALF_SIZE  (CURRENT with mist size x0.5 (quarter the sprite area))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_HALF_SIZE (rep1, 38/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":75.4,"msMedian":11.2,"msP95":28.7,"msWorst":51.7,"calls":18,"tris":27460,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled MIST_HALF_SIZE -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_HALF_SIZE (rep1, 38/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_HALF_SIZE (rep1, 38/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":47.2,"msMedian":20.8,"msP95":36.2,"msWorst":59.4,"calls":46,"tris":54104,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":300,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_HALF_SIZE","rep":1,"mean":25.85,"slowPct":100,"median":24.8,"p95":38.7,"fps":38.7,"calls":47,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> MIST_SMALL_END  (CURRENT with mist end size x0.5 (stops growing to 3.4x))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_SMALL_END (rep1, 39/88)
+CrystalBench.ts:736 [bench] settled MIST_SMALL_END -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_SMALL_END (rep1, 39/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_SMALL_END (rep1, 39/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":55.5,"msMedian":11.8,"msP95":46.8,"msWorst":52.4,"calls":47,"tris":54106,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":543,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_SMALL_END","rep":1,"mean":27.85,"slowPct":100,"median":23.9,"p95":49.3,"fps":35.9,"calls":48,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> MIST_LEAN  (CURRENT with rate x0.5, life x0.7, size x0.7, end size x0.6 combined)
+CrystalBench.ts:360 [bench] ## SETTLE MIST_LEAN (rep1, 40/88)
+CrystalBench.ts:736 [bench] settled MIST_LEAN -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_LEAN (rep1, 40/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":60.2,"msMedian":13.6,"msP95":37.1,"msWorst":59.9,"calls":48,"tris":54606,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1161,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE MIST_LEAN (rep1, 40/88)
+CrystalBench.ts:815 [bench] {"mode":"MIST_LEAN","rep":1,"mean":14.38,"slowPct":41.9,"median":13.5,"p95":23.5,"fps":69.5,"calls":49,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_DECALS  (hidden + no ground decals)
+CrystalBench.ts:360 [bench] ## SETTLE NO_DECALS (rep1, 41/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":67.1,"msMedian":13.7,"msP95":23.5,"msWorst":34.7,"calls":18,"tris":27460,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled NO_DECALS -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_DECALS (rep1, 41/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_DECALS (rep1, 41/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":34.9,"msMedian":13.4,"msP95":100,"msWorst":101,"calls":17,"tris":27218,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":412,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_DECALS","rep":1,"mean":87.36,"slowPct":100,"median":99.9,"p95":100.4,"fps":11.4,"calls":16,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_BURSTS  (hidden + no burst spheres)
+CrystalBench.ts:360 [bench] ## SETTLE NO_BURSTS (rep1, 42/88)
+CrystalBench.ts:736 [bench] settled NO_BURSTS -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_BURSTS (rep1, 42/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_BURSTS (rep1, 42/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":18.5,"msMedian":35.3,"msP95":100.3,"msWorst":100.4,"calls":40,"tris":27032,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1030,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_BURSTS","rep":1,"mean":100.2,"slowPct":100,"median":100.2,"p95":100.5,"fps":10,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_SIM  (hidden + no _updateSpikes (190 matrices + attribute upload))
+CrystalBench.ts:360 [bench] ## SETTLE NO_SIM (rep1, 43/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100.2,"msP95":100.5,"msWorst":101,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled NO_SIM -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_SIM (rep1, 43/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_SIM (rep1, 43/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100.2,"msP95":100.5,"msWorst":100.5,"calls":45,"tris":27042,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":317,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_SIM","rep":1,"mean":100.19,"slowPct":100,"median":100.2,"p95":100.5,"fps":10,"calls":45,"instances":190}
+CrystalBench.ts:713 [bench] rep1 --> NO_ANYTHING  (hidden + all of the above -> what remains is unaccounted)
+CrystalBench.ts:360 [bench] ## SETTLE NO_ANYTHING (rep1, 44/88)
+CrystalBench.ts:736 [bench] settled NO_ANYTHING -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_ANYTHING (rep1, 44/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_ANYTHING (rep1, 44/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":30.1,"msMedian":11.4,"msP95":100.3,"msWorst":100.7,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_ANYTHING","rep":1,"mean":11.19,"slowPct":0.6,"median":11.1,"p95":11.8,"fps":89.4,"calls":16,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:360 [bench] ## SETTLE NO_CAST (rep2, 45/88)
+CrystalBench.ts:736 [bench] settled NO_CAST -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_CAST (rep2, 45/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.9,"msWorst":12.7,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_CAST (rep2, 45/88)
+CrystalBench.ts:815 [bench] {"mode":"NO_CAST","rep":2,"mean":11.12,"slowPct":0,"median":11.1,"p95":11.7,"fps":90,"calls":16,"instances":0}
+CrystalBench.ts:713 [bench] rep2 --> HIDDEN_ICE_MAT  (not drawn, ice material assigned (run 1 CRYSTALS_HIDDEN))
+CrystalBench.ts:360 [bench] ## SETTLE HIDDEN_ICE_MAT (rep2, 46/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.7,"msWorst":12.5,"calls":16,"tris":26984,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled HIDDEN_ICE_MAT -> abilities=0 particles=0 calls=16 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP HIDDEN_ICE_MAT (rep2, 46/88)
+CrystalBench.ts:360 [bench] ## MEASURE HIDDEN_ICE_MAT (rep2, 46/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":39.2,"msMedian":11.3,"msP95":100,"msWorst":100.8,"calls":35,"tris":18066,"points":2600,"programs":35,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":414,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"HIDDEN_ICE_MAT","rep":2,"mean":99.91,"slowPct":100,"median":100,"p95":100.4,"fps":10,"calls":38,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> HIDDEN_SIMPLE_MAT  (not drawn, cheap material assigned -> pairs with HIDDEN_ICE_MAT)
+CrystalBench.ts:360 [bench] ## SETTLE HIDDEN_SIMPLE_MAT (rep2, 47/88)
+CrystalBench.ts:736 [bench] settled HIDDEN_SIMPLE_MAT -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP HIDDEN_SIMPLE_MAT (rep2, 47/88)
+CrystalBench.ts:360 [bench] ## MEASURE HIDDEN_SIMPLE_MAT (rep2, 47/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.5,"msMedian":22.2,"msP95":100.2,"msWorst":100.4,"calls":40,"tris":23182,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1044,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"HIDDEN_SIMPLE_MAT","rep":2,"mean":100.21,"slowPct":100,"median":100.2,"p95":100.7,"fps":10,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:360 [bench] ## SETTLE CURRENT (rep2, 48/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100.2,"msP95":100.5,"msWorst":100.8,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled CURRENT -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP CURRENT (rep2, 48/88)
+CrystalBench.ts:360 [bench] ## MEASURE CURRENT (rep2, 48/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.7,"msMedian":19.4,"msP95":100.1,"msWorst":100.5,"calls":43,"tris":49304,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":329,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"CURRENT","rep":2,"mean":79.1,"slowPct":100,"median":82.3,"p95":100.4,"fps":12.6,"calls":47,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> SIMPLE_OPAQUE  (cheapest possible fragment, no blend, no lighting)
+CrystalBench.ts:360 [bench] ## SETTLE SIMPLE_OPAQUE (rep2, 49/88)
+CrystalBench.ts:736 [bench] settled SIMPLE_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP SIMPLE_OPAQUE (rep2, 49/88)
+CrystalBench.ts:360 [bench] ## MEASURE SIMPLE_OPAQUE (rep2, 49/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.3,"msMedian":30.2,"msP95":99.8,"msWorst":100.3,"calls":41,"tris":36006,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":599,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"SIMPLE_OPAQUE","rep":2,"mean":80.14,"slowPct":100,"median":99.7,"p95":100.3,"fps":12.5,"calls":41,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> SIMPLE_TRANSPARENT  (SIMPLE_OPAQUE + blending -> isolates overdraw)
+CrystalBench.ts:360 [bench] ## SETTLE SIMPLE_TRANSPARENT (rep2, 50/88)
+CrystalBench.ts:736 [bench] settled SIMPLE_TRANSPARENT -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP SIMPLE_TRANSPARENT (rep2, 50/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":41.9,"msMedian":11.3,"msP95":100,"msWorst":100.3,"calls":42,"tris":36506,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1151,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE SIMPLE_TRANSPARENT (rep2, 50/88)
+CrystalBench.ts:815 [bench] {"mode":"SIMPLE_TRANSPARENT","rep":2,"mean":79.49,"slowPct":100,"median":82.7,"p95":100.3,"fps":12.6,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> STANDARD_OPAQUE  (stock PBR, opaque -> isolates normal lighting cost)
+CrystalBench.ts:360 [bench] ## SETTLE STANDARD_OPAQUE (rep2, 51/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15.5,"msMedian":56.4,"msP95":100.1,"msWorst":100.4,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled STANDARD_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP STANDARD_OPAQUE (rep2, 51/88)
+CrystalBench.ts:360 [bench] ## MEASURE STANDARD_OPAQUE (rep2, 51/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":42.2,"msMedian":11.2,"msP95":100.2,"msWorst":100.6,"calls":41,"tris":36006,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":436,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"STANDARD_OPAQUE","rep":2,"mean":91.37,"slowPct":100,"median":100,"p95":100.5,"fps":10.9,"calls":41,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> ICE_OPAQUE  (full ice shader, opaque -> isolates custom shader cost)
+CrystalBench.ts:360 [bench] ## SETTLE ICE_OPAQUE (rep2, 52/88)
+CrystalBench.ts:736 [bench] settled ICE_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP ICE_OPAQUE (rep2, 52/88)
+CrystalBench.ts:360 [bench] ## MEASURE ICE_OPAQUE (rep2, 52/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":41.7,"msMedian":11.3,"msP95":99.9,"msWorst":100.6,"calls":41,"tris":36006,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1088,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"ICE_OPAQUE","rep":2,"mean":91.99,"slowPct":100,"median":99.9,"p95":100.3,"fps":10.9,"calls":35,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> ICE_SINGLE_SIDE  (CURRENT but FrontSide -> isolates double-sided fragments)
+CrystalBench.ts:360 [bench] ## SETTLE ICE_SINGLE_SIDE (rep2, 53/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":18,"msMedian":51.1,"msP95":100.3,"msWorst":100.5,"calls":12,"tris":18020,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled ICE_SINGLE_SIDE -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP ICE_SINGLE_SIDE (rep2, 53/88)
+CrystalBench.ts:360 [bench] ## MEASURE ICE_SINGLE_SIDE (rep2, 53/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.6,"msMedian":21.4,"msP95":100.1,"msWorst":100.4,"calls":38,"tris":31366,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":324,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"ICE_SINGLE_SIDE","rep":2,"mean":82.59,"slowPct":100,"median":99.4,"p95":100.3,"fps":12.1,"calls":35,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_PARTICLES  (hidden + no particle emission)
+CrystalBench.ts:360 [bench] ## SETTLE NO_PARTICLES (rep2, 54/88)
+CrystalBench.ts:736 [bench] settled NO_PARTICLES -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_PARTICLES (rep2, 54/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_PARTICLES (rep2, 54/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":44.4,"msMedian":19.8,"msP95":54.9,"msWorst":71.4,"calls":36,"tris":18068,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_PARTICLES","rep":2,"mean":22.61,"slowPct":100,"median":22.5,"p95":26.9,"fps":44.2,"calls":36,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_MIST  (hidden + no mist emission (ice.mist only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_MIST (rep2, 55/88)
+CrystalBench.ts:736 [bench] settled NO_MIST -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_MIST (rep2, 55/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":59.5,"msMedian":12.1,"msP95":26.8,"msWorst":30,"calls":37,"tris":18568,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":854,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_MIST (rep2, 55/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":51,"msMedian":20,"msP95":24.4,"msWorst":27.5,"calls":35,"tris":18066,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":171,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_MIST","rep":2,"mean":21.15,"slowPct":100,"median":21.4,"p95":24.5,"fps":47.3,"calls":36,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_SHARDS  (hidden + no shard emission (ice.shards only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_SHARDS (rep2, 56/88)
+CrystalBench.ts:736 [bench] settled NO_SHARDS -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_SHARDS (rep2, 56/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_SHARDS (rep2, 56/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":42.6,"msMedian":11.3,"msP95":100,"msWorst":100.1,"calls":35,"tris":18066,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":447,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_SHARDS","rep":2,"mean":100,"slowPct":100,"median":100,"p95":100.3,"fps":10,"calls":44,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_GLITTER  (hidden + no glitter emission (ice.glitter only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_GLITTER (rep2, 57/88)
+CrystalBench.ts:736 [bench] settled NO_GLITTER -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_GLITTER (rep2, 57/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":22.1,"msMedian":24.3,"msP95":100.1,"msWorst":100.5,"calls":36,"tris":18068,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":951,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_GLITTER (rep2, 57/88)
+CrystalBench.ts:815 [bench] {"mode":"NO_GLITTER","rep":2,"mean":99.95,"slowPct":100,"median":100,"p95":100.3,"fps":10,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> MIST_QUARTER_RATE  (CURRENT with mist emission rate x0.25 (quarter the sprites))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_QUARTER_RATE (rep2, 58/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100,"msP95":100.3,"msWorst":100.5,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled MIST_QUARTER_RATE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_QUARTER_RATE (rep2, 58/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_QUARTER_RATE (rep2, 58/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":32.4,"msMedian":15,"msP95":89.6,"msWorst":100.2,"calls":40,"tris":44664,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":323,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_QUARTER_RATE","rep":2,"mean":64.68,"slowPct":100,"median":61.8,"p95":99.4,"fps":15.5,"calls":34,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> MIST_HALF_LIFE  (CURRENT with mist lifetime x0.5 (half the live sprites))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_HALF_LIFE (rep2, 59/88)
+CrystalBench.ts:736 [bench] settled MIST_HALF_LIFE -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_HALF_LIFE (rep2, 59/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_HALF_LIFE (rep2, 59/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":33.7,"msMedian":20.1,"msP95":78.2,"msWorst":100.5,"calls":43,"tris":49304,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":499,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_HALF_LIFE","rep":2,"mean":16.6,"slowPct":41.3,"median":13.5,"p95":41.4,"fps":60.2,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> MIST_HALF_SIZE  (CURRENT with mist size x0.5 (quarter the sprite area))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_HALF_SIZE (rep2, 60/88)
+CrystalBench.ts:736 [bench] settled MIST_HALF_SIZE -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_HALF_SIZE (rep2, 60/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":75.1,"msMedian":12.8,"msP95":20.2,"msWorst":30.1,"calls":37,"tris":44658,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":470,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE MIST_HALF_SIZE (rep2, 60/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":34,"msMedian":27.2,"msP95":47.3,"msWorst":52.6,"calls":41,"tris":44666,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":261,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_HALF_SIZE","rep":2,"mean":32.69,"slowPct":100,"median":30,"p95":47.7,"fps":30.6,"calls":35,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> MIST_SMALL_END  (CURRENT with mist end size x0.5 (stops growing to 3.4x))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_SMALL_END (rep2, 61/88)
+CrystalBench.ts:736 [bench] settled MIST_SMALL_END -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_SMALL_END (rep2, 61/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_SMALL_END (rep2, 61/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":49.5,"msMedian":11.4,"msP95":52.6,"msWorst":63.8,"calls":41,"tris":44666,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":475,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_SMALL_END","rep":2,"mean":38.72,"slowPct":100,"median":35.3,"p95":57.6,"fps":25.8,"calls":35,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> MIST_LEAN  (CURRENT with rate x0.5, life x0.7, size x0.7, end size x0.6 combined)
+CrystalBench.ts:360 [bench] ## SETTLE MIST_LEAN (rep2, 62/88)
+CrystalBench.ts:736 [bench] settled MIST_LEAN -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_LEAN (rep2, 62/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":55,"msMedian":11.7,"msP95":39.8,"msWorst":54.5,"calls":41,"tris":45164,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1088,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE MIST_LEAN (rep2, 62/88)
+CrystalBench.ts:815 [bench] {"mode":"MIST_LEAN","rep":2,"mean":19.22,"slowPct":92.8,"median":18.4,"p95":28.5,"fps":52,"calls":41,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_DECALS  (hidden + no ground decals)
+CrystalBench.ts:360 [bench] ## SETTLE NO_DECALS (rep2, 63/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":55.8,"msMedian":17.1,"msP95":27.5,"msWorst":30.2,"calls":12,"tris":18020,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled NO_DECALS -> abilities=0 particles=0 calls=12 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_DECALS (rep2, 63/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_DECALS (rep2, 63/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":32.2,"msMedian":11.3,"msP95":100.1,"msWorst":100.5,"calls":18,"tris":27300,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":343,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_DECALS","rep":2,"mean":69.29,"slowPct":100,"median":99.4,"p95":100.4,"fps":14.4,"calls":18,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_BURSTS  (hidden + no burst spheres)
+CrystalBench.ts:360 [bench] ## SETTLE NO_BURSTS (rep2, 64/88)
+CrystalBench.ts:736 [bench] settled NO_BURSTS -> abilities=0 particles=0 calls=18 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_BURSTS (rep2, 64/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_BURSTS (rep2, 64/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.1,"msMedian":32.6,"msP95":100,"msWorst":100.7,"calls":40,"tris":27344,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":834,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_BURSTS","rep":2,"mean":99.99,"slowPct":100,"median":100,"p95":100.4,"fps":10,"calls":37,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_SIM  (hidden + no _updateSpikes (190 matrices + attribute upload))
+CrystalBench.ts:360 [bench] ## SETTLE NO_SIM (rep2, 65/88)
+CrystalBench.ts:736 [bench] settled NO_SIM -> abilities=0 particles=0 calls=14 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_SIM (rep2, 65/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15,"msMedian":99.8,"msP95":100.3,"msWorst":100.4,"calls":14,"tris":22648,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_SIM (rep2, 65/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.9,"msMedian":55.9,"msP95":100.2,"msWorst":115.6,"calls":38,"tris":22706,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":284,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_SIM","rep":2,"mean":77.77,"slowPct":100,"median":76.6,"p95":100.2,"fps":12.9,"calls":38,"instances":190}
+CrystalBench.ts:713 [bench] rep2 --> NO_ANYTHING  (hidden + all of the above -> what remains is unaccounted)
+CrystalBench.ts:360 [bench] ## SETTLE NO_ANYTHING (rep2, 66/88)
+CrystalBench.ts:736 [bench] settled NO_ANYTHING -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_ANYTHING (rep2, 66/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_ANYTHING (rep2, 66/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":71.6,"msMedian":11.4,"msP95":25.4,"msWorst":56.6,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_ANYTHING","rep":2,"mean":11.13,"slowPct":0,"median":11.1,"p95":12,"fps":89.9,"calls":15,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_CAST  (floor: no ability at all, in-session reference)
+CrystalBench.ts:360 [bench] ## SETTLE NO_CAST (rep3, 67/88)
+CrystalBench.ts:736 [bench] settled NO_CAST -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_CAST (rep3, 67/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":12,"msWorst":12.9,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_CAST (rep3, 67/88)
+CrystalBench.ts:815 [bench] {"mode":"NO_CAST","rep":3,"mean":11.11,"slowPct":0,"median":11.1,"p95":12.1,"fps":90,"calls":15,"instances":0}
+CrystalBench.ts:713 [bench] rep3 --> HIDDEN_ICE_MAT  (not drawn, ice material assigned (run 1 CRYSTALS_HIDDEN))
+CrystalBench.ts:360 [bench] ## SETTLE HIDDEN_ICE_MAT (rep3, 68/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":12.1,"msWorst":12.8,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled HIDDEN_ICE_MAT -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP HIDDEN_ICE_MAT (rep3, 68/88)
+CrystalBench.ts:360 [bench] ## MEASURE HIDDEN_ICE_MAT (rep3, 68/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":36.7,"msMedian":11.5,"msP95":100,"msWorst":100.9,"calls":38,"tris":22706,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":380,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"HIDDEN_ICE_MAT","rep":3,"mean":99.99,"slowPct":100,"median":100,"p95":100.5,"fps":10,"calls":38,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> HIDDEN_SIMPLE_MAT  (not drawn, cheap material assigned -> pairs with HIDDEN_ICE_MAT)
+CrystalBench.ts:360 [bench] ## SETTLE HIDDEN_SIMPLE_MAT (rep3, 69/88)
+CrystalBench.ts:736 [bench] settled HIDDEN_SIMPLE_MAT -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP HIDDEN_SIMPLE_MAT (rep3, 69/88)
+CrystalBench.ts:360 [bench] ## MEASURE HIDDEN_SIMPLE_MAT (rep3, 69/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":29.8,"msMedian":15.4,"msP95":100.1,"msWorst":100.5,"calls":36,"tris":18068,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":982,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"HIDDEN_SIMPLE_MAT","rep":3,"mean":99.71,"slowPct":100,"median":100,"p95":100.4,"fps":10,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> CURRENT  (baseline: custom ice shader + transparent + DoubleSide)
+CrystalBench.ts:360 [bench] ## SETTLE CURRENT (rep3, 70/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15,"msMedian":99.8,"msP95":100.4,"msWorst":100.5,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled CURRENT -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP CURRENT (rep3, 70/88)
+CrystalBench.ts:360 [bench] ## MEASURE CURRENT (rep3, 70/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.5,"msMedian":24.1,"msP95":100.1,"msWorst":100.5,"calls":44,"tris":49306,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":303,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"CURRENT","rep":3,"mean":77.68,"slowPct":100,"median":74.3,"p95":100.2,"fps":12.9,"calls":44,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> SIMPLE_OPAQUE  (cheapest possible fragment, no blend, no lighting)
+CrystalBench.ts:360 [bench] ## SETTLE SIMPLE_OPAQUE (rep3, 71/88)
+CrystalBench.ts:736 [bench] settled SIMPLE_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP SIMPLE_OPAQUE (rep3, 71/88)
+CrystalBench.ts:360 [bench] ## MEASURE SIMPLE_OPAQUE (rep3, 71/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":43.1,"msMedian":11.3,"msP95":84,"msWorst":100.4,"calls":41,"tris":36006,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":582,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"SIMPLE_OPAQUE","rep":3,"mean":83.61,"slowPct":100,"median":99.9,"p95":100.4,"fps":12,"calls":38,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> SIMPLE_TRANSPARENT  (SIMPLE_OPAQUE + blending -> isolates overdraw)
+CrystalBench.ts:360 [bench] ## SETTLE SIMPLE_TRANSPARENT (rep3, 72/88)
+CrystalBench.ts:736 [bench] settled SIMPLE_TRANSPARENT -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP SIMPLE_TRANSPARENT (rep3, 72/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":33.2,"msMedian":16.4,"msP95":100.2,"msWorst":100.8,"calls":43,"tris":36508,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1167,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE SIMPLE_TRANSPARENT (rep3, 72/88)
+CrystalBench.ts:815 [bench] {"mode":"SIMPLE_TRANSPARENT","rep":3,"mean":77.52,"slowPct":100,"median":87.5,"p95":100.2,"fps":12.9,"calls":41,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> STANDARD_OPAQUE  (stock PBR, opaque -> isolates normal lighting cost)
+CrystalBench.ts:360 [bench] ## SETTLE STANDARD_OPAQUE (rep3, 73/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15,"msMedian":59.1,"msP95":100.1,"msWorst":100.3,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled STANDARD_OPAQUE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP STANDARD_OPAQUE (rep3, 73/88)
+CrystalBench.ts:360 [bench] ## MEASURE STANDARD_OPAQUE (rep3, 73/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":37.8,"msMedian":11.4,"msP95":99.8,"msWorst":100.3,"calls":38,"tris":31366,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":419,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"STANDARD_OPAQUE","rep":3,"mean":75.49,"slowPct":100,"median":76,"p95":100.1,"fps":13.2,"calls":37,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> ICE_OPAQUE  (full ice shader, opaque -> isolates custom shader cost)
+CrystalBench.ts:360 [bench] ## SETTLE ICE_OPAQUE (rep3, 74/88)
+CrystalBench.ts:736 [bench] settled ICE_OPAQUE -> abilities=0 particles=0 calls=13 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP ICE_OPAQUE (rep3, 74/88)
+CrystalBench.ts:360 [bench] ## MEASURE ICE_OPAQUE (rep3, 74/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":34.5,"msMedian":11.7,"msP95":86,"msWorst":100.3,"calls":45,"tris":40648,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1065,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"ICE_OPAQUE","rep":3,"mean":68.77,"slowPct":100,"median":57.9,"p95":100.3,"fps":14.5,"calls":44,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> ICE_SINGLE_SIDE  (CURRENT but FrontSide -> isolates double-sided fragments)
+CrystalBench.ts:360 [bench] ## SETTLE ICE_SINGLE_SIDE (rep3, 75/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":24.8,"msMedian":35.6,"msP95":100.2,"msWorst":100.4,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled ICE_SINGLE_SIDE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP ICE_SINGLE_SIDE (rep3, 75/88)
+CrystalBench.ts:360 [bench] ## MEASURE ICE_SINGLE_SIDE (rep3, 75/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":22.9,"msMedian":12.2,"msP95":100.2,"msWorst":100.2,"calls":42,"tris":36008,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":357,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"ICE_SINGLE_SIDE","rep":3,"mean":100.01,"slowPct":100,"median":100,"p95":100.2,"fps":10,"calls":42,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_PARTICLES  (hidden + no particle emission)
+CrystalBench.ts:360 [bench] ## SETTLE NO_PARTICLES (rep3, 76/88)
+CrystalBench.ts:736 [bench] settled NO_PARTICLES -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_PARTICLES (rep3, 76/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_PARTICLES (rep3, 76/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":24.2,"msMedian":18.4,"msP95":100.1,"msWorst":100.7,"calls":40,"tris":22710,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_PARTICLES","rep":3,"mean":87.07,"slowPct":100,"median":88.9,"p95":100.1,"fps":11.5,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_MIST  (hidden + no mist emission (ice.mist only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_MIST (rep3, 77/88)
+CrystalBench.ts:736 [bench] settled NO_MIST -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_MIST (rep3, 77/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":32.5,"msMedian":11.5,"msP95":99.6,"msWorst":100.3,"calls":41,"tris":23210,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":852,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_MIST (rep3, 77/88)
+CrystalBench.ts:815 [bench] {"mode":"NO_MIST","rep":3,"mean":91.25,"slowPct":100,"median":91.9,"p95":100.4,"fps":11,"calls":39,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_SHARDS  (hidden + no shard emission (ice.shards only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_SHARDS (rep3, 78/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.8,"msMedian":85.7,"msP95":100.4,"msWorst":100.8,"calls":39,"tris":22708,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled NO_SHARDS -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_SHARDS (rep3, 78/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_SHARDS (rep3, 78/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":31.3,"msMedian":11.5,"msP95":100.1,"msWorst":100.3,"calls":40,"tris":22710,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":439,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_SHARDS","rep":3,"mean":100,"slowPct":100,"median":100,"p95":100.2,"fps":10,"calls":40,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_GLITTER  (hidden + no glitter emission (ice.glitter only))
+CrystalBench.ts:360 [bench] ## SETTLE NO_GLITTER (rep3, 79/88)
+CrystalBench.ts:736 [bench] settled NO_GLITTER -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_GLITTER (rep3, 79/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100,"msP95":100.3,"msWorst":100.6,"calls":44,"tris":22718,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":899,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_GLITTER (rep3, 79/88)
+CrystalBench.ts:815 [bench] {"mode":"NO_GLITTER","rep":3,"mean":100,"slowPct":100,"median":100,"p95":100.3,"fps":10,"calls":44,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> MIST_QUARTER_RATE  (CURRENT with mist emission rate x0.25 (quarter the sprites))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_QUARTER_RATE (rep3, 80/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100,"msP95":100.3,"msWorst":100.3,"calls":15,"tris":22660,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled MIST_QUARTER_RATE -> abilities=0 particles=0 calls=15 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_QUARTER_RATE (rep3, 80/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_QUARTER_RATE (rep3, 80/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.4,"msMedian":99.9,"msP95":100.2,"msWorst":100.5,"calls":49,"tris":45154,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":323,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_QUARTER_RATE","rep":3,"mean":62.67,"slowPct":100,"median":49.5,"p95":100.2,"fps":16,"calls":41,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> MIST_HALF_LIFE  (CURRENT with mist lifetime x0.5 (half the live sprites))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_HALF_LIFE (rep3, 81/88)
+CrystalBench.ts:736 [bench] settled MIST_HALF_LIFE -> abilities=0 particles=0 calls=14 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_HALF_LIFE (rep3, 81/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_HALF_LIFE (rep3, 81/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":33.7,"msMedian":23.1,"msP95":64.6,"msWorst":100.3,"calls":43,"tris":45142,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":482,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_HALF_LIFE","rep":3,"mean":16.83,"slowPct":54.4,"median":14.1,"p95":37.2,"fps":59.4,"calls":48,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> MIST_HALF_SIZE  (CURRENT with mist size x0.5 (quarter the sprite area))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_HALF_SIZE (rep3, 82/88)
+CrystalBench.ts:736 [bench] settled MIST_HALF_SIZE -> abilities=0 particles=0 calls=14 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_HALF_SIZE (rep3, 82/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":66.1,"msMedian":13.8,"msP95":26,"msWorst":37.9,"calls":39,"tris":45134,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":476,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE MIST_HALF_SIZE (rep3, 82/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":40.2,"msMedian":23.5,"msP95":39,"msWorst":51.5,"calls":46,"tris":49782,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":273,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_HALF_SIZE","rep":3,"mean":27.27,"slowPct":100,"median":25.7,"p95":39.5,"fps":36.7,"calls":47,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> MIST_SMALL_END  (CURRENT with mist end size x0.5 (stops growing to 3.4x))
+CrystalBench.ts:360 [bench] ## SETTLE MIST_SMALL_END (rep3, 83/88)
+CrystalBench.ts:736 [bench] settled MIST_SMALL_END -> abilities=0 particles=0 calls=14 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_SMALL_END (rep3, 83/88)
+CrystalBench.ts:360 [bench] ## MEASURE MIST_SMALL_END (rep3, 83/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":47,"msMedian":11.3,"msP95":57.8,"msWorst":75.5,"calls":42,"tris":45140,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":488,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"MIST_SMALL_END","rep":3,"mean":36.48,"slowPct":100,"median":29.1,"p95":59.9,"fps":27.4,"calls":43,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> MIST_LEAN  (CURRENT with rate x0.5, life x0.7, size x0.7, end size x0.6 combined)
+CrystalBench.ts:360 [bench] ## SETTLE MIST_LEAN (rep3, 84/88)
+CrystalBench.ts:736 [bench] settled MIST_LEAN -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP MIST_LEAN (rep3, 84/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":51.5,"msMedian":16.5,"msP95":37.5,"msWorst":48.9,"calls":45,"tris":49770,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1112,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE MIST_LEAN (rep3, 84/88)
+CrystalBench.ts:815 [bench] {"mode":"MIST_LEAN","rep":3,"mean":19.4,"slowPct":99.5,"median":18.7,"p95":28.1,"fps":51.6,"calls":48,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_DECALS  (hidden + no ground decals)
+CrystalBench.ts:360 [bench] ## SETTLE NO_DECALS (rep3, 85/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":55.4,"msMedian":18.2,"msP95":28.5,"msWorst":32.7,"calls":14,"tris":18496,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:736 [bench] settled NO_DECALS -> abilities=0 particles=0 calls=14 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_DECALS (rep3, 85/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_DECALS (rep3, 85/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":33.4,"msMedian":11.8,"msP95":87.4,"msWorst":100,"calls":17,"tris":23136,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":372,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_DECALS","rep":3,"mean":56.63,"slowPct":100,"median":51.5,"p95":96.1,"fps":17.7,"calls":14,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_BURSTS  (hidden + no burst spheres)
+CrystalBench.ts:360 [bench] ## SETTLE NO_BURSTS (rep3, 86/88)
+CrystalBench.ts:736 [bench] settled NO_BURSTS -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_BURSTS (rep3, 86/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_BURSTS (rep3, 86/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":33.9,"msMedian":24.1,"msP95":82.5,"msWorst":100,"calls":41,"tris":23184,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":783,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_BURSTS","rep":3,"mean":83.55,"slowPct":100,"median":99.8,"p95":100.2,"fps":12,"calls":38,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_SIM  (hidden + no _updateSpikes (190 matrices + attribute upload))
+CrystalBench.ts:360 [bench] ## SETTLE NO_SIM (rep3, 87/88)
+CrystalBench.ts:736 [bench] settled NO_SIM -> abilities=0 particles=0 calls=17 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_SIM (rep3, 87/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":34.2,"msMedian":11.8,"msP95":100.1,"msWorst":100.3,"calls":28,"tris":23158,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":60,"foveation":1}
+CrystalBench.ts:360 [bench] ## MEASURE NO_SIM (rep3, 87/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19.4,"msMedian":46.9,"msP95":99.8,"msWorst":100.5,"calls":36,"tris":18540,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":270,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_SIM","rep":3,"mean":70.23,"slowPct":100,"median":68.4,"p95":100.1,"fps":14.2,"calls":36,"instances":190}
+CrystalBench.ts:713 [bench] rep3 --> NO_ANYTHING  (hidden + all of the above -> what remains is unaccounted)
+CrystalBench.ts:360 [bench] ## SETTLE NO_ANYTHING (rep3, 88/88)
+CrystalBench.ts:736 [bench] settled NO_ANYTHING -> abilities=0 particles=0 calls=14 CLEAN
+CrystalBench.ts:360 [bench] ## WARMUP NO_ANYTHING (rep3, 88/88)
+CrystalBench.ts:360 [bench] ## MEASURE NO_ANYTHING (rep3, 88/88)
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":84,"msMedian":11.2,"msP95":12,"msWorst":46.7,"calls":17,"tris":23136,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":0,"foveation":1}
+CrystalBench.ts:815 [bench] {"mode":"NO_ANYTHING","rep":3,"mean":11.11,"slowPct":0,"median":11.1,"p95":11.7,"fps":90,"calls":17,"instances":190}
+CrystalBench.ts:859 [bench] RESULTS [{"mode":"NO_CAST","meanMs":11.11,"slowPct":0,"minMs":11.11,"maxMs":11.12,"spreadMs":0.01,"reps":3,"vsCurrent":-66.57,"vsHidden":-88.88},{"mode":"HIDDEN_ICE_MAT","meanMs":99.99,"slowPct":100,"minMs":99.91,"maxMs":100.13,"spreadMs":0.22,"reps":3,"vsCurrent":22.31,"vsHidden":0},{"mode":"HIDDEN_SIMPLE_MAT","meanMs":99.99,"slowPct":100,"minMs":99.71,"maxMs":100.21,"spreadMs":0.5,"reps":3,"vsCurrent":22.31,"vsHidden":0},{"mode":"CURRENT","meanMs":77.68,"slowPct":100,"minMs":45.77,"maxMs":79.1,"spreadMs":33.33,"reps":3,"vsCurrent":0,"vsHidden":-22.31},{"mode":"SIMPLE_OPAQUE","meanMs":80.14,"slowPct":100,"minMs":58.32,"maxMs":83.61,"spreadMs":25.29,"reps":3,"vsCurrent":2.46,"vsHidden":-19.85},{"mode":"SIMPLE_TRANSPARENT","meanMs":77.52,"slowPct":100,"minMs":64.09,"maxMs":79.49,"spreadMs":15.4,"reps":3,"vsCurrent":-0.16,"vsHidden":-22.47},{"mode":"STANDARD_OPAQUE","meanMs":89.41,"slowPct":100,"minMs":75.49,"maxMs":91.37,"spreadMs":15.88,"reps":3,"vsCurrent":11.73,"vsHidden":-10.58},{"mode":"ICE_OPAQUE","meanMs":74.74,"slowPct":100,"minMs":68.77,"maxMs":91.99,"spreadMs":23.22,"reps":3,"vsCurrent":-2.94,"vsHidden":-25.25},{"mode":"ICE_SINGLE_SIDE","meanMs":85.25,"slowPct":100,"minMs":82.59,"maxMs":100.01,"spreadMs":17.42,"reps":3,"vsCurrent":7.57,"vsHidden":-14.74},{"mode":"NO_PARTICLES","meanMs":22.61,"slowPct":100,"minMs":15.33,"maxMs":87.07,"spreadMs":71.74,"reps":3,"vsCurrent":-55.07,"vsHidden":-77.38},{"mode":"NO_MIST","meanMs":21.15,"slowPct":100,"minMs":16.74,"maxMs":91.25,"spreadMs":74.51,"reps":3,"vsCurrent":-56.53,"vsHidden":-78.84},{"mode":"NO_SHARDS","meanMs":100,"slowPct":100,"minMs":91.31,"maxMs":100,"spreadMs":8.69,"reps":3,"vsCurrent":22.32,"vsHidden":0.01},{"mode":"NO_GLITTER","meanMs":99.95,"slowPct":100,"minMs":91.25,"maxMs":100,"spreadMs":8.75,"reps":3,"vsCurrent":22.27,"vsHidden":-0.04},{"mode":"MIST_QUARTER_RATE","meanMs":62.67,"slowPct":100,"minMs":60.11,"maxMs":64.68,"spreadMs":4.57,"reps":3,"vsCurrent":-15.01,"vsHidden":-37.32},{"mode":"MIST_HALF_LIFE","meanMs":16.6,"slowPct":41.3,"minMs":13.05,"maxMs":16.83,"spreadMs":3.78,"reps":3,"vsCurrent":-61.08,"vsHidden":-83.39},{"mode":"MIST_HALF_SIZE","meanMs":27.27,"slowPct":100,"minMs":25.85,"maxMs":32.69,"spreadMs":6.84,"reps":3,"vsCurrent":-50.41,"vsHidden":-72.72},{"mode":"MIST_SMALL_END","meanMs":36.48,"slowPct":100,"minMs":27.85,"maxMs":38.72,"spreadMs":10.87,"reps":3,"vsCurrent":-41.2,"vsHidden":-63.51},{"mode":"MIST_LEAN","meanMs":19.22,"slowPct":92.8,"minMs":14.38,"maxMs":19.4,"spreadMs":5.02,"reps":3,"vsCurrent":-58.46,"vsHidden":-80.77},{"mode":"NO_DECALS","meanMs":69.29,"slowPct":100,"minMs":56.63,"maxMs":87.36,"spreadMs":30.73,"reps":3,"vsCurrent":-8.39,"vsHidden":-30.7},{"mode":"NO_BURSTS","meanMs":99.99,"slowPct":100,"minMs":83.55,"maxMs":100.2,"spreadMs":16.65,"reps":3,"vsCurrent":22.31,"vsHidden":0},{"mode":"NO_SIM","meanMs":77.77,"slowPct":100,"minMs":70.23,"maxMs":100.19,"spreadMs":29.96,"reps":3,"vsCurrent":0.09,"vsHidden":-22.22},{"mode":"NO_ANYTHING","meanMs":11.13,"slowPct":0,"minMs":11.11,"maxMs":11.19,"spreadMs":0.08,"reps":3,"vsCurrent":-66.55,"vsHidden":-88.86}]
+CrystalBench.ts:860 [bench] done -- results also on window.__bench
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":57,"msMedian":11.2,"msP95":68,"msWorst":99.6,"calls":46,"tris":49782,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":566,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":21.4,"msMedian":39.8,"msP95":79.5,"msWorst":99.9,"calls":48,"tris":49816,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1072,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19.3,"msMedian":43.6,"msP95":90.6,"msWorst":99.5,"calls":75,"tris":50368,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1302,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":20.3,"msMedian":44.2,"msP95":81.4,"msWorst":87.8,"calls":44,"tris":23220,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":0,"instances":0,"particles":216,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":22.2,"msMedian":40.6,"msP95":100,"msWorst":100.4,"calls":49,"tris":54452,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":301,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":27.7,"msMedian":17,"msP95":99.9,"msWorst":100.1,"calls":49,"tris":54422,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":414,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":18.8,"msMedian":43.7,"msP95":97.2,"msWorst":100.7,"calls":51,"tris":54426,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":567,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":24.3,"msMedian":34.5,"msP95":85.3,"msWorst":97.1,"calls":51,"tris":54426,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1014,"foveation":1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19.5,"msMedian":41.9,"msP95":97.2,"msWorst":99.8,"calls":75,"tris":54972,"points":2600,"programs":37,"geometries":40,"textures":15,"abilities":1,"instances":190,"particles":1281,"foveation":1}

@@ -282,6 +282,39 @@ This is in tension with Step 1's desktop result, which ruled overdraw out for th
 *crystals*; that finding was about the crystal meshes, not particles, and the desktop camera
 was a different view. Confirm before tuning — see Step 5.
 
+### V5 — mist tuning (Quest, **noisy: read the ranking only**)
+
+V5 added five `MIST_*` modes on top of `CURRENT` (crystals visible). The run itself was
+degraded: `CURRENT` read 78 ms against 38 ms in V4, and `NO_MIST` slid 17 → 21 → 91 ms
+across reps, while `NO_CAST` / `NO_ANYTHING` stayed at 11.1 ms. Cause unconfirmed — headset
+thermal throttling or something accumulating in the app. **Do not quote V5's absolute
+numbers.** The ranking of the tuning modes was identical in every rep, so that is usable.
+
+Mean ms, rep 3 (rep 1):
+
+| Mode | Change | Mean ms |
+|---|---|---|
+| `CURRENT` | baseline | 77.7 (45.8) |
+| `MIST_QUARTER_RATE` | emission rate ×0.25 | 62.7 (60.1) |
+| `MIST_SMALL_END` | end size ×0.5 | 36.5 (27.9) |
+| `MIST_HALF_SIZE` | size ×0.5 (¼ area) | 27.3 (25.9) |
+| `MIST_LEAN` | combined | 19.4 (14.4) |
+| `MIST_HALF_LIFE` | lifetime ×0.5 | **16.8 (13.1)** |
+
+1. **Screen coverage, not sprite count.** Quarter the area helps a lot; quarter the
+   emission rate barely helps. This supports the overdraw hypothesis.
+2. **Lifetime is the best lever** and the most stable mode. It is the only one that gets
+   near 90 fps.
+3. **Why the rate change did nothing (inferred from code, not measured):** `mistRate` only
+   drives the continuous stream. The biggest puffs come from a one-off burst of 90
+   (`IceAbility.js` ~line 712: size 1.6, life `mistLifetime × 1.5` ≈ 4.2 s) that the rate
+   setting never touches. `mistLifetime` scales it.
+4. `MIST_LEAN` is no better than `MIST_HALF_LIFE` alone.
+
+**Next:** rerun a trimmed list (`NO_CAST`, `CURRENT`, `NO_MIST`, `MIST_*`) with the headset
+cooled, and add burst-targeting modes (count 90 → 30, size 1.6 → 0.8, life ×1.5 → ×0.75).
+Judge the look of `MIST_HALF_LIFE` in the headset before choosing.
+
 ## Step 4 — Re-run on Quest ✅ DONE
 
 The retrieval gap is closed. `adb devices` sees the headset, and the console log is
