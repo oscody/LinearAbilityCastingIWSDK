@@ -177,7 +177,7 @@ If that is what happened, V2 measured the throttle, not the scene. **Before trus
 confirm the managed browser window is foregrounded and visible for the whole run**, and
 treat any mode reporting ~100 ms with a p95 equal to its median as suspect.
 
-## Step 3 — Find the missing ~38 ms ✅ ANSWERED (V3-A, V4): it is the mist
+## Step 3 — Find the missing ~38 ms ⚠️ ANSWERED FOR THE STATIC BENCH ONLY (V3-A, V4): the mist — but see V8, live play disagrees
 
 Crystals are ruled out, so every Step 3 mode runs with them **hidden** and removes one
 subsystem at a time. The reference is `HIDDEN_ICE_MAT` — the same cast, nothing suppressed.
@@ -394,6 +394,50 @@ Mean ms, median of 3 reps (target 11.1):
 3. Measure real play — repeated casts, while moving — not just the static bench. Consider
    the Quest's own GPU/CPU counters (`mcp__metavr__` tools; adb is now connected) as an
    independent check on the in-page timings.
+
+### V8 — live real-play probe on the Quest (supersedes the static-bench conclusion)
+
+`BENCH_MODE = 'live'`: the game's own casting runs untouched (unseeded, every 6 s) while the
+player moves freely; only the mist lifetime multiplier is cycled (8 × 30 s windows, second
+cycle reversed). Quest 3, `xr`, 1680×1760, head at ~1.55 m. A desktop-emulator pass of the
+same probe was also run (headset fixed at origin, editor sharing the window, ~26 ms at ×1
+falling to ~17 ms at ×0.5; two passes agreed within 1 ms) but it does not represent the
+headset and is not scored here.
+
+Mean ms per window (window 1 / window 2), target 11.1:
+
+| Mist lifetime | Mean ms | ≈ fps |
+|---|---|---|
+| ×0.5 | 58 / 48 | 17–21 |
+| ×0.7 | 69 / 68 | 14–15 |
+| ×1 (current) | 67 / 86 | 12–15 |
+| ×0.85 | 85 / 82 | 12 |
+
+1. **Live play runs at 12–20 fps** on the headset. This matches what the user sees. The
+   static bench (V4, V6) made it look far better than it is.
+2. **Lifetime is a small lever, not the fix.** ×0.5 was best in both windows (~76 → ~53 ms
+   averaged) but is still ~5× over budget. The V6 result that ×0.5 reaches the floor does
+   not hold in live play.
+3. **Noise is ±15–20 ms.** ×0.85 came out worse than ×1; ×1 itself swung 67 → 86 ms. Only
+   "×0.5 is best" is supported. Many frames sit on the 100 ms cap, so true times may be
+   worse.
+4. **Slow even with no active cast.** In the 11 of 112 two-second samples with no active
+   ability, frames still took 44–88 ms with only ~150 live particles and ~45 draw calls (a
+   clean scene is 15). Something remaining after the cast is expensive, and no bench mode
+   isolated it.
+5. **One ability at a time** (`abilities:1` in every `[perf]` line), so stacking fields is
+   not the explanation.
+
+**Revised understanding.** In the static bench, removing mist restores the floor. In live
+play it does not come close. So either (a) something the static bench doesn't reproduce is
+also expensive (what lingers after a cast; the cast's ramp-up/tail; head motion against the
+fog), or (b) the static bench under-loads the GPU relative to real play. Mist is *a* cost,
+not established as *the* cost.
+
+**Next (V9): subtract, in live play.** Instead of cycling lifetime, cycle what is
+switched off while the game casts normally — nothing, mist, all particles, decals, bursts,
+everything, plus a no-cast control — each in a 30 s window, repeated in reverse to expose
+drift. Whichever removal brings live play near the floor is the real cost.
 
 ## Step 4 — Re-run on Quest ✅ DONE
 

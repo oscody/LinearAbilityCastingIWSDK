@@ -28,6 +28,24 @@ import { patchOnBeforeCompile } from '../utils/shaderPatch.js';
 const BENCH_ENABLED = true;
 
 /**
+ * `controlled` = the mode benchmark: one seeded static field, player still.
+ * `live`       = real-play probe: the game's own casting (unseeded, every 6 s)
+ *                runs untouched while you move and look around freely. Only the
+ *                mist lifetime multiplier is cycled, and every 2 s the frame
+ *                stats, cast/particle load and head pose are logged, so a slow
+ *                stretch can be explained by what you were doing.
+ *
+ * V4-V7 read fast in some sessions and slow in others, and the user still saw
+ * problems in VR; the controlled bench does not reproduce real play.
+ */
+const BENCH_MODE: 'controlled' | 'live' = 'live';
+
+/** Mist lifetime multipliers tested in live mode; cycle 2 runs them reversed to expose drift. */
+const LIVE_MULTS = [1, 0.85, 0.7, 0.5];
+const LIVE_WINDOW_SECONDS = 30;
+const LIVE_LOG_SECONDS = 2;
+
+/**
  * Every effect is torn down and the scene left empty for this long before the
  * next mode casts.
  *
@@ -568,10 +586,15 @@ export class CrystalBench extends createSystem({}) {
     this.cast = this.world.getSystem(CastSystem);
     if (!this.cast) return;
 
+    this.buildBadge();
+    if (BENCH_MODE === 'live') {
+      this.initLive();
+      return;
+    }
+
     this.cast.benchControlled = true;
     this.installSeededRandom();
     this.buildMaterials();
-    this.buildBadge();
 
     console.log(
       '[bench] crystal rendering benchmark: ' +
@@ -895,6 +918,10 @@ export class CrystalBench extends createSystem({}) {
   }
 
   update(delta: number): void {
+    if (BENCH_MODE === 'live') {
+      this.liveUpdate(delta);
+      return;
+    }
     if (this.phase === 'idle' || this.phase === 'done') return;
 
     const mode = MODES[this.modeIndex];
@@ -937,6 +964,211 @@ export class CrystalBench extends createSystem({}) {
       if (this.rep === 0 && mode !== 'NO_CAST') this.setPhase('look');
       else this.nextMode();
     }
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Live probe                                                       */
+  /* ---------------------------------------------------------------- */
+
+  private liveDone = false;
+  private liveWindow = 0; // index into the LIVE_MULTS x 2 cycles sequence
+  private liveTime = 0; // seconds into the current window
+  private liveLogTime = 0;
+  private liveFrames = 0;
+  private liveSlow = 0;
+  private liveCastFrames = 0;
+  private liveCastSum = 0;
+  private liveIdleSum = 0;
+  private liveWorst = 0;
+  private liveSum = 0;
+  private liveCount = 0; // frames in the whole window
+  private liveWin!: Float32Array;
+  private subCount = 0; // frames in the 2 s sub-window
+  private subSum = 0;
+  private subWorst = 0;
+  private liveResults: Array<{ mult: number; mean: number; p95: number; slowPct: number; worst: number; castMean: number; idleMean: number }> = [];
+  private liveHead!: Vector3;
+  private liveDir!: Vector3;
+  private liveLifeBase = 0;
+
+  private liveMult(): number {
+    const n = LIVE_MULTS.length;
+    const w = this.liveWindow;
+    return w < n ? LIVE_MULTS[w] : LIVE_MULTS[2 * n - 1 - w];
+  }
+
+  private initLive(): void {
+    this.liveWin = new Float32Array(8192);
+    this.liveHead = new Vector3();
+    this.liveDir = new Vector3();
+    this.liveLifeBase = settings.ice.mistLifetime;
+    this.beginLiveWindow();
+    this.cleanupFuncs.push(() => {
+      settings.ice.mistLifetime = this.liveLifeBase;
+    });
+    console.log(
+      '[live] real-play probe: ' + LIVE_MULTS.length * 2 + ' windows x ' +
+        LIVE_WINDOW_SECONDS + 's. Move and look around normally. Base mistLifetime ' +
+        this.liveLifeBase,
+    );
+  }
+
+  private beginLiveWindow(): void {
+    const mult = this.liveMult();
+    settings.ice.mistLifetime = this.liveLifeBase * mult;
+    this.liveTime = 0;
+    this.liveLogTime = 0;
+    this.liveCount = 0;
+    this.liveSum = 0;
+    this.liveSlow = 0;
+    this.liveWorst = 0;
+    this.liveCastFrames = 0;
+    this.liveCastSum = 0;
+    this.liveIdleSum = 0;
+    this.subCount = 0;
+    this.subSum = 0;
+    this.subWorst = 0;
+    this.setLivePhase('measure', mult);
+    console.log(
+      '[live] ## WINDOW ' + (this.liveWindow + 1) + '/' + LIVE_MULTS.length * 2 +
+        ' mist life x' + mult,
+    );
+  }
+
+  private setLivePhase(phase: 'measure' | 'done', mult: number): void {
+    (globalThis as { __benchStatus?: unknown }).__benchStatus = {
+      live: true,
+      phase,
+      mult,
+      window: this.liveWindow + 1,
+    };
+  }
+
+  private liveUpdate(delta: number): void {
+    if (this.liveDone) return;
+    const ms = delta * 1000;
+    const casting = this.cast!.abilities.active.length > 0;
+
+    if (this.liveCount < this.liveWin.length) this.liveWin[this.liveCount++] = ms;
+    this.liveSum += ms;
+    if (ms > SLOW_MS) this.liveSlow++;
+    if (ms > this.liveWorst) this.liveWorst = ms;
+    if (casting) {
+      this.liveCastFrames++;
+      this.liveCastSum += ms;
+    } else {
+      this.liveIdleSum += ms;
+    }
+    this.subCount++;
+    this.subSum += ms;
+    if (ms > this.subWorst) this.subWorst = ms;
+
+    this.liveTime += delta;
+    this.liveLogTime += delta;
+
+    if (this.liveLogTime >= LIVE_LOG_SECONDS) {
+      const mean = this.subSum / this.subCount;
+      this.player.head.getWorldPosition(this.liveHead);
+      this.player.head.getWorldDirection(this.liveDir);
+      const yaw = (Math.atan2(this.liveDir.x, this.liveDir.z) * 180) / Math.PI;
+      const pitch = (Math.asin(this.liveDir.y) * 180) / Math.PI;
+      console.log(
+        '[live] ' + JSON.stringify({
+          w: this.liveWindow + 1,
+          mult: this.liveMult(),
+          t: +this.liveTime.toFixed(1),
+          fps: +(1000 / mean).toFixed(1),
+          ms: +mean.toFixed(1),
+          worst: +this.subWorst.toFixed(1),
+          casting,
+          particles: this.cast!.liveParticles(),
+          calls: this.renderer.info.render.calls,
+          head: [+this.liveHead.x.toFixed(2), +this.liveHead.y.toFixed(2), +this.liveHead.z.toFixed(2)],
+          yaw: +yaw.toFixed(0),
+          pitch: +pitch.toFixed(0),
+        }),
+      );
+      this.drawLiveBadge(mean);
+      this.liveLogTime = 0;
+      this.subCount = 0;
+      this.subSum = 0;
+      this.subWorst = 0;
+    }
+
+    if (this.liveTime >= LIVE_WINDOW_SECONDS) this.endLiveWindow();
+  }
+
+  private drawLiveBadge(meanMs: number): void {
+    const ctx = this.badgeCtx;
+    if (!ctx || !this.badgeTex) return;
+    ctx.fillStyle = this.liveDone ? CrystalBench.PHASE_COLOR.done : CrystalBench.PHASE_COLOR.measure;
+    ctx.fillRect(0, 0, 512, 256);
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    if (this.liveDone) {
+      ctx.font = 'bold 120px sans-serif';
+      ctx.fillText('DONE', 256, 150);
+    } else {
+      ctx.font = 'bold 56px sans-serif';
+      ctx.fillText('LIVE ' + (this.liveWindow + 1) + '/' + LIVE_MULTS.length * 2, 256, 62);
+      ctx.font = 'bold 76px sans-serif';
+      ctx.fillText('life x' + this.liveMult(), 256, 150);
+      ctx.font = '42px sans-serif';
+      ctx.fillText(
+        Math.round(1000 / meanMs) + ' fps   ' + Math.round(LIVE_WINDOW_SECONDS - this.liveTime) + ' s left',
+        256,
+        216,
+      );
+    }
+    this.badgeTex.needsUpdate = true;
+  }
+
+  private endLiveWindow(): void {
+    const n = this.liveCount;
+    this.sorted.set(this.liveWin.subarray(0, Math.min(n, this.sorted.length)));
+    const m = Math.min(n, this.sorted.length);
+    const view = this.sorted.subarray(0, m);
+    view.sort();
+    const castFrames = this.liveCastFrames;
+    const idleFrames = n - castFrames;
+    const r = {
+      mult: this.liveMult(),
+      mean: +(this.liveSum / n).toFixed(2),
+      p95: +view[Math.floor(m * 0.95)].toFixed(2),
+      slowPct: +((this.liveSlow / n) * 100).toFixed(1),
+      worst: +this.liveWorst.toFixed(1),
+      castMean: castFrames ? +(this.liveCastSum / castFrames).toFixed(2) : 0,
+      idleMean: idleFrames ? +(this.liveIdleSum / idleFrames).toFixed(2) : 0,
+    };
+    this.liveResults.push(r);
+    console.log('[live] WINDOW RESULT ' + JSON.stringify(r));
+
+    this.liveWindow++;
+    if (this.liveWindow >= LIVE_MULTS.length * 2) {
+      this.liveDone = true;
+      settings.ice.mistLifetime = this.liveLifeBase;
+      const rows = LIVE_MULTS.map((mult) => {
+        const rs = this.liveResults.filter((x) => x.mult === mult);
+        const avg = (k: 'mean' | 'p95' | 'slowPct' | 'castMean' | 'idleMean') =>
+          +(rs.reduce((a, x) => a + x[k], 0) / rs.length).toFixed(2);
+        return {
+          mult,
+          mean: avg('mean'),
+          p95: avg('p95'),
+          slowPct: avg('slowPct'),
+          castMean: avg('castMean'),
+          idleMean: avg('idleMean'),
+          worst: Math.max(...rs.map((x) => x.worst)),
+          windows: rs.map((x) => x.mean),
+        };
+      });
+      (globalThis as { __bench?: unknown }).__bench = rows;
+      console.log('[live] RESULTS ' + JSON.stringify(rows));
+      this.setLivePhase('done', 1);
+      this.drawLiveBadge(11);
+      return;
+    }
+    this.beginLiveWindow();
   }
 
   private record(): void {
