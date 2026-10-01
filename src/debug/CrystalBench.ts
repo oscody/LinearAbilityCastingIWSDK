@@ -60,6 +60,10 @@ interface LiveCondition {
 }
 
 /**
+ * V12 -- JS time vs frame time. The list is cut to what can split the 2-4 s stall:
+ * all particle emission, burst spheres and decals each removed in turn. (V10's
+ * frost-lever list is in git history.)
+ *
  * V10 -- decal fixes in live play. V9 showed removing the ground decals takes
  * live play from ~56 to ~18.5 ms. The frost patches are laid at `frostRate`
  * per metre of front travel, radius `halfWidth * frostSpread`, living
@@ -69,42 +73,9 @@ interface LiveCondition {
  */
 const LIVE_CONDITIONS: LiveCondition[] = [
   { name: 'CURRENT', visible: true, suppress: [], casts: true },
+  { name: 'NO_PARTICLES', visible: true, suppress: ['particles'], casts: true },
+  { name: 'NO_BURSTS', visible: true, suppress: ['bursts'], casts: true },
   { name: 'NO_DECALS', visible: true, suppress: ['decals'], casts: true },
-  {
-    name: 'FROST_RATE_HALF',
-    visible: true,
-    suppress: [],
-    casts: true,
-    frost: { rate: 0.5 },
-  },
-  {
-    name: 'FROST_RATE_QUARTER',
-    visible: true,
-    suppress: [],
-    casts: true,
-    frost: { rate: 0.25 },
-  },
-  {
-    name: 'FROST_LIFE_HALF',
-    visible: true,
-    suppress: [],
-    casts: true,
-    frost: { life: 0.5 },
-  },
-  {
-    name: 'FROST_SPREAD_HALF',
-    visible: true,
-    suppress: [],
-    casts: true,
-    frost: { spread: 0.5 },
-  },
-  {
-    name: 'FROST_LEAN',
-    visible: true,
-    suppress: [],
-    casts: true,
-    frost: { rate: 0.5, life: 0.5, spread: 0.7 },
-  },
   { name: 'NO_CAST', visible: false, suppress: [], casts: false },
 ];
 
@@ -1069,6 +1040,14 @@ export class CrystalBench extends createSystem({}) {
   private subWorst = 0;
   private liveLastActive: unknown = null;
   private liveNextCast = 0;
+
+  /** Per-system JS time, from wrapping every system's `update` (wrapped lazily, once). */
+  private sysNames: string[] = [];
+  private sysAcc = new Float64Array(0); // running total ms per system
+  private sysLast = new Float64Array(0); // sysAcc at the previous frame
+  private sysSub = new Float64Array(0); // ms per system this 2 s sub-window
+  private sysAge: Float64Array[] = []; // [bin] ms per system this window
+  private sysWrapped = false;
   private liveSinceCast = 0;
   private liveAgeSum = new Float64Array(LIVE_AGE_BINS);
   private liveAgeCount = new Float64Array(LIVE_AGE_BINS);
@@ -1076,6 +1055,8 @@ export class CrystalBench extends createSystem({}) {
   private liveResults: Array<{
     name: string;
     age: number[];
+    js: number[];
+    top: string[];
     mean: number;
     p95: number;
     slowPct: number;
@@ -1124,6 +1105,7 @@ export class CrystalBench extends createSystem({}) {
     this.liveSinceCast = 0;
     this.liveAgeSum.fill(0);
     this.liveAgeCount.fill(0);
+    for (const a of this.sysAge) a.fill(0);
     this.liveLastActive = null;
     this.liveApply(cond);
 
@@ -1189,8 +1171,44 @@ export class CrystalBench extends createSystem({}) {
     };
   }
 
+  /**
+   * Splits each frame into JS time (summed per system) and the rest. If JS is small
+   * while the frame is ~100 ms, the stall is GPU/compositor; if JS is large, the
+   * per-system split names the system.
+   */
+  private wrapSystems(): void {
+    this.sysWrapped = true;
+    const systems = this.world.getSystems() as unknown as Array<{
+      constructor: { name: string };
+      update: (...args: unknown[]) => void;
+    }>;
+    this.sysAcc = new Float64Array(systems.length);
+    this.sysLast = new Float64Array(systems.length);
+    this.sysSub = new Float64Array(systems.length);
+    this.sysAge = Array.from({ length: LIVE_AGE_BINS }, () => new Float64Array(systems.length));
+    systems.forEach((sys, i) => {
+      this.sysNames.push(sys.constructor.name);
+      const original = sys.update;
+      const acc = this.sysAcc;
+      sys.update = function (this: unknown, ...args: unknown[]) {
+        const t0 = performance.now();
+        original.apply(this, args);
+        acc[i] += performance.now() - t0;
+      };
+    });
+  }
+
+  private topSystems(sums: Float64Array, frames: number, n: number): string {
+    return Array.from(sums, (v, i) => [this.sysNames[i], v / Math.max(1, frames)] as const)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, n)
+      .map(([name, ms]) => name + ':' + ms.toFixed(1))
+      .join(' ');
+  }
+
   private liveUpdate(delta: number): void {
     if (this.liveDone) return;
+    if (!this.sysWrapped) this.wrapSystems();
     const ms = delta * 1000;
     if (this.liveTime >= this.liveNextCast) {
       this.liveNextCast += LIVE_CAST_INTERVAL;
@@ -1216,6 +1234,14 @@ export class CrystalBench extends createSystem({}) {
     this.liveTime += delta;
     this.liveLogTime += delta;
     this.liveSinceCast += delta;
+
+    const jsBin = Math.min(LIVE_AGE_BINS - 1, Math.floor(this.liveSinceCast / 2));
+    for (let i = 0; i < this.sysAcc.length; i++) {
+      const d = this.sysAcc[i] - this.sysLast[i];
+      this.sysLast[i] = this.sysAcc[i];
+      this.sysSub[i] += d;
+      if (this.liveCond().casts) this.sysAge[jsBin][i] += d;
+    }
 
     if (this.liveCond().casts) {
       const bin = Math.min(LIVE_AGE_BINS - 1, Math.floor(this.liveSinceCast / 2));
@@ -1253,6 +1279,8 @@ export class CrystalBench extends createSystem({}) {
           scored: this.liveTime >= LIVE_SKIP_SECONDS,
           fps: +(1000 / mean).toFixed(1),
           ms: +mean.toFixed(1),
+          js: +(this.sysSub.reduce((a, v) => a + v, 0) / this.subCount).toFixed(1),
+          top: this.topSystems(this.sysSub, this.subCount, 3),
           worst: +this.subWorst.toFixed(1),
           casting,
           particles: this.cast!.liveParticles(),
@@ -1267,6 +1295,7 @@ export class CrystalBench extends createSystem({}) {
       this.subCount = 0;
       this.subSum = 0;
       this.subWorst = 0;
+      this.sysSub.fill(0);
     }
 
     if (this.liveTime >= LIVE_WINDOW_SECONDS) this.endLiveWindow();
@@ -1308,6 +1337,12 @@ export class CrystalBench extends createSystem({}) {
       age: Array.from(this.liveAgeSum, (sum, i) =>
         this.liveAgeCount[i] ? +(sum / this.liveAgeCount[i]).toFixed(1) : 0,
       ),
+      js: this.sysAge.map((sums, b) =>
+        this.liveAgeCount[b]
+          ? +(sums.reduce((a, v) => a + v, 0) / this.liveAgeCount[b]).toFixed(1)
+          : 0,
+      ),
+      top: this.sysAge.map((sums, b) => this.topSystems(sums, this.liveAgeCount[b], 3)),
       mean: +(this.liveSum / n).toFixed(2),
       p95: +view[Math.floor(m * 0.95)].toFixed(2),
       slowPct: +((this.liveSlow / n) * 100).toFixed(1),
@@ -1339,6 +1374,10 @@ export class CrystalBench extends createSystem({}) {
           age: [0, 1, 2].map((i) =>
             +(rs.reduce((a, x) => a + x.age[i], 0) / rs.length).toFixed(1),
           ),
+          js: [0, 1, 2].map((i) =>
+            +(rs.reduce((a, x) => a + x.js[i], 0) / rs.length).toFixed(1),
+          ),
+          top: rs[0].top,
           worst: Math.max(...rs.map((x) => x.worst)),
           windows: rs.map((x) => x.mean),
         };

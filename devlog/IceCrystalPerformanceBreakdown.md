@@ -591,6 +591,40 @@ timer and log, every 2 s and per cast-age bin, the total JS time per frame and t
 systems. If JS is slow at 2–4 s the stall is in code and the per-system split names it; if JS
 is fast while the frame is 100 ms the stall is on the GPU/compositor side.
 
+### V12 — JS time vs frame time (Quest): the stall is not in the game's code
+
+Every system's `update` is wrapped with a timer; each 2 s log line carries `js` (summed
+system time per frame) and the top three systems. Conditions: `CURRENT`, `NO_PARTICLES`,
+`NO_BURSTS`, `NO_DECALS`, `NO_CAST`, two windows each, fixed cast schedule.
+
+| Condition | Mean ms | w1 / w2 | Frame ms by age 0–2 / 2–4 / 4–6 s | JS ms per frame |
+|---|---|---|---|---|
+| `NO_CAST` | 11.1 | 11.1 / 11.1 | – | ~0 |
+| `NO_DECALS` | 14.2 | 11.1 / 17.3 | 14 / 16 / 13 | 1.7–1.9 |
+| `NO_PARTICLES` | 28.3 | 15.1 / 41.6 | 31 / 26 / 29 | 1.6 |
+| `NO_BURSTS` | 31.1 | 22.6 / 39.6 | 30 / 30 / 35 | 1.6 |
+| `CURRENT` | 35.8 | 40.2 / 31.3 | 36 / 39 / 35 | 1.8–1.9 |
+
+1. **JavaScript is ~1.5–2.5 ms per frame in every condition, including the frames that take
+   100 ms.** (`InputSystem` ~1 ms, `CastSystem` ~0.5 ms; nothing else registers.) The
+   hypothesis from V11 — that the burst's particle emit stalls in code — is refuted: the
+   whole cast's CPU cost is under 1 ms.
+2. **The stall is GPU/compositor-side.** The frame is the page's `delta`; with JS at ~2 ms
+   the remaining ~10–100 ms is render submission, GPU work and the compositor wait.
+3. **This session was faster overall** (`CURRENT` 36 ms, against 65 in V11) and
+   `NO_DECALS` was again the best condition (14 ms), as in V9 (18.5) but not in V10/V10-A/V11
+   (46–62). Run-to-run variation is still larger than between-condition differences in
+   most conditions; do not treat decals as established.
+4. **Working explanation (hypothesis):** the load is fill-rate. Mist puffs grow with age (up
+   to 3.4× size) and decals/spheres expand, so the drawn *area* peaks 2–4 s after the cast
+   even while draw calls and particle counts are at their minimum. This fits V5/V6 (size
+   mattered, emission rate did not) and V11 (cost peaks when counts are lowest). Not yet
+   measured on the GPU.
+
+**Next (V13): look at the GPU directly.** Capture a Perfetto trace on the Quest across a
+cast (`mcp__metavr__*` tools; adb is connected) to read GPU frame time and its
+fragment/bandwidth breakdown at the 2–4 s mark, independent of the page's timing.
+
 ## Step 4 — Re-run on Quest ✅ DONE
 
 The retrieval gap is closed. `adb devices` sees the headset, and the console log is
