@@ -1,5 +1,14 @@
 # Ice Crystal Performance Breakdown
 
+**Current status (2026-09-30):** V14 identifies mist and FROST ground decals as the
+main contributors to GPU fragment cost in a stationary close-view Quest run.
+Removing both cuts mean frame intervals from 91.06 to 20.76 ms; this remains
+above the 11.1 ms budget. V9 and V12 have an additional, confirmed harness
+confound: particle suppression leaked into subsequent conditions. Their comparisons
+are invalid as labelled. V13 reruns all effects with restoration checks and measures
+the full update-to-render CPU span; see the current results below. Older conclusions
+and next-step lists are historical.
+
 **Branch:** `Phase_3_IceCrystalDebug` (from `master` @ `b112186`)
 **Harness:** `src/debug/CrystalBench.ts`, registered in `index.ts` at priority 50.
 Set `BENCH_ENABLED = false` in that file to run the app normally on this branch.
@@ -177,7 +186,7 @@ If that is what happened, V2 measured the throttle, not the scene. **Before trus
 confirm the managed browser window is foregrounded and visible for the whole run**, and
 treat any mode reporting ~100 ms with a p95 equal to its median as suspect.
 
-## Step 3 — Find the missing ~38 ms ⚠️ STATIC BENCH SAID MIST (V3-A, V4); LIVE PLAY SAYS GROUND DECALS (V9)
+## Step 3 — Attribution history (V3–V12; corrected reruns start at V13)
 
 Crystals are ruled out, so every Step 3 mode runs with them **hidden** and removes one
 subsystem at a time. The reference is `HIDDEN_ICE_MAT` — the same cast, nothing suppressed.
@@ -593,6 +602,13 @@ is fast while the frame is 100 ms the stall is on the GPU/compositor side.
 
 ### V12 — JS time vs frame time (Quest): the stall is not in the game's code
 
+> **Invalidated as a condition comparison (2026-09-30).** `NO_PARTICLES` saved its
+> already-zeroed settings when reapplied after a cast. Every subsequent condition
+> inherited disabled particles. V12's final `CURRENT` window has zero particles
+> throughout, whereas the first has hundreds. The same leak is visible in V9.
+> The small measured system-update average also does not establish total CPU cost:
+> rendering and XR frame callbacks were outside those timers. V13 measures that span.
+
 Every system's `update` is wrapped with a timer; each 2 s log line carries `js` (summed
 system time per frame) and the top three systems. Conditions: `CURRENT`, `NO_PARTICLES`,
 `NO_BURSTS`, `NO_DECALS`, `NO_CAST`, two windows each, fixed cast schedule.
@@ -625,6 +641,109 @@ system time per frame) and the top three systems. Conditions: `CURRENT`, `NO_PAR
 cast (`mcp__metavr__*` tools; adb is connected) to read GPU frame time and its
 fragment/bandwidth breakdown at the 2–4 s mark, independent of the page's timing.
 
+### V13 — restored particles and full render-frame measurement (2026-09-30)
+
+Artifacts: `Phase_3_IceCrystalDebug/Phase_3_IceCrystalDebug-V13.log` and `.json`.
+Quest 3, real XR, 1680×1760, foveation 1. A stationary headset was kept awake with
+a temporary proximity override; its pose was approximately (0.35, 0.79, -0.59),
+yaw -100°, pitch -13°. This is a close, low view, not standing/moving gameplay.
+
+The original particle multipliers are now saved once, restored once, and the saved
+state cleared. Repeated suppression cannot overwrite the originals. All **20/20**
+window checks passed: both `CURRENT` windows had live particles and multipliers 1;
+`NO_PARTICLES`/`NO_ANYTHING` had none. An additional paused, three-frame runtime
+check suppressed twice, restored, cast, and observed 10 live particles with both
+multipliers back at 1.
+
+The live probe now holds the cast origin fixed, seeds spawn records, discards a
+six-second initial cast for warmup, and rejects loss of XR visibility. Particle
+updates retain their normal randomness. Each 24-second window has casts at
+0/6/12/18 seconds; conditions run forward then backward.
+
+| Condition | Frame interval ms (forward / reverse) | Full CPU span ms (forward / reverse) |
+|---|---|---|
+| CURRENT | 80.61 / 81.71 | 3.895 / 3.098 |
+| NO_PARTICLES | 42.04 / 42.68 | 3.197 / 3.107 |
+| NO_MIST | 40.91 / 43.73 | 2.911 / 3.149 |
+| NO_SHARDS | 82.25 / 78.47 | 3.123 / 3.128 |
+| NO_GLITTER | 81.26 / 78.91 | 2.949 / 3.091 |
+| NO_BURSTS | 80.45 / 82.34 | 3.118 / 3.086 |
+| NO_DECALS | 68.80 / 93.75 | 2.606 / 2.548 |
+| NO_CRYSTALS | 104.73 / 108.65 | 2.534 / 2.671 |
+| NO_ANYTHING | 17.64 / 11.11 | 2.360 / 2.434 |
+| NO_CAST | 11.11 / 11.12 | 1.882 / 1.914 |
+
+`RenderFrameProbe` wraps `world.update` and `renderer.render`. The CPU span starts
+at ECS update entry and ends at render return, including XR frame callbacks between
+them. Render submission alone was 1.930–2.253 ms in CURRENT, with worst full CPU
+spans 11.5 ms and 6.1 ms. It is not a GPU-duration measurement and does not include
+compositor waits or unrelated callbacks outside that span. Actual frame intervals,
+means, p95 and worst values are reported separately, without a 100 ms clamp.
+The run contains intervals up to 1679 ms; the 100 ms plateau remains unexplained.
+NO_CRYSTALS and the first NO_ANYTHING window include large spikes.
+
+GPU timer queries were unavailable in Quest Browser. A 45-second standard Perfetto
+capture (`ice-v13-restored-particles`) independently showed mean GPU utilization
+97.143%, shaders busy 84.921%, time shading fragments 97.337%, shader ALU capacity
+utilized 65.787%, and bus busy 6.549%, at constant 640 MHz GPU frequency. These are
+system-wide counters during casting, not isolated per-effect GPU timings.
+The varying app-GPU track recorded 21.449–106.721 ms; timewarp was 0.579–0.757 ms.
+
+The trace is at `/Users/bogle/Library/Application Support/odh/traces/ice-v13-restored-particles.pftrace`.
+The metavr RPC analyzer incorrectly returned empty tables for it. Direct loading
+with MQDH's `trace_processor_shell` found 1,060,389 slices and 3,074,122 counters.
+Use `scripts/quest-gpu-counters.sql` to reproduce the counter query. Counter samples
+span ~45 seconds; the overall `trace_bounds` spans multiple clock domains and is
+not a valid capture-duration calculation here.
+
+**Supported:** mist is a substantial, reproducible cost; CPU update/render work is
+small and the independent counters indicate a GPU fragment-shading bottleneck.
+Decals alone do not account for it. V14 tests frost and shockwaves separately and
+removes mist plus frost together before choosing an optimization.
+
+### V14 — mist and FROST are the major costs (2026-09-30)
+
+Artifacts: `Phase_3_IceCrystalDebug/Phase_3_IceCrystalDebug-V14.log` and `.json`.
+Same stationary headset pose as V13. The focused `?bench=frost` suite uses two
+casts per 12-second window, forward and backward, after the discarded warmup cast.
+All **12/12** particle checks passed, including the final CURRENT window.
+
+Selective FROST suppression forwards every other decal type to the original
+service; selective SHOCKWAVE suppression does the reverse. The combined condition
+retains crystals, shards, glitter, burst spheres, shockwaves, and lights, and
+still records hundreds of live particles. No authored VFX settings were retuned.
+
+| Condition | Frame interval ms (forward / reverse) | Mean ms | Full CPU span ms (forward / reverse) |
+|---|---|---|---|
+| CURRENT | 94.20 / 87.93 | 91.06 | 3.386 / 3.126 |
+| NO_MIST | 40.04 / 38.36 | 39.20 | 3.622 / 3.088 |
+| NO_FROST | 64.27 / 64.91 | 64.59 | 2.629 / 2.494 |
+| NO_MIST_OR_FROST | 20.14 / 21.37 | 20.76 | 2.557 / 2.436 |
+| NO_SHOCKWAVES | 85.13 / 80.37 | 82.75 | 3.111 / 3.268 |
+| NO_CAST | 11.53 / 11.11 | 11.32 | 1.928 / 1.975 |
+
+**Attribution:** both mist and FROST decals are substantial, repeatable contributors;
+removing both recovers ~77% of the baseline frame interval. Mist alone leaves
+~39 ms; frost alone leaves ~65 ms. The full CPU span changes by less than a
+millisecond, supporting the GPU fragment-cost attribution from V13's independent
+counter capture. These subtraction deltas are conditional, not additive GPU
+durations. Shockwaves have a smaller effect and are not the whole decal cost.
+
+**Why these effects are candidates for shader optimization (code inspection):**
+mist uses expanding translucent sprites and procedural noise. FROST evaluates
+three `snowDepth` taps per covered pixel for its normal; each tap evaluates fBm,
+Voronoi cells, and fine noise, on top of the warped coverage noise. Multiple
+transparent frost quads overlap and do not write depth. The experiment identifies
+the costly effects; it does not separate their arithmetic, coverage, and blending
+costs into per-draw GPU measurements.
+
+**Remaining work:** the combined condition still exceeds the 90 Hz budget, so
+this is attribution, not a completed performance fix. Optimize mist and frost
+fragment work first, preserving D2's authored emissive/glow values, then remeasure
+the remaining cost and confirm standing/moving gameplay. The near, low, stationary
+view, normal per-frame particle randomness, and shorter V14 windows limit
+generalization. Normal Quest proximity behavior was restored after capture.
+
 ## Step 4 — Re-run on Quest ✅ DONE
 
 The retrieval gap is closed. `adb devices` sees the headset, and the console log is
@@ -636,8 +755,9 @@ Access from the headset: `adb reverse tcp:8081 tcp:8081`, then open
 
 ## Step 5 — Only then, optimise ⬜ NEXT
 
-The cost is now named, so this step is unblocked. Do it one lever at a time, re-measuring
-each on the Quest, in this order:
+**Historical V4 plan; superseded by the V13/V14 attribution work above.** Do not
+interpret this list as an established mist-only fix. Once attribution is complete,
+change one lever at a time and re-measure on Quest. The original proposed order was:
 
 1. Confirm it is fill rate: shrink `mistSize` / end size (`uEndSize` 3.4) and see if the
    time falls with sprite area, not particle count.

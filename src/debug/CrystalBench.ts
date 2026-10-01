@@ -18,22 +18,25 @@ import {
   MeshStandardMaterial,
   PlaneGeometry,
   Vector3,
+  VisibilityState,
 } from '@iwsdk/core';
 import { CastSystem } from '../abilities/CastSystem.js';
 import { settings } from '../config/settings.js';
 import { createIceMaterial } from '../materials/IceMaterial.js';
 import { patchOnBeforeCompile } from '../utils/shaderPatch.js';
+import { RenderFrameProbe } from './RenderFrameProbe.js';
+import { DecalType } from '../effects/GroundDecals.js';
 
 /** Flip to false to run the app normally on this branch. */
 const BENCH_ENABLED = true;
 
 /**
  * `controlled` = the mode benchmark: one seeded static field, player still.
- * `live`       = real-play probe: the game's own casting (unseeded, every 6 s)
- *                runs untouched while you move and look around freely. Only the
- *                mist lifetime multiplier is cycled, and every 2 s the frame
- *                stats, cast/particle load and head pose are logged, so a slow
- *                stretch can be explained by what you were doing.
+ * `live`       = repeated casts at fixed offsets, with effect subtraction and
+ *                checked particle restoration. Every 2 s logs frame intervals,
+ *                system timings, cast/particle load and head pose. A separate
+ *                probe measures the full CPU update/render span and GPU queries
+ *                where available. ?bench=frost selects the focused follow-up.
  *
  * V4-V7 read fast in some sessions and slow in others, and the user still saw
  * problems in VR; the controlled bench does not reproduce real play.
@@ -41,13 +44,8 @@ const BENCH_ENABLED = true;
 const BENCH_MODE: 'controlled' | 'live' = 'live';
 
 /**
- * V9 -- subtract in live play. Each window removes one thing while the game
- * casts on its own, so the condition that brings live play near the 11.1 ms floor
- * is the real cost. V8 showed lifetime x0.5 only takes ~76 -> ~53 ms live.
- *
- * Unlike the static bench's NO_* modes these keep the crystals VISIBLE (except
- * NO_CRYSTALS / NO_ANYTHING), so each result is player-facing. Cycle 2 runs the
- * list reversed to expose drift.
+ * Effect subtraction under a fixed cast schedule. Crystals remain visible
+ * except in explicit controls. The second pass reverses the condition order.
  */
 interface LiveCondition {
   name: string;
@@ -60,22 +58,29 @@ interface LiveCondition {
 }
 
 /**
- * V12 -- JS time vs frame time. The list is cut to what can split the 2-4 s stall:
- * all particle emission, burst spheres and decals each removed in turn. (V10's
- * frost-lever list is in git history.)
- *
- * V10 -- decal fixes in live play. V9 showed removing the ground decals takes
- * live play from ~56 to ~18.5 ms. The frost patches are laid at `frostRate`
- * per metre of front travel, radius `halfWidth * frostSpread`, living
- * `frostLife` = 7 s while casts come every 6 s -- so consecutive casts overlap.
- * Each row changes one lever (plus a combination) and is compared against
- * CURRENT and the NO_DECALS ceiling.
+ * V13 restores particle state correctly and measures CPU render work. V14
+ * separates frost from shockwaves and tests mist plus frost together. Every
+ * scored window verifies its settings and live-particle count before reporting.
  */
-const LIVE_CONDITIONS: LiveCondition[] = [
+/** ?bench=frost runs the follow-up factorial comparison, two casts per window. */
+const FROST_SUITE = new URLSearchParams(location.search).get('bench') === 'frost';
+const LIVE_CONDITIONS: LiveCondition[] = FROST_SUITE ? [
+  { name: 'CURRENT', visible: true, suppress: [], casts: true },
+  { name: 'NO_MIST', visible: true, suppress: ['mist'], casts: true },
+  { name: 'NO_FROST', visible: true, suppress: ['frost'], casts: true },
+  { name: 'NO_MIST_OR_FROST', visible: true, suppress: ['mist', 'frost'], casts: true },
+  { name: 'NO_SHOCKWAVES', visible: true, suppress: ['shockwaves'], casts: true },
+  { name: 'NO_CAST', visible: false, suppress: [], casts: false },
+] : [
   { name: 'CURRENT', visible: true, suppress: [], casts: true },
   { name: 'NO_PARTICLES', visible: true, suppress: ['particles'], casts: true },
+  { name: 'NO_MIST', visible: true, suppress: ['mist'], casts: true },
+  { name: 'NO_SHARDS', visible: true, suppress: ['shards'], casts: true },
+  { name: 'NO_GLITTER', visible: true, suppress: ['glitter'], casts: true },
   { name: 'NO_BURSTS', visible: true, suppress: ['bursts'], casts: true },
   { name: 'NO_DECALS', visible: true, suppress: ['decals'], casts: true },
+  { name: 'NO_CRYSTALS', visible: false, suppress: [], casts: true },
+  { name: 'NO_ANYTHING', visible: false, suppress: ['particles', 'decals', 'bursts'], casts: true },
   { name: 'NO_CAST', visible: false, suppress: [], casts: false },
 ];
 
@@ -86,7 +91,7 @@ const LIVE_CONDITIONS: LiveCondition[] = [
  * phase, confounding condition with timing. Nothing is discarded: the window
  * starts clean (clearAll) and the first cast fires on frame 0.
  */
-const LIVE_WINDOW_SECONDS = 24;
+const LIVE_WINDOW_SECONDS = FROST_SUITE ? 12 : 24;
 const LIVE_CAST_INTERVAL = 6;
 /** Frame time is also binned by seconds since the last cast: [0-2), [2-4), [4-6). */
 const LIVE_AGE_BINS = 3;
@@ -194,6 +199,8 @@ type Suppress =
   | 'shards'
   | 'glitter'
   | 'decals'
+  | 'frost'
+  | 'shockwaves'
   | 'bursts'
   | 'sim';
 
@@ -616,8 +623,8 @@ export class CrystalBench extends createSystem({}) {
   /** Saved originals, restored at the end of every mode. */
   private savedDecals: unknown = null;
   private savedBursts: unknown = null;
-  private savedParticleCount = 1;
-  private savedEmissionRate = 1;
+  private savedParticleCount?: number;
+  private savedEmissionRate?: number;
   private simSuppressed = false;
   private emitStubbed = false;
   private mistBase?: { rate: number; size: number; life: number };
@@ -745,8 +752,12 @@ export class CrystalBench extends createSystem({}) {
       this.cast!.ctx.bursts = this.savedBursts;
       this.savedBursts = null;
     }
-    settings.global.particleCount = this.savedParticleCount;
-    settings.global.emissionRate = this.savedEmissionRate;
+    if (this.savedParticleCount !== undefined) {
+      settings.global.particleCount = this.savedParticleCount;
+      settings.global.emissionRate = this.savedEmissionRate!;
+      this.savedParticleCount = undefined;
+      this.savedEmissionRate = undefined;
+    }
     if (this.simSuppressed) {
       this.forEachIceInstance((ability) => {
         delete (ability as unknown as Record<string, unknown>)._updateSpikes;
@@ -880,10 +891,7 @@ export class CrystalBench extends createSystem({}) {
 
     for (const what of list) {
       if (what === 'particles') {
-        this.savedParticleCount = settings.global.particleCount;
-        this.savedEmissionRate = settings.global.emissionRate;
-        settings.global.particleCount = 0;
-        settings.global.emissionRate = 0;
+        this.suppressParticles();
       } else if (what === 'decals') {
         this.savedDecals = this.cast!.ctx.decals;
         this.cast!.ctx.decals = { spawn: () => {} };
@@ -893,6 +901,16 @@ export class CrystalBench extends createSystem({}) {
       }
     }
     this.stubInstances(list);
+  }
+
+  /** Re-applying a condition must never overwrite the original values with zero. */
+  private suppressParticles(): void {
+    if (this.savedParticleCount === undefined) {
+      this.savedParticleCount = settings.global.particleCount;
+      this.savedEmissionRate = settings.global.emissionRate;
+    }
+    settings.global.particleCount = 0;
+    settings.global.emissionRate = 0;
   }
 
   private applyMode(mode: ModeName): void {
@@ -971,6 +989,7 @@ export class CrystalBench extends createSystem({}) {
   }
 
   update(delta: number): void {
+    if (!BENCH_ENABLED || !this.cast) return;
     if (BENCH_MODE === 'live') {
       this.liveUpdate(delta);
       return;
@@ -1024,6 +1043,17 @@ export class CrystalBench extends createSystem({}) {
   /* ---------------------------------------------------------------- */
 
   private liveDone = false;
+  private liveStarted = false;
+  private liveReadyTime = 0;
+  private liveWarming = false;
+  private liveWarmTime = 0;
+  private liveRandom?: () => number;
+  private frameProbe?: RenderFrameProbe;
+  private liveFinishTime = 0;
+  private liveFramesReported = false;
+  private liveParticlePeak = 0;
+  private liveParticleChecks = 0;
+  private liveParticleBase?: { count: number; rate: number };
   private liveWindow = 0;
   private liveTime = 0;
   private liveLogTime = 0;
@@ -1074,6 +1104,16 @@ export class CrystalBench extends createSystem({}) {
   }
 
   private initLive(): void {
+    this.liveRandom = () => {
+      this.seed = (this.seed * 1664525 + 1013904223) >>> 0;
+      return this.seed / 4294967296;
+    };
+    this.liveParticleBase = {
+      count: settings.global.particleCount,
+      rate: settings.global.emissionRate,
+    };
+    this.frameProbe = new RenderFrameProbe(this.world, this.renderer, LIVE_CONDITIONS.length * 2);
+    this.cleanupFuncs.push(() => this.frameProbe?.dispose());
     this.liveWin = new Float32Array(8192);
     this.liveHead = new Vector3();
     this.liveDir = new Vector3();
@@ -1091,7 +1131,8 @@ export class CrystalBench extends createSystem({}) {
         LIVE_WINDOW_SECONDS + 's (first ' + LIVE_SKIP_SECONDS +
         's of each discarded). Move and look around normally.',
     );
-    this.beginLiveWindow();
+    this.cast!.benchControlled = true;
+    this.setLivePhase('measure', 'WAITING_FOR_XR');
   }
 
   /** Tear down the previous condition, then apply this window's. */
@@ -1108,6 +1149,9 @@ export class CrystalBench extends createSystem({}) {
     for (const a of this.sysAge) a.fill(0);
     this.liveLastActive = null;
     this.liveApply(cond);
+    this.frameProbe!.setWindow(this.liveWindow, cond.name);
+    this.liveParticlePeak = 0;
+    this.liveParticleChecks = 0;
 
     this.liveTime = 0;
     this.liveLogTime = 0;
@@ -1146,14 +1190,21 @@ export class CrystalBench extends createSystem({}) {
     }
     const list = cond.suppress;
     if (list.includes('particles')) {
-      this.savedParticleCount = settings.global.particleCount;
-      this.savedEmissionRate = settings.global.emissionRate;
-      settings.global.particleCount = 0;
-      settings.global.emissionRate = 0;
+      this.suppressParticles();
     }
-    if (list.includes('decals') && !this.savedDecals) {
+    if ((list.includes('decals') || list.includes('frost') || list.includes('shockwaves')) && !this.savedDecals) {
       this.savedDecals = this.cast!.ctx.decals;
-      this.cast!.ctx.decals = { spawn: () => {} };
+      const original = this.savedDecals as {
+        spawn: (type: number, position: Vector3, options: unknown) => unknown;
+      };
+      this.cast!.ctx.decals = {
+        spawn: (type: number, position: Vector3, options: unknown) => {
+          if (list.includes('decals')
+            || (list.includes('frost') && type === DecalType.FROST)
+            || (list.includes('shockwaves') && type === DecalType.SHOCKWAVE)) return;
+          return original.spawn(type, position, options);
+        },
+      };
     }
     if (list.includes('bursts') && !this.savedBursts) {
       this.savedBursts = this.cast!.ctx.bursts;
@@ -1172,15 +1223,14 @@ export class CrystalBench extends createSystem({}) {
   }
 
   /**
-   * Splits each frame into JS time (summed per system) and the rest. If JS is small
-   * while the frame is ~100 ms, the stall is GPU/compositor; if JS is large, the
-   * per-system split names the system.
+   * Measures system updates only. RenderFrameProbe separately measures the full
+   * update-to-render CPU span, render submission, frame intervals and GPU queries.
    */
   private wrapSystems(): void {
     this.sysWrapped = true;
     const systems = this.world.getSystems() as unknown as Array<{
       constructor: { name: string };
-      update: (...args: unknown[]) => void;
+      update: (delta: number, time: number) => void;
     }>;
     this.sysAcc = new Float64Array(systems.length);
     this.sysLast = new Float64Array(systems.length);
@@ -1190,11 +1240,15 @@ export class CrystalBench extends createSystem({}) {
       this.sysNames.push(sys.constructor.name);
       const original = sys.update;
       const acc = this.sysAcc;
-      sys.update = function (this: unknown, ...args: unknown[]) {
+      const wrapped = function (this: unknown, delta: number, time: number) {
         const t0 = performance.now();
-        original.apply(this, args);
+        original.call(this, delta, time);
         acc[i] += performance.now() - t0;
       };
+      sys.update = wrapped;
+      this.cleanupFuncs.push(() => {
+        if (sys.update === wrapped) sys.update = original;
+      });
     });
   }
 
@@ -1207,16 +1261,51 @@ export class CrystalBench extends createSystem({}) {
   }
 
   private liveUpdate(delta: number): void {
-    if (this.liveDone) return;
+    if (!this.liveStarted) {
+      if (!this.renderer.xr.isPresenting || this.visibilityState.peek() !== VisibilityState.Visible) {
+        this.liveReadyTime = 0;
+        return;
+      }
+      this.liveReadyTime += delta;
+      if (this.liveReadyTime < 2) return;
+      this.liveStarted = true;
+      this.player.getWorldPosition(this.origin);
+      this.origin.y = 0;
+      this.liveWarming = true;
+      this.liveFireCast();
+      this.setLivePhase('measure', 'WARMUP');
+    }
+    if (!this.liveDone && (!this.renderer.xr.isPresenting || this.visibilityState.peek() !== VisibilityState.Visible)) {
+      this.liveDone = true;
+      this.frameProbe!.setWindow(-1, 'invalid');
+      this.restoreSuppression();
+      this.cast!.clearAll();
+      console.error('[live] INVALID RUN: XR session lost visibility. Reload to rerun.');
+      this.setLivePhase('done', 'INVALID');
+    }
+    if (this.liveWarming && !this.liveDone) {
+      this.liveWarmTime += delta;
+      if (this.liveWarmTime < LIVE_CAST_INTERVAL) return;
+      this.liveWarming = false;
+      this.beginLiveWindow();
+    }
+    if (this.liveDone) {
+      this.liveFinishTime += delta;
+      if (!this.liveFramesReported && this.liveFinishTime >= 1) {
+        this.liveFramesReported = true;
+        const frames = this.frameProbe!.report();
+        (globalThis as { __benchFrames?: unknown }).__benchFrames = frames;
+        console.log('[frame-probe] RESULTS ' + JSON.stringify(frames));
+      }
+      return;
+    }
     if (!this.sysWrapped) this.wrapSystems();
     const ms = delta * 1000;
     if (this.liveTime >= this.liveNextCast) {
       this.liveNextCast += LIVE_CAST_INTERVAL;
       if (this.liveCond().casts) {
         this.liveSinceCast = 0;
-        this.player.getWorldPosition(this.origin);
-        this.origin.y = 0;
-        this.cast!.cast(this.origin, CAST_DIRECTION, CAST_DISTANCE);
+        this.liveFireCast();
         // A new cast may be a fresh pooled instance beside a still-living one.
         this.liveApply(this.liveCond());
       }
@@ -1267,6 +1356,9 @@ export class CrystalBench extends createSystem({}) {
 
     if (this.liveLogTime >= LIVE_LOG_SECONDS) {
       const mean = this.subSum / this.subCount;
+      const particles = this.cast!.liveParticles();
+      this.liveParticlePeak = Math.max(this.liveParticlePeak, particles);
+      this.liveParticleChecks++;
       this.player.head.getWorldPosition(this.liveHead);
       this.player.head.getWorldDirection(this.liveDir);
       const yaw = (Math.atan2(this.liveDir.x, this.liveDir.z) * 180) / Math.PI;
@@ -1283,7 +1375,9 @@ export class CrystalBench extends createSystem({}) {
           top: this.topSystems(this.sysSub, this.subCount, 3),
           worst: +this.subWorst.toFixed(1),
           casting,
-          particles: this.cast!.liveParticles(),
+          particles,
+          particleCount: settings.global.particleCount,
+          emissionRate: settings.global.emissionRate,
           calls: this.renderer.info.render.calls,
           head: [+this.liveHead.x.toFixed(2), +this.liveHead.y.toFixed(2), +this.liveHead.z.toFixed(2)],
           yaw: +yaw.toFixed(0),
@@ -1299,6 +1393,18 @@ export class CrystalBench extends createSystem({}) {
     }
 
     if (this.liveTime >= LIVE_WINDOW_SECONDS) this.endLiveWindow();
+  }
+
+  /** Fixed origin and seeded spawn records; particle updates retain their normal RNG. */
+  private liveFireCast(): void {
+    const random = Math.random;
+    this.seed = 0x1234567;
+    Math.random = this.liveRandom!;
+    try {
+      this.cast!.cast(this.origin, CAST_DIRECTION, CAST_DISTANCE);
+    } finally {
+      Math.random = random;
+    }
   }
 
   private drawLiveBadge(meanMs: number): void {
@@ -1332,6 +1438,28 @@ export class CrystalBench extends createSystem({}) {
     const view = this.sorted.subarray(0, m);
     view.sort();
     const idleFrames = n - this.liveCastFrames;
+    const cond = this.liveCond();
+    const suppressed = cond.suppress.includes('particles');
+    const settingsValid = settings.global.particleCount === (suppressed ? 0 : this.liveParticleBase!.count)
+      && settings.global.emissionRate === (suppressed ? 0 : this.liveParticleBase!.rate);
+    const expectsParticles = cond.casts && !suppressed
+      && this.liveParticleBase!.count > 0 && this.liveParticleBase!.rate > 0;
+    const particlesValid = settingsValid && this.liveParticleChecks > 0
+      && (expectsParticles ? this.liveParticlePeak > 0 : this.liveParticlePeak === 0);
+    console.log('[live] PARTICLE CHECK ' + JSON.stringify({
+      w: this.liveWindow + 1, cond: cond.name, valid: particlesValid,
+      particlePeak: this.liveParticlePeak, checks: this.liveParticleChecks,
+      particleCount: settings.global.particleCount, emissionRate: settings.global.emissionRate,
+    }));
+    if (!particlesValid) {
+      this.liveDone = true;
+      this.frameProbe!.setWindow(-1, 'invalid');
+      this.restoreSuppression();
+      this.cast!.clearAll();
+      console.error('[live] INVALID RUN: particle condition did not match its label.');
+      this.setLivePhase('done', 'INVALID');
+      return;
+    }
     const r = {
       name: this.liveCond().name,
       age: Array.from(this.liveAgeSum, (sum, i) =>
@@ -1356,6 +1484,7 @@ export class CrystalBench extends createSystem({}) {
     this.liveWindow++;
     if (this.liveWindow >= LIVE_CONDITIONS.length * 2) {
       this.liveDone = true;
+      this.frameProbe!.setWindow(-1, 'done');
       this.restoreSuppression();
       this.cast!.clearAll();
       this.cast!.benchControlled = false;
