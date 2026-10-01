@@ -525,11 +525,38 @@ one session and not in the next. Neither is established. What *is* stable across
 USB cable (adb) keeping the headset charging and warm during runs; the 100 ms delta clamp in
 the in-page timing hiding the true size of spikes; GPU work the page cannot see.
 
-**Next (V11): measure the headset, not just the page.** Log device thermals and charging
-state alongside each run (`scripts/quest-thermals.sh`, wall-clock stamped; the live log
-lines now carry timestamps so the two can be lined up), and capture GPU frame times with
-the Meta Perfetto tools (`mcp__metavr__*`) during a cast to see where the GPU time actually
-goes.
+### V10-A — rerun of V10 (Quest): reveals a flaw in the live probe
+
+Same conditions and schedule, run again. Mean ms, w1 / w2:
+
+| Condition | V10 | V10-A |
+|---|---|---|
+| `CURRENT` | 52 / 53 | 38 / 57 |
+| `NO_DECALS` | 40 / 70 | 25 / 67 |
+| `FROST_LIFE_HALF` | 48 / 74 | 24 / 73 |
+| `FROST_LEAN` | 72 / 49 | 61 / 20 |
+| `FROST_RATE_HALF` | 93 / 85 | 56 / 84 |
+| `NO_CAST` | 11.1 | 11.1 |
+
+1. **V9's decal result still does not reproduce** (`NO_DECALS` 46 ms here against 18.5 in V9).
+2. **Not a heat effect.** The two runs match closely *by window slot* (windows 13–16: 54/55,
+   85/84, 70/67, 52/57), which heat would not produce; and frame time returns to the 11 ms
+   floor after the no-cast windows. The thermals logger planned for V11 was therefore
+   dropped before use.
+3. **Harness flaw — cast timing is confounded with the condition.** The game fires its own
+   cast every 6 s; windows are 20 s, so each window catches casts at a different phase
+   (the cast pattern in the per-2 s log repeats with period 3 windows), and the first 3 s
+   (discarded) sometimes contains a cast's expensive start. Which condition gets which
+   phase is fixed by its slot, so slot and condition cannot be separated.
+4. **A cliff, not a slope.** Frame time sits at ~11 ms until a cast fires, then jumps to
+   30–100 ms (the clamp) for several seconds. If the post-cast load straddles that cliff,
+   modest cuts show nothing and then suddenly look dramatic, which would explain the
+   non-monotone tuning results. Hypothesis, not proven.
+
+**Next (V11): fix the harness, then re-ask the question.** The probe fires the casts itself
+at fixed times in every window (0, 6, 12, 18 s of a 24 s window, nothing discarded) so every
+condition sees an identical schedule, and records frame time by seconds since the last cast
+(0–2, 2–4, 4–6 s) to show where the cost falls. Conditions unchanged from V10.
 
 ## Step 4 — Re-run on Quest ✅ DONE
 
