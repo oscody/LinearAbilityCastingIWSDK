@@ -553,10 +553,43 @@ Same conditions and schedule, run again. Mean ms, w1 / w2:
    modest cuts show nothing and then suddenly look dramatic, which would explain the
    non-monotone tuning results. Hypothesis, not proven.
 
-**Next (V11): fix the harness, then re-ask the question.** The probe fires the casts itself
-at fixed times in every window (0, 6, 12, 18 s of a 24 s window, nothing discarded) so every
-condition sees an identical schedule, and records frame time by seconds since the last cast
-(0–2, 2–4, 4–6 s) to show where the cost falls. Conditions unchanged from V10.
+### V11 — fixed-schedule probe (Quest): the stall is 2–4 s after a cast, and not the decals
+
+The probe fires every cast itself at 0, 6, 12, 18 s of a 24 s window (nothing discarded), so
+every condition sees an identical schedule; frame time is also binned by seconds since the last
+cast. Conditions as V10. Mean ms (w1 / w2), and by cast age (0–2 / 2–4 / 4–6 s):
+
+| Condition | Mean ms | w1 / w2 | Age 0–2 / 2–4 / 4–6 s |
+|---|---|---|---|
+| `NO_CAST` | 11.1 | 11.1 / 11.1 | – |
+| `FROST_LEAN` | 50.4 | 53.4 / 47.4 | 48 / 100 / 35 |
+| `NO_DECALS` | 52.8 | 43.1 / 62.5 | 50 / 92 / 40 |
+| `CURRENT` | 65.1 | 46.1 / 84.0 | 57 / 79 / 64 |
+| `FROST_LIFE_HALF` | 65.1 | 60.6 / 69.6 | 60 / 100 / 52 |
+| `FROST_SPREAD_HALF` | 73.6 | 70.8 / 76.5 | 58 / 100 / 74 |
+| `FROST_RATE_QUARTER` | 78.7 | 75.4 / 82.0 | 63 / 100 / 83 |
+| `FROST_RATE_HALF` | 85.4 | 82.3 / 88.4 | 70 / 100 / 93 |
+
+1. **Fixing the cast schedule helped:** most conditions now agree between their two windows
+   (e.g. `FROST_LEAN` 53 / 47). `CURRENT` (46 / 84) still does not.
+2. **Every casting condition hits the 100 ms clamp 2–4 s after a cast — including
+   `NO_DECALS`.** Removing or shrinking decals does not remove it, so the ground decals
+   are not the cause of the stall (consistent with V9 failing to reproduce in V10/V10-A).
+3. **The costliest moment has the least on screen.** At age 2–4 s there are ~27 draw calls and
+   ~350 particles, the minimum of the cast cycle, against ~38 calls / ~850–1000 particles at
+   age 0–2 s. Frame time is therefore not tracking how much is drawn.
+4. **Recovery by 4–6 s is where the conditions differ** (35–40 ms for `FROST_LEAN` and
+   `NO_DECALS`, 83–93 ms for the rate-cut conditions), but the 2–4 s stall dominates.
+
+**Hypothesis (from reading the code, not measured):** 2–4 s after the cast the front reaches
+the end of its travel and the burst fires: a shockwave decal, a 90-puff mist emit, shards,
+150 glitter particles, the burst sphere, a light, screen flash and camera shake. Emitting into
+the GPU particle buffers is a candidate for the stall.
+
+**Next (V12): split JavaScript time from everything else.** Wrap every system's `update` with a
+timer and log, every 2 s and per cast-age bin, the total JS time per frame and the top three
+systems. If JS is slow at 2–4 s the stall is in code and the per-system split names it; if JS
+is fast while the frame is 100 ms the stall is on the GPU/compositor side.
 
 ## Step 4 — Re-run on Quest ✅ DONE
 

@@ -1,0 +1,389 @@
+@iwer-injection-runtime:851 [IWSDK Dev] Configuration: {device: 'metaQuest3', activation: 'localhost', verbose: false, sem: null, ai: null, …}
+@iwsdk_core.js?v=361afaaa:1519                                                  
+▄▄▄▄▄▄  ▄▄      ▄▄   ▄▄▄▄    ▄▄▄▄▄     ▄▄   ▄▄▄ 
+▀▀██▀▀  ██      ██ ▄█▀▀▀▀█   ██▀▀▀██   ██  ██▀  
+  ██    ▀█▄ ██ ▄█▀ ██▄       ██    ██  ██▄██    
+  ██     ██ ██ ██   ▀████▄   ██    ██  █████    
+  ██     ███▀▀███       ▀██  ██    ██  ██  ██▄  
+▄▄██▄▄   ███  ███  █▄▄▄▄▄█▀  ██▄▄▄██   ██   ██▄ 
+▀▀▀▀▀▀   ▀▀▀  ▀▀▀   ▀▀▀▀▀    ▀▀▀▀▀     ▀▀    ▀▀                                                
+===============================================
+Immersive Web SDK v0.5.3
+Three.js r181
+EliCS v3.4.2
+CrystalBench.ts:1108 [live] fixed-schedule probe: 16 windows x 24s (first 0s of each discarded). Move and look around normally.
+CrystalBench.ts:1143 [live] ## WINDOW 1/16 CURRENT
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":2,"scored":true,"fps":34.5,"ms":29,"worst":259.8,"casting":true,"particles":1009,"calls":44,"head":[0,0.01,0],"yaw":0,"pitch":0}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":4,"scored":true,"fps":26.1,"ms":38.3,"worst":102.2,"casting":true,"particles":416,"calls":44,"head":[0,0.01,0],"yaw":0,"pitch":0}
+PerfSystem.ts:127 [perf] {"mode":"browser","views":1,"target":"1308x950","fps":29.9,"msMedian":22.4,"msP95":75.9,"msWorst":259.8,"calls":44,"tris":44994,"points":2600,"programs":22,"geometries":31,"textures":7,"abilities":1,"instances":190,"particles":292,"foveation":null}
+chunk-ER7ZKBRH.js?v=361afaaa:265 THREE.WebGLRenderer: Can't change size while VR device is presenting.
+warn @ chunk-ER7ZKBRH.js?v=361afaaa:265
+WebGLRenderer.setSize @ chunk-ER7ZKBRH.js?v=361afaaa:42678
+onWindowResize @ chunk-ZEFKGSF7.js?v=361afaaa:108062
+panel.ts:24 WebGL: INVALID_ENUM: texParameter: invalid parameter
+setTextureParameters @ chunk-ER7ZKBRH.js?v=361afaaa:38165
+setupRenderTarget @ chunk-ER7ZKBRH.js?v=361afaaa:38965
+WebGLRenderer.setRenderTarget @ chunk-ER7ZKBRH.js?v=361afaaa:43683
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:39816
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31415
+XRRequestFrame
+start @ chunk-ER7ZKBRH.js?v=361afaaa:31422
+WebXRManager.setSession @ chunk-ER7ZKBRH.js?v=361afaaa:39593
+await in WebXRManager.setSession
+onSessionStart @ chunk-ZEFKGSF7.js?v=361afaaa:27829
+await in onSessionStart
+(anonymous) @ chunk-ZEFKGSF7.js?v=361afaaa:27846
+Promise.then
+launchXR @ chunk-ZEFKGSF7.js?v=361afaaa:27846
+launchXR @ chunk-ZEFKGSF7.js?v=361afaaa:97942
+(anonymous) @ panel.ts:24
+emitPointerEventRec @ chunk-ZEFKGSF7.js?v=361afaaa:18631
+emitPointerEvent @ chunk-ZEFKGSF7.js?v=361afaaa:18620
+up @ chunk-ZEFKGSF7.js?v=361afaaa:19072
+emitEvent @ chunk-ZEFKGSF7.js?v=361afaaa:19801
+update @ chunk-ZEFKGSF7.js?v=361afaaa:19866
+update @ chunk-ZEFKGSF7.js?v=361afaaa:103348
+update @ chunk-MGD6D3NL.js?v=361afaaa:1363
+update @ chunk-ZEFKGSF7.js?v=361afaaa:98163
+world.update @ chunk-ZEFKGSF7.js?v=361afaaa:105712
+render @ chunk-ZEFKGSF7.js?v=361afaaa:108048
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:43038
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31415
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+requestAnimationFrame
+onAnimationFrame @ chunk-ER7ZKBRH.js?v=361afaaa:31416
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":6.1,"scored":true,"fps":27,"ms":37.1,"worst":156,"casting":false,"particles":186,"calls":39,"head":[-0.05,1.14,0.85],"yaw":29,"pitch":-8}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":8.1,"scored":true,"fps":27.8,"ms":35.9,"worst":130.3,"casting":true,"particles":920,"calls":47,"head":[0.03,1.12,0.85],"yaw":-36,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":10.1,"scored":true,"fps":10.2,"ms":97.8,"worst":100.3,"casting":true,"particles":359,"calls":46,"head":[-0.03,1.13,0.84],"yaw":-12,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19.6,"msMedian":37,"msP95":100.3,"msWorst":156,"calls":46,"tris":54104,"points":2600,"programs":41,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":311,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":12.2,"scored":true,"fps":34.7,"ms":28.8,"worst":50.1,"casting":true,"particles":295,"calls":53,"head":[-0.01,1.15,0.83],"yaw":2,"pitch":-17}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":14.2,"scored":true,"fps":23.7,"ms":42.3,"worst":88.6,"casting":true,"particles":850,"calls":48,"head":[-0.04,1.13,0.83],"yaw":5,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":23.5,"msMedian":31.2,"msP95":99.7,"msWorst":100.3,"calls":47,"tris":54106,"points":2600,"programs":41,"geometries":37,"textures":12,"abilities":1,"instances":190,"particles":399,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":16.2,"scored":true,"fps":15.4,"ms":64.8,"worst":100.3,"casting":true,"particles":356,"calls":47,"head":[-0.07,1.12,0.82],"yaw":6,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":18.3,"scored":true,"fps":19.8,"ms":50.5,"worst":99.5,"casting":true,"particles":219,"calls":39,"head":[0.13,1.13,0.72],"yaw":-45,"pitch":-1}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":20.3,"scored":true,"fps":13.5,"ms":74.1,"worst":100.6,"casting":true,"particles":893,"calls":52,"head":[0.08,1.11,0.87],"yaw":-54,"pitch":3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.3,"msMedian":58.8,"msP95":99.5,"msWorst":100.6,"calls":52,"tris":53644,"points":2600,"programs":41,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":585,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":1,"cond":"CURRENT","t":22.4,"scored":true,"fps":11.8,"ms":84.8,"worst":99.8,"casting":true,"particles":374,"calls":51,"head":[-0.01,1.12,0.86],"yaw":-49,"pitch":-1}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"CURRENT","age":[38.7,66.9,40.9],"mean":46.09,"p95":99.8,"slowPct":87.5,"worst":259.8,"castMean":45.73,"idleMean":50.87}
+CrystalBench.ts:1143 [live] ## WINDOW 2/16 NO_DECALS
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":16.4,"msMedian":52.7,"msP95":99.8,"msWorst":100.2,"calls":24,"tris":54060,"points":2600,"programs":41,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":962,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":2.1,"scored":true,"fps":20.1,"ms":49.8,"worst":100.2,"casting":true,"particles":921,"calls":22,"head":[-0.03,1.12,0.86],"yaw":-51,"pitch":0}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":4.1,"scored":true,"fps":10.8,"ms":92.6,"worst":101.1,"casting":true,"particles":388,"calls":22,"head":[-0.03,1.12,0.87],"yaw":-50,"pitch":-1}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":6.1,"scored":true,"fps":41.3,"ms":24.2,"worst":57.9,"casting":true,"particles":282,"calls":22,"head":[-0.03,1.12,0.87],"yaw":-50,"pitch":-1}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":25,"msMedian":29.9,"msP95":100,"msWorst":101.1,"calls":25,"tris":54560,"points":2600,"programs":41,"geometries":38,"textures":13,"abilities":1,"instances":190,"particles":1285,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":8.2,"scored":true,"fps":20.4,"ms":49.1,"worst":72.4,"casting":true,"particles":819,"calls":24,"head":[-1.16,1.1,1.34],"yaw":-23,"pitch":10}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":10.2,"scored":true,"fps":16.8,"ms":59.4,"worst":86.8,"casting":true,"particles":358,"calls":24,"head":[-0.04,1.1,0.85],"yaw":-43,"pitch":8}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":32.6,"msMedian":22.4,"msP95":65.7,"msWorst":86.8,"calls":18,"tris":27460,"points":2600,"programs":43,"geometries":40,"textures":13,"abilities":0,"instances":0,"particles":181,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":12.2,"scored":true,"fps":61.8,"ms":16.2,"worst":45.9,"casting":true,"particles":522,"calls":24,"head":[-1.67,1.11,0.02],"yaw":-53,"pitch":7}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":14.2,"scored":true,"fps":14.5,"ms":69,"worst":100.2,"casting":true,"particles":840,"calls":24,"head":[-1.74,1.13,-0.01],"yaw":-50,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":16.3,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":346,"calls":24,"head":[-1.73,1.13,-0.01],"yaw":-52,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15,"msMedian":83.1,"msP95":100.3,"msWorst":100.5,"calls":24,"tris":54060,"points":2600,"programs":43,"geometries":40,"textures":13,"abilities":1,"instances":190,"particles":301,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":18.3,"scored":true,"fps":33.3,"ms":30,"worst":100.3,"casting":true,"particles":1059,"calls":25,"head":[-1.73,1.13,-0.01],"yaw":-52,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":20.4,"scored":true,"fps":12.2,"ms":82.1,"worst":100.4,"casting":true,"particles":772,"calls":24,"head":[-1.73,1.13,-0.01],"yaw":-52,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":20.1,"msMedian":28.4,"msP95":100.2,"msWorst":100.7,"calls":20,"tris":45096,"points":2600,"programs":43,"geometries":40,"textures":13,"abilities":1,"instances":190,"particles":371,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":2,"cond":"NO_DECALS","t":22.5,"scored":true,"fps":10,"ms":100,"worst":100.7,"casting":true,"particles":342,"calls":26,"head":[-1.73,1.13,-0.01],"yaw":-52,"pitch":-3}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"NO_DECALS","age":[45.1,84.8,28.3],"mean":43.09,"p95":100.1,"slowPct":76.1,"worst":101.1,"castMean":52.04,"idleMean":13.97}
+CrystalBench.ts:1143 [live] ## WINDOW 3/16 FROST_RATE_HALF
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":2.1,"scored":true,"fps":21.9,"ms":45.7,"worst":100,"casting":true,"particles":865,"calls":38,"head":[-1.73,1.13,-0.01],"yaw":-53,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":21.1,"msMedian":26.9,"msP95":100.1,"msWorst":100.8,"calls":38,"tris":54400,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":493,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":4.1,"scored":true,"fps":10,"ms":100,"worst":100.8,"casting":true,"particles":372,"calls":38,"head":[-1.73,1.13,-0.01],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":6.1,"scored":true,"fps":10.8,"ms":92.5,"worst":100.3,"casting":true,"particles":176,"calls":32,"head":[-1.73,1.13,-0.01],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":8.2,"scored":true,"fps":12.1,"ms":82.8,"worst":100.1,"casting":true,"particles":907,"calls":42,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.2,"msMedian":97.3,"msP95":100.3,"msWorst":100.3,"calls":42,"tris":54408,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":907,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":10.3,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":365,"calls":41,"head":[-1.73,1.13,-0.01],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":12.3,"scored":true,"fps":11,"ms":91.1,"worst":100.1,"casting":true,"particles":385,"calls":44,"head":[-1.73,1.13,-0.01],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.3,"msMedian":99.7,"msP95":100.3,"msWorst":100.4,"calls":51,"tris":54924,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1294,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":14.3,"scored":true,"fps":12.5,"ms":80.3,"worst":100.5,"casting":true,"particles":855,"calls":39,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":16.3,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":355,"calls":38,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.9,"msMedian":99.6,"msP95":100.3,"msWorst":100.5,"calls":41,"tris":54406,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":324,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":18.3,"scored":true,"fps":14.7,"ms":68.2,"worst":100.2,"casting":true,"particles":503,"calls":44,"head":[-1.73,1.12,-0.01],"yaw":-52,"pitch":-1}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":20.3,"scored":true,"fps":12.4,"ms":80.7,"worst":100.1,"casting":true,"particles":852,"calls":40,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":3,"cond":"FROST_RATE_HALF","t":22.3,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":351,"calls":39,"head":[-1.73,1.13,0],"yaw":-55,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11,"msMedian":99.9,"msP95":100.3,"msWorst":100.4,"calls":39,"tris":54402,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":266,"foveation":1}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_RATE_HALF","age":[66.1,100,87.9],"mean":82.32,"p95":100.3,"slowPct":96.2,"worst":100.8,"castMean":81.94,"idleMean":86.98}
+CrystalBench.ts:1143 [live] ## WINDOW 4/16 FROST_RATE_QUARTER
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":2.1,"scored":true,"fps":18.4,"ms":54.3,"worst":100,"casting":true,"particles":889,"calls":32,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":4.2,"scored":true,"fps":10,"ms":99.9,"worst":100.3,"casting":true,"particles":367,"calls":32,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.4,"msMedian":91.3,"msP95":100.3,"msWorst":100.4,"calls":32,"tris":54388,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":343,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":6.2,"scored":true,"fps":16.8,"ms":59.6,"worst":100.4,"casting":true,"particles":243,"calls":32,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":8.2,"scored":true,"fps":13.6,"ms":73.7,"worst":100.1,"casting":true,"particles":841,"calls":33,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.2,"msMedian":61.4,"msP95":100.1,"msWorst":100.5,"calls":33,"tris":54390,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":468,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":10.3,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":354,"calls":32,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":12.4,"scored":true,"fps":14.7,"ms":67.9,"worst":100.1,"casting":true,"particles":1202,"calls":41,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":14.5,"scored":true,"fps":12.5,"ms":79.7,"worst":100.3,"casting":true,"particles":753,"calls":34,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13,"msMedian":78.1,"msP95":100.1,"msWorst":100.3,"calls":34,"tris":54392,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":753,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":16.5,"scored":true,"fps":10,"ms":100,"worst":100.7,"casting":true,"particles":344,"calls":33,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":18.5,"scored":true,"fps":16.4,"ms":61,"worst":100.2,"casting":true,"particles":1318,"calls":42,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.2,"msMedian":83.8,"msP95":100.2,"msWorst":100.7,"calls":34,"tris":54392,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1159,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":20.5,"scored":true,"fps":11.7,"ms":85.6,"worst":100.3,"casting":true,"particles":694,"calls":34,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":4,"cond":"FROST_RATE_QUARTER","t":22.5,"scored":true,"fps":10,"ms":100,"worst":100.2,"casting":true,"particles":344,"calls":33,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_RATE_QUARTER","age":[63.5,99.9,71],"mean":75.38,"p95":100.2,"slowPct":99.4,"worst":100.7,"castMean":78.38,"idleMean":53.77}
+CrystalBench.ts:1143 [live] ## WINDOW 5/16 FROST_LIFE_HALF
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.3,"msMedian":63.9,"msP95":100.1,"msWorst":100.3,"calls":52,"tris":54926,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1153,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":2.1,"scored":true,"fps":18,"ms":55.4,"worst":100.3,"casting":true,"particles":885,"calls":50,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":4.1,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":390,"calls":27,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12,"msMedian":99.9,"msP95":100.3,"msWorst":100.3,"calls":26,"tris":54376,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":239,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":6.1,"scored":true,"fps":29.4,"ms":34,"worst":100.3,"casting":true,"particles":201,"calls":26,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":8.1,"scored":true,"fps":16.6,"ms":60.2,"worst":100.6,"casting":true,"particles":922,"calls":51,"head":[-1.73,1.13,0],"yaw":-54,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":10.2,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":367,"calls":27,"head":[-1.74,1.13,-0.01],"yaw":-51,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19.1,"msMedian":36,"msP95":100.3,"msWorst":100.6,"calls":27,"tris":54378,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":326,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":12.2,"scored":true,"fps":18.4,"ms":54.4,"worst":100.2,"casting":true,"particles":369,"calls":38,"head":[-1.74,1.13,-0.01],"yaw":-51,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":14.2,"scored":true,"fps":12.4,"ms":80.4,"worst":100.3,"casting":true,"particles":853,"calls":53,"head":[-1.74,1.13,0],"yaw":-51,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.3,"msMedian":90,"msP95":100.2,"msWorst":100.5,"calls":53,"tris":54430,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":461,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":16.2,"scored":true,"fps":10,"ms":100,"worst":100.7,"casting":true,"particles":370,"calls":27,"head":[-1.74,1.13,0],"yaw":-51,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":18.3,"scored":true,"fps":23.1,"ms":43.2,"worst":100.4,"casting":true,"particles":446,"calls":41,"head":[-1.73,1.13,0],"yaw":-51,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":20.3,"scored":true,"fps":12.7,"ms":78.9,"worst":100.4,"casting":true,"particles":818,"calls":50,"head":[-1.74,1.13,0],"yaw":-51,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":16.3,"msMedian":53.6,"msP95":100.2,"msWorst":100.7,"calls":50,"tris":54424,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":615,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":5,"cond":"FROST_LIFE_HALF","t":22.3,"scored":true,"fps":10,"ms":100,"worst":100.9,"casting":true,"particles":337,"calls":27,"head":[-1.73,1.13,0],"yaw":-51,"pitch":-2}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_LIFE_HALF","age":[56.1,100,46.3],"mean":60.62,"p95":100.3,"slowPct":85.9,"worst":100.9,"castMean":75.18,"idleMean":19.2}
+CrystalBench.ts:1143 [live] ## WINDOW 6/16 FROST_SPREAD_HALF
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":22,"msMedian":20.7,"msP95":100.3,"msWorst":100.9,"calls":50,"tris":54424,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":994,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":2,"scored":true,"fps":23.5,"ms":42.6,"worst":100.1,"casting":true,"particles":862,"calls":50,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":4,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":372,"calls":50,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":6.1,"scored":true,"fps":14.9,"ms":67.3,"worst":100.2,"casting":true,"particles":209,"calls":44,"head":[-1.74,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.6,"msMedian":94.2,"msP95":100.2,"msWorst":100.3,"calls":78,"tris":54978,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1283,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":8.1,"scored":true,"fps":15,"ms":66.7,"worst":100.1,"casting":true,"particles":944,"calls":53,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":10.2,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":369,"calls":52,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.3,"msMedian":99.7,"msP95":100.5,"msWorst":100.6,"calls":46,"tris":27828,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":217,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":12.2,"scored":true,"fps":13.9,"ms":71.7,"worst":100.6,"casting":true,"particles":250,"calls":56,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":14.3,"scored":true,"fps":14.3,"ms":69.8,"worst":100.6,"casting":true,"particles":840,"calls":52,"head":[-1.74,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":16.4,"scored":true,"fps":10,"ms":100,"worst":100.6,"casting":true,"particles":319,"calls":51,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.3,"msMedian":99.3,"msP95":100.3,"msWorst":100.6,"calls":51,"tris":54426,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":297,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":18.4,"scored":true,"fps":18.4,"ms":54.3,"worst":100.2,"casting":true,"particles":1013,"calls":78,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":20.4,"scored":true,"fps":12.6,"ms":79.1,"worst":100.1,"casting":true,"particles":760,"calls":52,"head":[-1.74,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.4,"msMedian":56.4,"msP95":100.2,"msWorst":100.5,"calls":51,"tris":54426,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":401,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":6,"cond":"FROST_SPREAD_HALF","t":22.4,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":352,"calls":51,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_SPREAD_HALF","age":[57,100,67.1],"mean":70.8,"p95":100.2,"slowPct":95.3,"worst":100.8,"castMean":73.62,"idleMean":48.49}
+CrystalBench.ts:1143 [live] ## WINDOW 7/16 FROST_LEAN
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":2,"scored":true,"fps":20.9,"ms":47.9,"worst":100.5,"casting":true,"particles":918,"calls":38,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":16.7,"msMedian":47,"msP95":100.2,"msWorst":100.8,"calls":38,"tris":54400,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":541,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":4.1,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":380,"calls":27,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":6.1,"scored":true,"fps":27.5,"ms":36.4,"worst":100.5,"casting":true,"particles":216,"calls":28,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":19.4,"msMedian":34.1,"msP95":100.2,"msWorst":100.5,"calls":38,"tris":54400,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":883,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":8.2,"scored":true,"fps":16.1,"ms":62.1,"worst":100.1,"casting":true,"particles":841,"calls":38,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":10.2,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":349,"calls":27,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":12.2,"scored":true,"fps":41.2,"ms":24.2,"worst":100.2,"casting":true,"particles":351,"calls":31,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":24.2,"msMedian":17.3,"msP95":100.2,"msWorst":100.3,"calls":39,"tris":54900,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1298,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":14.3,"scored":true,"fps":14.3,"ms":69.8,"worst":100.2,"casting":true,"particles":822,"calls":38,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":16.3,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":345,"calls":27,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15,"msMedian":99.7,"msP95":100.2,"msWorst":100.4,"calls":27,"tris":54378,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":197,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":18.3,"scored":true,"fps":25.5,"ms":39.2,"worst":100.2,"casting":true,"particles":590,"calls":34,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":20.3,"scored":true,"fps":13.2,"ms":75.9,"worst":100.4,"casting":true,"particles":802,"calls":38,"head":[-1.73,1.13,0],"yaw":-52,"pitch":-2}
+CrystalBench.ts:1248 [live] {"w":7,"cond":"FROST_LEAN","t":22.4,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":328,"calls":27,"head":[-1.73,1.13,0],"yaw":-53,"pitch":-2}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.7,"msMedian":99.7,"msP95":100.3,"msWorst":100.4,"calls":26,"tris":54376,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":288,"foveation":1}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_LEAN","age":[48.6,100,39.3],"mean":53.36,"p95":100.2,"slowPct":81.3,"worst":100.5,"castMean":67.47,"idleMean":15.82}
+CrystalBench.ts:1143 [live] ## WINDOW 8/16 NO_CAST
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":2,"scored":true,"fps":88.8,"ms":11.3,"worst":17.6,"casting":false,"particles":0,"calls":20,"head":[-1.73,1.13,0],"yaw":-53,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":4,"scored":true,"fps":90,"ms":11.1,"worst":12.1,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-49,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":81.7,"msMedian":11.2,"msP95":16.8,"msWorst":45.6,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":6,"scored":true,"fps":90,"ms":11.1,"worst":12.2,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-49,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":8,"scored":true,"fps":90,"ms":11.1,"worst":12.3,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-49,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.9,"msWorst":12.3,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":10,"scored":true,"fps":90,"ms":11.1,"worst":12.3,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-49,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":12,"scored":true,"fps":90,"ms":11.1,"worst":15.7,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-49,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":14,"scored":true,"fps":90,"ms":11.1,"worst":12.1,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-49,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.8,"msWorst":15.7,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":16,"scored":true,"fps":90,"ms":11.1,"worst":12.1,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-49,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":18.1,"scored":true,"fps":90,"ms":11.1,"worst":12.2,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-49,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.8,"msWorst":12.2,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":20.1,"scored":true,"fps":90,"ms":11.1,"worst":12.1,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-48,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":8,"cond":"NO_CAST","t":22.1,"scored":true,"fps":90,"ms":11.1,"worst":12.2,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-48,"pitch":-5}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"NO_CAST","age":[0,0,0],"mean":11.12,"p95":11.9,"slowPct":0.1,"worst":17.6,"castMean":0,"idleMean":11.12}
+CrystalBench.ts:1143 [live] ## WINDOW 9/16 NO_CAST
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.8,"msWorst":12.2,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":2,"scored":true,"fps":90,"ms":11.1,"worst":12.4,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-47,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":4,"scored":true,"fps":90.1,"ms":11.1,"worst":12.4,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-47,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.8,"msWorst":12.4,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":6,"scored":true,"fps":90,"ms":11.1,"worst":12.1,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-47,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":8,"scored":true,"fps":90,"ms":11.1,"worst":12.3,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-47,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":10,"scored":true,"fps":90,"ms":11.1,"worst":12.4,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-47,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.9,"msWorst":12.4,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":12,"scored":true,"fps":90,"ms":11.1,"worst":12.2,"casting":false,"particles":0,"calls":20,"head":[-1.74,1.13,0],"yaw":-46,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":14,"scored":true,"fps":89.5,"ms":11.2,"worst":22.4,"casting":false,"particles":0,"calls":20,"head":[-1.75,1.13,0],"yaw":-46,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":89.8,"msMedian":11.1,"msP95":11.9,"msWorst":22.4,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":16,"scored":true,"fps":90,"ms":11.1,"worst":12.4,"casting":false,"particles":0,"calls":20,"head":[-1.75,1.13,-0.01],"yaw":-46,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":18.1,"scored":true,"fps":90,"ms":11.1,"worst":12,"casting":false,"particles":0,"calls":20,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":20.1,"scored":true,"fps":90,"ms":11.1,"worst":12.3,"casting":false,"particles":0,"calls":20,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":90,"msMedian":11.1,"msP95":11.8,"msWorst":12.3,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":0,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":9,"cond":"NO_CAST","t":22.1,"scored":true,"fps":90,"ms":11.1,"worst":12.2,"casting":false,"particles":0,"calls":20,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-4}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"NO_CAST","age":[0,0,0],"mean":11.12,"p95":11.8,"slowPct":0,"worst":22.4,"castMean":0,"idleMean":11.12}
+CrystalBench.ts:1143 [live] ## WINDOW 10/16 FROST_LEAN
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":75.1,"msMedian":11.1,"msP95":15.8,"msWorst":98.7,"calls":39,"tris":54900,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1171,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":2,"scored":true,"fps":21.6,"ms":46.3,"worst":100.3,"casting":true,"particles":888,"calls":38,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":4.1,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":357,"calls":27,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":6.1,"scored":true,"fps":35.4,"ms":28.2,"worst":100.2,"casting":true,"particles":300,"calls":29,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":21,"msMedian":22.6,"msP95":100.2,"msWorst":100.5,"calls":33,"tris":54390,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":466,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":8.2,"scored":true,"fps":15.5,"ms":64.7,"worst":100.3,"casting":true,"particles":823,"calls":38,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":10.3,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":346,"calls":27,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.2,"msMedian":96.9,"msP95":100.2,"msWorst":100.4,"calls":26,"tris":54376,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":263,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":12.3,"scored":true,"fps":37.3,"ms":26.8,"worst":100,"casting":true,"particles":1083,"calls":39,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":14.3,"scored":true,"fps":13.4,"ms":74.8,"worst":100.2,"casting":true,"particles":780,"calls":37,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":16.3,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":338,"calls":27,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":20.5,"msMedian":26.2,"msP95":100.2,"msWorst":100.3,"calls":27,"tris":54378,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":338,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":18.3,"scored":true,"fps":38.4,"ms":26.1,"worst":100.2,"casting":true,"particles":1102,"calls":40,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":20.4,"scored":true,"fps":12.9,"ms":77.4,"worst":100.1,"casting":true,"particles":751,"calls":38,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":22.4,"msMedian":29.1,"msP95":100.1,"msWorst":100.5,"calls":38,"tris":54400,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":455,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":10,"cond":"FROST_LEAN","t":22.5,"scored":true,"fps":10.8,"ms":92.8,"worst":100.5,"casting":true,"particles":327,"calls":27,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-3}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_LEAN","age":[47.5,100,31.3],"mean":47.44,"p95":100.2,"slowPct":83.4,"worst":100.5,"castMean":58.76,"idleMean":15.02}
+CrystalBench.ts:1143 [live] ## WINDOW 11/16 FROST_SPREAD_HALF
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":2,"scored":true,"fps":23.2,"ms":43.1,"worst":100.4,"casting":true,"particles":862,"calls":48,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":26.1,"msMedian":23.5,"msP95":100,"msWorst":100.4,"calls":48,"tris":54420,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":667,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":4.1,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":353,"calls":48,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-3}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":6.1,"scored":true,"fps":13.9,"ms":72.2,"worst":100.4,"casting":true,"particles":228,"calls":53,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-3}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.3,"msMedian":89.8,"msP95":100.3,"msWorst":100.4,"calls":53,"tris":54430,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1215,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":8.2,"scored":true,"fps":14.3,"ms":69.8,"worst":100.1,"casting":true,"particles":945,"calls":53,"head":[-1.75,1.13,-0.01],"yaw":-45,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":10.2,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":366,"calls":52,"head":[-1.74,1.13,-0.01],"yaw":-46,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":12.2,"scored":true,"fps":12.4,"ms":80.6,"worst":100.4,"casting":true,"particles":187,"calls":56,"head":[-1.73,1.14,0.01],"yaw":-60,"pitch":-8}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.9,"msMedian":99.8,"msP95":100.4,"msWorst":100.5,"calls":77,"tris":54976,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1276,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":14.2,"scored":true,"fps":12.9,"ms":77.8,"worst":100.2,"casting":true,"particles":862,"calls":50,"head":[-1.73,1.14,0.01],"yaw":-60,"pitch":-8}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":16.2,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":361,"calls":49,"head":[-1.73,1.13,0.01],"yaw":-59,"pitch":-7}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.2,"msMedian":99.9,"msP95":100.2,"msWorst":100.4,"calls":49,"tris":54422,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":240,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":18.2,"scored":true,"fps":17.2,"ms":58,"worst":100.2,"casting":true,"particles":488,"calls":61,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":20.3,"scored":true,"fps":12.7,"ms":78.7,"worst":100.3,"casting":true,"particles":860,"calls":52,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":11,"cond":"FROST_SPREAD_HALF","t":22.3,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":363,"calls":51,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13,"msMedian":99.8,"msP95":100.2,"msWorst":100.4,"calls":51,"tris":54426,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":320,"foveation":1}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_SPREAD_HALF","age":[59,100,80.9],"mean":76.47,"p95":100.3,"slowPct":94.6,"worst":100.5,"castMean":78.95,"idleMean":56.61}
+CrystalBench.ts:1143 [live] ## WINDOW 12/16 FROST_LIFE_HALF
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":2,"scored":true,"fps":16.1,"ms":61.9,"worst":100.4,"casting":true,"particles":910,"calls":51,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.5,"msMedian":99.8,"msP95":100.3,"msWorst":100.4,"calls":51,"tris":54426,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":434,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":4.1,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":358,"calls":27,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":6.2,"scored":true,"fps":22.8,"ms":43.9,"worst":100.6,"casting":true,"particles":316,"calls":34,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":8.2,"scored":true,"fps":13.4,"ms":74.5,"worst":100.7,"casting":true,"particles":904,"calls":50,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":16.5,"msMedian":63.4,"msP95":100.3,"msWorst":100.7,"calls":50,"tris":54424,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":639,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":10.3,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":350,"calls":27,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":12.3,"scored":true,"fps":20.2,"ms":49.6,"worst":100.6,"casting":true,"particles":578,"calls":45,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.7,"msMedian":99.4,"msP95":100.4,"msWorst":100.6,"calls":51,"tris":54426,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1102,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":14.4,"scored":true,"fps":11.4,"ms":87.4,"worst":100.4,"casting":true,"particles":778,"calls":51,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":16.5,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":328,"calls":27,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":18.5,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":1317,"calls":57,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10.1,"msMedian":100,"msP95":100.3,"msWorst":100.4,"calls":57,"tris":54936,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1304,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":20.5,"scored":true,"fps":11.8,"ms":84.4,"worst":100.4,"casting":true,"particles":758,"calls":55,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":12,"cond":"FROST_LIFE_HALF","t":22.6,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":353,"calls":27,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":14.2,"msMedian":83.1,"msP95":100.4,"msWorst":100.5,"calls":20,"tris":27776,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":239,"foveation":1}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_LIFE_HALF","age":[64.1,100,57.2],"mean":69.57,"p95":100.3,"slowPct":97.4,"worst":100.7,"castMean":79.71,"idleMean":25.05}
+CrystalBench.ts:1143 [live] ## WINDOW 13/16 FROST_RATE_QUARTER
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":2,"scored":true,"fps":22.7,"ms":44,"worst":100.4,"casting":true,"particles":890,"calls":32,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":4,"scored":true,"fps":10,"ms":100,"worst":116.6,"casting":true,"particles":366,"calls":32,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.9,"msMedian":53.1,"msP95":100.3,"msWorst":116.6,"calls":32,"tris":54388,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":303,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":6.1,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":169,"calls":26,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":8.2,"scored":true,"fps":13.6,"ms":73.4,"worst":100.1,"casting":true,"particles":902,"calls":33,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.5,"msMedian":99.9,"msP95":100.3,"msWorst":101,"calls":32,"tris":54388,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":427,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":10.2,"scored":true,"fps":10,"ms":100,"worst":101,"casting":true,"particles":388,"calls":32,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":12.2,"scored":true,"fps":12.2,"ms":81.7,"worst":100.4,"casting":true,"particles":328,"calls":34,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":14.2,"scored":true,"fps":13.4,"ms":74.4,"worst":100.5,"casting":true,"particles":867,"calls":33,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":12.3,"msMedian":99.7,"msP95":100.4,"msWorst":100.7,"calls":33,"tris":54390,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":560,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":16.3,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":336,"calls":32,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":18.3,"scored":true,"fps":10,"ms":100,"worst":100.7,"casting":true,"particles":448,"calls":34,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.1,"msMedian":99.9,"msP95":100.4,"msWorst":100.7,"calls":35,"tris":54394,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1050,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":20.4,"scored":true,"fps":12.8,"ms":78.3,"worst":100.4,"casting":true,"particles":851,"calls":35,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":13,"cond":"FROST_RATE_QUARTER","t":22.4,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":372,"calls":34,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_RATE_QUARTER","age":[61.8,100,94.2],"mean":81.95,"p95":100.3,"slowPct":94.2,"worst":116.6,"castMean":82.13,"idleMean":79.95}
+CrystalBench.ts:1143 [live] ## WINDOW 14/16 FROST_RATE_HALF
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.5,"msMedian":99.8,"msP95":100.3,"msWorst":100.4,"calls":40,"tris":54902,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1186,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":2,"scored":true,"fps":18.1,"ms":55.2,"worst":100.5,"casting":true,"particles":915,"calls":38,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":4,"scored":true,"fps":10,"ms":100.2,"worst":100.4,"casting":true,"particles":376,"calls":38,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":6.1,"scored":true,"fps":10,"ms":100.2,"worst":100.5,"casting":false,"particles":190,"calls":32,"head":[-1.73,1.13,0.01],"yaw":-59,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10.3,"msMedian":100.2,"msP95":100.5,"msWorst":100.5,"calls":32,"tris":27800,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":190,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":8.1,"scored":true,"fps":12.2,"ms":82.1,"worst":100.7,"casting":true,"particles":976,"calls":41,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":10.1,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":375,"calls":40,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10.9,"msMedian":99.9,"msP95":100.4,"msWorst":100.7,"calls":40,"tris":54404,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":285,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":12.2,"scored":true,"fps":11.1,"ms":89.9,"worst":100.7,"casting":true,"particles":187,"calls":34,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":14.2,"scored":true,"fps":11.5,"ms":87,"worst":100.5,"casting":true,"particles":948,"calls":39,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":16.2,"scored":true,"fps":10,"ms":100,"worst":100.6,"casting":true,"particles":371,"calls":38,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11,"msMedian":99.7,"msP95":100.2,"msWorst":100.6,"calls":38,"tris":54400,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":371,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":18.2,"scored":true,"fps":10.5,"ms":95.4,"worst":100.4,"casting":true,"particles":172,"calls":32,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":20.3,"scored":true,"fps":12,"ms":83.3,"worst":100.4,"casting":true,"particles":899,"calls":41,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-6}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11,"msMedian":99.8,"msP95":100.4,"msWorst":100.4,"calls":41,"tris":54406,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":522,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":14,"cond":"FROST_RATE_HALF","t":22.3,"scored":true,"fps":10,"ms":100,"worst":100.2,"casting":true,"particles":371,"calls":40,"head":[-1.73,1.13,0.01],"yaw":-60,"pitch":-5}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"FROST_RATE_HALF","age":[72.9,100,97],"mean":88.44,"p95":100.4,"slowPct":99.3,"worst":100.7,"castMean":87.69,"idleMean":97.89}
+CrystalBench.ts:1143 [live] ## WINDOW 15/16 NO_DECALS
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":2.1,"scored":true,"fps":17.9,"ms":56,"worst":100.1,"casting":true,"particles":890,"calls":26,"head":[-1.73,1.13,0.01],"yaw":-59,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.2,"msMedian":94.9,"msP95":100.2,"msWorst":100.3,"calls":26,"tris":54376,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":830,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":4.2,"scored":true,"fps":10,"ms":99.9,"worst":100.3,"casting":true,"particles":382,"calls":26,"head":[-1.73,1.13,0.01],"yaw":-59,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":6.2,"scored":true,"fps":28.4,"ms":35.2,"worst":99.7,"casting":true,"particles":381,"calls":26,"head":[-1.73,1.13,0.01],"yaw":-59,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":18.8,"msMedian":46.1,"msP95":100.2,"msWorst":100.3,"calls":26,"tris":54376,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1256,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":8.2,"scored":true,"fps":13.7,"ms":73.2,"worst":100.3,"casting":true,"particles":853,"calls":26,"head":[-1.73,1.13,0.01],"yaw":-59,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":10.2,"scored":true,"fps":10,"ms":100,"worst":100.6,"casting":true,"particles":352,"calls":26,"head":[-1.73,1.13,0.01],"yaw":-59,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":12.3,"scored":true,"fps":23.2,"ms":43.1,"worst":100.3,"casting":true,"particles":575,"calls":26,"head":[-1.73,1.13,0.01],"yaw":-59,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":15.7,"msMedian":84,"msP95":100.3,"msWorst":100.6,"calls":27,"tris":54876,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1269,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":14.3,"scored":true,"fps":12.8,"ms":78,"worst":100.2,"casting":true,"particles":796,"calls":26,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-6}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":16.3,"scored":true,"fps":10,"ms":100,"worst":100.7,"casting":true,"particles":336,"calls":26,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10.8,"msMedian":99.9,"msP95":100.4,"msWorst":101.6,"calls":26,"tris":54376,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":253,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":18.3,"scored":true,"fps":24.8,"ms":40.4,"worst":101.6,"casting":true,"particles":990,"calls":26,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":20.4,"scored":true,"fps":13.1,"ms":76.5,"worst":100.3,"casting":true,"particles":767,"calls":26,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-5}
+CrystalBench.ts:1248 [live] {"w":15,"cond":"NO_DECALS","t":22.4,"scored":true,"fps":10,"ms":100,"worst":100.5,"casting":true,"particles":351,"calls":26,"head":[-1.74,1.13,0.01],"yaw":-59,"pitch":-5}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":17.1,"msMedian":56.4,"msP95":100.2,"msWorst":100.5,"calls":26,"tris":54376,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":351,"foveation":1}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"NO_DECALS","age":[55,99.9,50.6],"mean":62.52,"p95":100.3,"slowPct":100,"worst":101.6,"castMean":73.23,"idleMean":23.08}
+CrystalBench.ts:1143 [live] ## WINDOW 16/16 CURRENT
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":2.1,"scored":true,"fps":19.7,"ms":50.9,"worst":100.2,"casting":true,"particles":854,"calls":49,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":16.9,"msMedian":53,"msP95":100.2,"msWorst":100.4,"calls":49,"tris":54422,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":455,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":4.1,"scored":true,"fps":10,"ms":100,"worst":100.3,"casting":true,"particles":364,"calls":49,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":6.1,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":false,"particles":187,"calls":43,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":8.2,"scored":true,"fps":10,"ms":100,"worst":100.4,"casting":true,"particles":966,"calls":56,"head":[-1.74,1.13,0.01],"yaw":-59,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100,"msP95":100.3,"msWorst":100.4,"calls":56,"tris":54436,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":774,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":10.3,"scored":true,"fps":10.6,"ms":94.5,"worst":100.2,"casting":true,"particles":388,"calls":55,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":12.3,"scored":true,"fps":11.6,"ms":86.5,"worst":100.2,"casting":true,"particles":216,"calls":64,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":11.5,"msMedian":91,"msP95":100.2,"msWorst":100.2,"calls":56,"tris":54436,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1220,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":14.4,"scored":true,"fps":13.8,"ms":72.7,"worst":100.2,"casting":true,"particles":873,"calls":56,"head":[-1.74,1.13,0.01],"yaw":-59,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":16.4,"scored":true,"fps":13.3,"ms":75,"worst":86.3,"casting":true,"particles":376,"calls":55,"head":[-1.74,1.13,0.01],"yaw":-59,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":18.4,"scored":true,"fps":13.4,"ms":74.9,"worst":100.7,"casting":true,"particles":469,"calls":73,"head":[-1.74,1.13,0],"yaw":-59,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":13.5,"msMedian":71.9,"msP95":100.4,"msWorst":100.7,"calls":86,"tris":54994,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":1330,"foveation":1}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":20.4,"scored":true,"fps":10,"ms":100.2,"worst":100.5,"casting":true,"particles":827,"calls":56,"head":[-1.74,1.13,0.01],"yaw":-59,"pitch":-4}
+CrystalBench.ts:1248 [live] {"w":16,"cond":"CURRENT","t":22.4,"scored":true,"fps":10,"ms":100.3,"worst":100.5,"casting":true,"particles":347,"calls":55,"head":[-1.74,1.13,0.01],"yaw":-60,"pitch":-4}
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10,"msMedian":100.2,"msP95":100.5,"msWorst":100.8,"calls":49,"tris":27834,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":0,"instances":0,"particles":228,"foveation":1}
+CrystalBench.ts:1319 [live] WINDOW RESULT {"name":"CURRENT","age":[75.3,91.3,86.9],"mean":84.04,"p95":100.4,"slowPct":96.5,"worst":100.8,"castMean":82.83,"idleMean":100.08}
+CrystalBench.ts:1351 [live] RESULTS [{"name":"CURRENT","mean":65.06,"p95":100.1,"slowPct":92,"castMean":64.28,"idleMean":75.47,"age":[57,79.1,63.9],"worst":259.8,"windows":[46.09,84.04],"vsCurrent":0},{"name":"NO_DECALS","mean":52.81,"p95":100.2,"slowPct":88.05,"castMean":62.64,"idleMean":18.52,"age":[50,92.3,39.5],"worst":101.6,"windows":[43.09,62.52],"vsCurrent":-12.25},{"name":"FROST_RATE_HALF","mean":85.38,"p95":100.35,"slowPct":97.75,"castMean":84.81,"idleMean":92.44,"age":[69.5,100,92.5],"worst":100.8,"windows":[82.32,88.44],"vsCurrent":20.32},{"name":"FROST_RATE_QUARTER","mean":78.66,"p95":100.25,"slowPct":96.8,"castMean":80.25,"idleMean":66.86,"age":[62.6,100,82.6],"worst":116.6,"windows":[75.38,81.95],"vsCurrent":13.6},{"name":"FROST_LIFE_HALF","mean":65.09,"p95":100.3,"slowPct":91.65,"castMean":77.44,"idleMean":22.13,"age":[60.1,100,51.8],"worst":100.9,"windows":[60.62,69.57],"vsCurrent":0.03},{"name":"FROST_SPREAD_HALF","mean":73.63,"p95":100.25,"slowPct":94.95,"castMean":76.28,"idleMean":52.55,"age":[58,100,74],"worst":100.8,"windows":[70.8,76.47],"vsCurrent":8.57},{"name":"FROST_LEAN","mean":50.4,"p95":100.2,"slowPct":82.35,"castMean":63.11,"idleMean":15.42,"age":[48,100,35.3],"worst":100.5,"windows":[53.36,47.44],"vsCurrent":-14.66},{"name":"NO_CAST","mean":11.12,"p95":11.85,"slowPct":0.05,"castMean":0,"idleMean":11.12,"age":[0,0,0],"worst":22.4,"windows":[11.12,11.12],"vsCurrent":-53.94}]
+PerfSystem.ts:127 [perf] {"mode":"xr","views":2,"target":"1680x1760","fps":10.4,"msMedian":100,"msP95":100.3,"msWorst":100.7,"calls":55,"tris":54434,"points":2600,"programs":45,"geometries":42,"textures":15,"abilities":1,"instances":190,"particles":319,"foveation":1}

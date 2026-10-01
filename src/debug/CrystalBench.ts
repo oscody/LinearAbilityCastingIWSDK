@@ -108,9 +108,18 @@ const LIVE_CONDITIONS: LiveCondition[] = [
   { name: 'NO_CAST', visible: false, suppress: [], casts: false },
 ];
 
-const LIVE_WINDOW_SECONDS = 20;
-/** Discarded at the start of each window while the previous condition's leftovers clear. */
-const LIVE_SKIP_SECONDS = 3;
+/**
+ * V11: the probe fires every cast itself, at the same offsets in every window
+ * (0, 6, 12, 18 s), so each condition sees an identical schedule. V10/V10-A showed
+ * the game's own 6 s clock against 20 s windows gave each slot a different cast
+ * phase, confounding condition with timing. Nothing is discarded: the window
+ * starts clean (clearAll) and the first cast fires on frame 0.
+ */
+const LIVE_WINDOW_SECONDS = 24;
+const LIVE_CAST_INTERVAL = 6;
+/** Frame time is also binned by seconds since the last cast: [0-2), [2-4), [4-6). */
+const LIVE_AGE_BINS = 3;
+const LIVE_SKIP_SECONDS = 0;
 const LIVE_LOG_SECONDS = 2;
 
 /**
@@ -1059,9 +1068,14 @@ export class CrystalBench extends createSystem({}) {
   private subSum = 0;
   private subWorst = 0;
   private liveLastActive: unknown = null;
+  private liveNextCast = 0;
+  private liveSinceCast = 0;
+  private liveAgeSum = new Float64Array(LIVE_AGE_BINS);
+  private liveAgeCount = new Float64Array(LIVE_AGE_BINS);
   private frostBase?: { rate: number; life: number; spread: number };
   private liveResults: Array<{
     name: string;
+    age: number[];
     mean: number;
     p95: number;
     slowPct: number;
@@ -1092,7 +1106,7 @@ export class CrystalBench extends createSystem({}) {
       if (this.cast) this.cast.benchControlled = false;
     });
     console.log(
-      '[live] subtraction probe: ' + LIVE_CONDITIONS.length * 2 + ' windows x ' +
+      '[live] fixed-schedule probe: ' + LIVE_CONDITIONS.length * 2 + ' windows x ' +
         LIVE_WINDOW_SECONDS + 's (first ' + LIVE_SKIP_SECONDS +
         's of each discarded). Move and look around normally.',
     );
@@ -1104,7 +1118,12 @@ export class CrystalBench extends createSystem({}) {
     const cond = this.liveCond();
     this.restoreSuppression();
     this.cast!.clearAll();
-    this.cast!.benchControlled = !cond.casts;
+    // The probe owns casting in every window so the schedule is identical.
+    this.cast!.benchControlled = true;
+    this.liveNextCast = 0;
+    this.liveSinceCast = 0;
+    this.liveAgeSum.fill(0);
+    this.liveAgeCount.fill(0);
     this.liveLastActive = null;
     this.liveApply(cond);
 
@@ -1173,6 +1192,17 @@ export class CrystalBench extends createSystem({}) {
   private liveUpdate(delta: number): void {
     if (this.liveDone) return;
     const ms = delta * 1000;
+    if (this.liveTime >= this.liveNextCast) {
+      this.liveNextCast += LIVE_CAST_INTERVAL;
+      if (this.liveCond().casts) {
+        this.liveSinceCast = 0;
+        this.player.getWorldPosition(this.origin);
+        this.origin.y = 0;
+        this.cast!.cast(this.origin, CAST_DIRECTION, CAST_DISTANCE);
+        // A new cast may be a fresh pooled instance beside a still-living one.
+        this.liveApply(this.liveCond());
+      }
+    }
     const active = this.cast!.abilities.active as unknown[];
     const casting = active.length > 0;
 
@@ -1185,6 +1215,13 @@ export class CrystalBench extends createSystem({}) {
 
     this.liveTime += delta;
     this.liveLogTime += delta;
+    this.liveSinceCast += delta;
+
+    if (this.liveCond().casts) {
+      const bin = Math.min(LIVE_AGE_BINS - 1, Math.floor(this.liveSinceCast / 2));
+      this.liveAgeSum[bin] += ms;
+      this.liveAgeCount[bin]++;
+    }
 
     if (this.liveTime >= LIVE_SKIP_SECONDS) {
       if (this.liveCount < this.liveWin.length) this.liveWin[this.liveCount++] = ms;
@@ -1268,6 +1305,9 @@ export class CrystalBench extends createSystem({}) {
     const idleFrames = n - this.liveCastFrames;
     const r = {
       name: this.liveCond().name,
+      age: Array.from(this.liveAgeSum, (sum, i) =>
+        this.liveAgeCount[i] ? +(sum / this.liveAgeCount[i]).toFixed(1) : 0,
+      ),
       mean: +(this.liveSum / n).toFixed(2),
       p95: +view[Math.floor(m * 0.95)].toFixed(2),
       slowPct: +((this.liveSlow / n) * 100).toFixed(1),
@@ -1296,6 +1336,9 @@ export class CrystalBench extends createSystem({}) {
           slowPct: avg(rs, 'slowPct'),
           castMean: avg(rs, 'castMean'),
           idleMean: avg(rs, 'idleMean'),
+          age: [0, 1, 2].map((i) =>
+            +(rs.reduce((a, x) => a + x.age[i], 0) / rs.length).toFixed(1),
+          ),
           worst: Math.max(...rs.map((x) => x.worst)),
           windows: rs.map((x) => x.mean),
         };
