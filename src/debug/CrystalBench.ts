@@ -55,20 +55,55 @@ interface LiveCondition {
   suppress: Suppress[];
   /** False = the game never casts in this window (control). */
   casts: boolean;
+  /** Multipliers on the ice frost decals' own settings, applied on top of CURRENT. */
+  frost?: { rate?: number; life?: number; spread?: number };
 }
 
+/**
+ * V10 -- decal fixes in live play. V9 showed removing the ground decals takes
+ * live play from ~56 to ~18.5 ms. The frost patches are laid at `frostRate`
+ * per metre of front travel, radius `halfWidth * frostSpread`, living
+ * `frostLife` = 7 s while casts come every 6 s -- so consecutive casts overlap.
+ * Each row changes one lever (plus a combination) and is compared against
+ * CURRENT and the NO_DECALS ceiling.
+ */
 const LIVE_CONDITIONS: LiveCondition[] = [
   { name: 'CURRENT', visible: true, suppress: [], casts: true },
-  { name: 'NO_MIST', visible: true, suppress: ['mist'], casts: true },
-  { name: 'NO_PARTICLES', visible: true, suppress: ['particles'], casts: true },
   { name: 'NO_DECALS', visible: true, suppress: ['decals'], casts: true },
-  { name: 'NO_BURSTS', visible: true, suppress: ['bursts'], casts: true },
-  { name: 'NO_CRYSTALS', visible: false, suppress: [], casts: true },
   {
-    name: 'NO_ANYTHING',
-    visible: false,
-    suppress: ['particles', 'decals', 'bursts', 'sim'],
+    name: 'FROST_RATE_HALF',
+    visible: true,
+    suppress: [],
     casts: true,
+    frost: { rate: 0.5 },
+  },
+  {
+    name: 'FROST_RATE_QUARTER',
+    visible: true,
+    suppress: [],
+    casts: true,
+    frost: { rate: 0.25 },
+  },
+  {
+    name: 'FROST_LIFE_HALF',
+    visible: true,
+    suppress: [],
+    casts: true,
+    frost: { life: 0.5 },
+  },
+  {
+    name: 'FROST_SPREAD_HALF',
+    visible: true,
+    suppress: [],
+    casts: true,
+    frost: { spread: 0.5 },
+  },
+  {
+    name: 'FROST_LEAN',
+    visible: true,
+    suppress: [],
+    casts: true,
+    frost: { rate: 0.5, life: 0.5, spread: 0.7 },
   },
   { name: 'NO_CAST', visible: false, suppress: [], casts: false },
 ];
@@ -738,6 +773,11 @@ export class CrystalBench extends createSystem({}) {
       });
       this.simSuppressed = false;
     }
+    if (this.frostBase) {
+      settings.ice.frostRate = this.frostBase.rate;
+      settings.ice.frostLife = this.frostBase.life;
+      settings.ice.frostSpread = this.frostBase.spread;
+    }
     if (this.mistBase) {
       settings.ice.mistRate = this.mistBase.rate;
       settings.ice.mistSize = this.mistBase.size;
@@ -1019,6 +1059,7 @@ export class CrystalBench extends createSystem({}) {
   private subSum = 0;
   private subWorst = 0;
   private liveLastActive: unknown = null;
+  private frostBase?: { rate: number; life: number; spread: number };
   private liveResults: Array<{
     name: string;
     mean: number;
@@ -1041,6 +1082,11 @@ export class CrystalBench extends createSystem({}) {
     this.liveWin = new Float32Array(8192);
     this.liveHead = new Vector3();
     this.liveDir = new Vector3();
+    this.frostBase = {
+      rate: settings.ice.frostRate,
+      life: settings.ice.frostLife,
+      spread: settings.ice.frostSpread,
+    };
     this.cleanupFuncs.push(() => {
       this.restoreSuppression();
       if (this.cast) this.cast.benchControlled = false;
@@ -1092,6 +1138,11 @@ export class CrystalBench extends createSystem({}) {
         mesh.visible = cond.visible;
       }
     });
+    if (cond.frost && this.frostBase) {
+      settings.ice.frostRate = this.frostBase.rate * (cond.frost.rate ?? 1);
+      settings.ice.frostLife = this.frostBase.life * (cond.frost.life ?? 1);
+      settings.ice.frostSpread = this.frostBase.spread * (cond.frost.spread ?? 1);
+    }
     const list = cond.suppress;
     if (list.includes('particles')) {
       this.savedParticleCount = settings.global.particleCount;

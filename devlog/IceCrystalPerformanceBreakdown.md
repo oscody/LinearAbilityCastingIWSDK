@@ -486,6 +486,51 @@ overlapping each other and the previous cast's patches.
 (`frostLife` below the 6 s cast interval so casts stop overlapping), smaller radius
 (`frostSpread`), and a combination — against `CURRENT` and `NO_DECALS`.
 
+### V10 — decal fixes in live play (Quest): did NOT reproduce V9
+
+Same format as V9 (20 s windows, forward then reversed, first 3 s discarded). Mean ms, average
+of 2 windows (w1 / w2):
+
+| Condition | Mean ms | w1 / w2 | Draw calls while casting |
+|---|---|---|---|
+| `NO_CAST` | 11.1 | 11.1 / 11.1 | – |
+| `CURRENT` | 52.4 | 52.3 / 52.5 | 50 |
+| `NO_DECALS` | 55.0 | 40.0 / 69.9 | 23 |
+| `FROST_LIFE_HALF` | 61.2 | 48.1 / 74.3 | 39 |
+| `FROST_LEAN` | 60.8 | 72.3 / 49.3 | 32 |
+| `FROST_RATE_QUARTER` | 67.3 | 81.4 / 53.2 | 32 |
+| `FROST_SPREAD_HALF` | 83.9 | 81.4 / 86.5 | 50 |
+| `FROST_RATE_HALF` | 88.8 | 93.0 / 84.7 | 38 |
+
+1. **V9's headline did not reproduce.** `NO_DECALS` was 18.5 ms in V9 and is 55 ms here
+   (while casting: 20.6 → 68 ms). Its two windows disagree by 30 ms.
+2. **The tuning did take effect:** draw calls while casting fall as intended (50 → 38 → 32;
+   23 with decals off). Frame time does not follow them — every casting condition sits at
+   68–82 ms.
+3. **Results are physically implausible.** Halving the frost rate was *worse* than doing
+   nothing (89 vs 52 ms) in both windows; halving the radius also. Fewer or smaller
+   transparent quads cannot cost more. So something other than the setting being changed
+   dominates frame time, and it varies between windows and sessions.
+4. **Each window starts fast and degrades:** first-2 s samples are 11–15 ms in many windows,
+   then rise toward the 100 ms cap as the cast plays out.
+
+**Conclusion: the in-page timing experiments are not resolving cause.** Across V4–V10 the
+same condition has read 11 ms in one session and 55–95 ms in another (`CURRENT`, `NO_MIST`,
+`NO_DECALS` all show it). The ground decals (V9) and mist (V4/V6) were each "the answer" in
+one session and not in the next. Neither is established. What *is* stable across every run:
+`NO_CAST` and `NO_ANYTHING` sit on the 11.1 ms floor, and live play with a normal cast is
+12–20 fps.
+
+**Untested explanations for the session swing:** headset thermal state or clock level; the
+USB cable (adb) keeping the headset charging and warm during runs; the 100 ms delta clamp in
+the in-page timing hiding the true size of spikes; GPU work the page cannot see.
+
+**Next (V11): measure the headset, not just the page.** Log device thermals and charging
+state alongside each run (`scripts/quest-thermals.sh`, wall-clock stamped; the live log
+lines now carry timestamps so the two can be lined up), and capture GPU frame times with
+the Meta Perfetto tools (`mcp__metavr__*`) during a cast to see where the GPU time actually
+goes.
+
 ## Step 4 — Re-run on Quest ✅ DONE
 
 The retrieval gap is closed. `adb devices` sees the headset, and the console log is
