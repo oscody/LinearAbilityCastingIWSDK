@@ -16,6 +16,9 @@ import { CameraShake } from '../effects/CameraShake.js';
 import { ScreenFlash } from '../effects/ScreenFlash.js';
 import { patchOnBeforeCompile } from '../utils/shaderPatch.js';
 import { frame } from '../core/FrameUniforms.js';
+import { ParticleEngineV2 } from '../v2/ParticleEngineV2.js';
+import { DecalSystemV2 } from '../v2/GroundDecalsV2.js';
+import { V2_ENABLED } from '../v2/VfxVersion.js';
 
 /**
  * Casting: the shared VFX services, the ability pool, and the per-frame order
@@ -72,9 +75,9 @@ export class CastSystem extends createSystem({}) {
     const vfxScene = vfxRoot.object3D!;
     vfxScene.name = 'VFX';
 
-    this.particles = new ParticleEngine(vfxScene);
+    this.particles = V2_ENABLED ? new ParticleEngineV2(vfxScene) : new ParticleEngine(vfxScene);
     this.lights = new LightPool(vfxScene);
-    this.decals = new DecalSystem(vfxScene);
+    this.decals = V2_ENABLED ? new DecalSystemV2(vfxScene) : new DecalSystem(vfxScene);
     this.fissures = new FissureSystem(vfxScene);
     this.bursts = new BurstSystem(vfxScene);
     this.flash = new ScreenFlash();
@@ -104,6 +107,8 @@ export class CastSystem extends createSystem({}) {
     };
 
     this.abilities = new AbilityManager(this.ctx);
+
+    if (V2_ENABLED) this.setVfxV2(true, true);
 
     this.cleanupFuncs.push(() => {
       this.abilities.dispose();
@@ -144,6 +149,16 @@ export class CastSystem extends createSystem({}) {
    */
   cast(origin: Vector3, direction: Vector3, distance: number): void {
     this.abilities.cast(origin, direction, distance);
+  }
+
+  /** Shader-only switches. Emission, size, life, colours and coverage stay fixed. */
+  setVfxV2(mist: boolean, frost: boolean): void {
+    if (!V2_ENABLED) {
+      if (mist || frost) throw new Error('Open ?vfx=v2 to enable the separate V2 implementations.');
+      return;
+    }
+    (this.particles as ParticleEngineV2).setMistV2(mist);
+    (this.decals as DecalSystemV2).setFrostV2(frost);
   }
 
   update(delta: number): void {

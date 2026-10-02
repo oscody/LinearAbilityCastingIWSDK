@@ -5,9 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { createSystem } from '@iwsdk/core';
+import { CanvasTexture, createSystem, Mesh, MeshBasicMaterial, PlaneGeometry } from '@iwsdk/core';
 import { CastSystem } from '../abilities/CastSystem.js';
 import { frame } from './FrameUniforms.js';
+import { V2_ENABLED, V2_MANUAL } from '../v2/VfxVersion.js';
 
 /** Seconds between reports. */
 const REPORT_INTERVAL = 5;
@@ -18,9 +19,9 @@ const WINDOW = 600;
  * Frame-cost telemetry.
  *
  * Replaces the source HUD's live counters (FPS, particles, instances, draw
- * calls), which were plain DOM and do not exist in a headset. Until the spatial
- * HUD lands in Phase 6 this reports to the console, which is the only readout
- * that works identically in the browser and on device.
+ * calls). Manual viewing (?bench=off) also gets a head-locked FPS badge using
+ * the same lightweight canvas approach as CrystalBench's diagnostic badge.
+ * Automated benchmarks retain their own per-condition badge.
  *
  * Every sample records whether XR was presenting, because a desktop number and
  * an on-device number are not comparable: XR renders two views at the headset's
@@ -36,17 +37,76 @@ export class PerfSystem extends createSystem({}) {
   private sampleCount = 0;
   private sorted!: Float32Array;
   private cast?: CastSystem;
+  private badgeCtx?: CanvasRenderingContext2D;
+  private badgeTex?: CanvasTexture;
+  private liveElapsed = 0;
+  private liveFrames = 0;
+  private liveFps = 0;
+  private lastSummary = 'Collecting a 5-second sample...';
+  private lastTail = 'App FPS  |  Higher is smoother';
 
   init(): void {
     this.samples = new Float32Array(WINDOW);
     this.sorted = new Float32Array(WINDOW);
     this.cast = this.world.getSystem(CastSystem);
+    if (V2_MANUAL) this.buildBadge();
 
     // A blurred headset idles its frame loop; folding those frames into the
     // average would flatter the numbers.
     this.cleanupFuncs.push(
-      this.visibilityState.subscribe(() => this.reset()),
+      this.visibilityState.subscribe(() => {
+        this.reset();
+        this.liveElapsed = 0;
+        this.liveFrames = 0;
+        this.liveFps = 0;
+        this.lastSummary = 'Collecting a 5-second sample...';
+        this.lastTail = 'App FPS  |  Higher is smoother';
+        this.drawBadge();
+      }),
     );
+  }
+
+  private buildBadge(): void {
+    const canvas = document.createElement('canvas');
+    canvas.width = 768;
+    canvas.height = 320;
+    this.badgeCtx = canvas.getContext('2d')!;
+    this.badgeTex = new CanvasTexture(canvas);
+    const material = new MeshBasicMaterial({
+      map: this.badgeTex, transparent: true, depthTest: false, depthWrite: false, toneMapped: false,
+    });
+    const mesh = new Mesh(new PlaneGeometry(0.36, 0.15), material);
+    mesh.name = 'FPS readout';
+    mesh.position.set(0, -0.22, -0.8);
+    mesh.frustumCulled = false;
+    mesh.renderOrder = 9999;
+    const entity = this.world.createTransformEntity(mesh);
+    this.player.head.add(mesh);
+    this.cleanupFuncs.push(() => {
+      entity.dispose();
+      this.badgeTex?.dispose();
+    });
+    this.drawBadge();
+  }
+
+  /** Two texture uploads per second; no canvas work on the other frames. */
+  private drawBadge(): void {
+    const ctx = this.badgeCtx;
+    if (!ctx || !this.badgeTex) return;
+    ctx.fillStyle = '#101b2b';
+    ctx.fillRect(0, 0, 768, 320);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#d5e7ff';
+    ctx.font = 'bold 38px sans-serif';
+    ctx.fillText(V2_ENABLED ? 'V2  •  LIVE VIEW' : 'ORIGINAL  •  LIVE VIEW', 384, 48);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 104px sans-serif';
+    ctx.fillText(this.liveFps > 0 ? Math.round(this.liveFps) + ' FPS' : '— FPS', 384, 157);
+    ctx.font = '30px sans-serif';
+    ctx.fillText(this.lastSummary, 384, 225);
+    ctx.font = '28px sans-serif';
+    ctx.fillText(this.lastTail, 384, 273);
+    this.badgeTex.needsUpdate = true;
   }
 
   private reset(): void {
@@ -56,10 +116,23 @@ export class PerfSystem extends createSystem({}) {
   }
 
   update(delta: number): void {
+    if (!(delta > 0) || !Number.isFinite(delta)) return;
+    if (this.renderer.xr.isPresenting
+      && this.renderer.xr.getSession()?.visibilityState !== 'visible') return;
     this.elapsed += delta;
     this.frames++;
     if (this.sampleCount < WINDOW) {
       this.samples[this.sampleCount++] = delta * 1000;
+    }
+    if (this.badgeTex) {
+      this.liveElapsed += delta;
+      this.liveFrames++;
+      if (this.liveElapsed >= 0.5) {
+        this.liveFps = this.liveFrames / this.liveElapsed;
+        this.liveElapsed = 0;
+        this.liveFrames = 0;
+        this.drawBadge();
+      }
     }
     if (this.elapsed < REPORT_INTERVAL) return;
 
@@ -79,6 +152,8 @@ export class PerfSystem extends createSystem({}) {
     const p95 = view[Math.floor(n * 0.95)];
     const worst = view[n - 1];
     const fps = this.frames / this.elapsed;
+    this.lastSummary = 'Last 5 sec: ' + fps.toFixed(1) + ' FPS average';
+    this.lastTail = 'p95 ' + p95.toFixed(1) + ' ms  |  Worst ' + worst.toFixed(1) + ' ms';
 
     const info = this.renderer.info;
     const xr = this.renderer.xr;

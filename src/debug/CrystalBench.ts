@@ -26,9 +26,10 @@ import { createIceMaterial } from '../materials/IceMaterial.js';
 import { patchOnBeforeCompile } from '../utils/shaderPatch.js';
 import { RenderFrameProbe } from './RenderFrameProbe.js';
 import { DecalType } from '../effects/GroundDecals.js';
+import { V2_MANUAL } from '../v2/VfxVersion.js';
 
 /** Flip to false to run the app normally on this branch. */
-const BENCH_ENABLED = true;
+const BENCH_ENABLED = !V2_MANUAL;
 
 /**
  * `controlled` = the mode benchmark: one seeded static field, player still.
@@ -55,6 +56,7 @@ interface LiveCondition {
   casts: boolean;
   /** Multipliers on the ice frost decals' own settings, applied on top of CURRENT. */
   frost?: { rate?: number; life?: number; spread?: number };
+  v2?: { mist: boolean; frost: boolean };
 }
 
 /**
@@ -64,7 +66,26 @@ interface LiveCondition {
  */
 /** ?bench=frost runs the follow-up factorial comparison, two casts per window. */
 const FROST_SUITE = new URLSearchParams(location.search).get('bench') === 'frost';
-const LIVE_CONDITIONS: LiveCondition[] = FROST_SUITE ? [
+const V2_SUITE = new URLSearchParams(location.search).get('bench') === 'v2';
+const REMAINING_SUITE = new URLSearchParams(location.search).get('bench') === 'remaining';
+const LIVE_CONDITIONS: LiveCondition[] = V2_SUITE ? [
+  { name: 'CURRENT', visible: true, suppress: [], casts: true, v2: { mist: false, frost: false } },
+  { name: 'MIST_V2', visible: true, suppress: [], casts: true, v2: { mist: true, frost: false } },
+  { name: 'FROST_V2', visible: true, suppress: [], casts: true, v2: { mist: false, frost: true } },
+  { name: 'BOTH_V2', visible: true, suppress: [], casts: true, v2: { mist: true, frost: true } },
+  { name: 'NO_MIST_OR_FROST', visible: true, suppress: ['mist', 'frost'], casts: true },
+  { name: 'NO_CAST', visible: false, suppress: [], casts: false },
+] : REMAINING_SUITE ? [
+  { name: 'BOTH_V2', visible: true, suppress: [], casts: true, v2: { mist: true, frost: true } },
+  { name: 'V2_NO_MIST', visible: true, suppress: ['mist'], casts: true, v2: { mist: true, frost: true } },
+  { name: 'V2_NO_FROST', visible: true, suppress: ['frost'], casts: true, v2: { mist: true, frost: true } },
+  { name: 'V2_NO_SHARDS', visible: true, suppress: ['shards'], casts: true, v2: { mist: true, frost: true } },
+  { name: 'V2_NO_GLITTER', visible: true, suppress: ['glitter'], casts: true, v2: { mist: true, frost: true } },
+  { name: 'V2_NO_SHOCKWAVES', visible: true, suppress: ['shockwaves'], casts: true, v2: { mist: true, frost: true } },
+  { name: 'V2_NO_BURSTS', visible: true, suppress: ['bursts'], casts: true, v2: { mist: true, frost: true } },
+  { name: 'V2_NO_CRYSTALS', visible: false, suppress: [], casts: true, v2: { mist: true, frost: true } },
+  { name: 'NO_CAST', visible: false, suppress: [], casts: false },
+] : FROST_SUITE ? [
   { name: 'CURRENT', visible: true, suppress: [], casts: true },
   { name: 'NO_MIST', visible: true, suppress: ['mist'], casts: true },
   { name: 'NO_FROST', visible: true, suppress: ['frost'], casts: true },
@@ -91,7 +112,7 @@ const LIVE_CONDITIONS: LiveCondition[] = FROST_SUITE ? [
  * phase, confounding condition with timing. Nothing is discarded: the window
  * starts clean (clearAll) and the first cast fires on frame 0.
  */
-const LIVE_WINDOW_SECONDS = FROST_SUITE ? 12 : 24;
+const LIVE_WINDOW_SECONDS = FROST_SUITE || V2_SUITE || REMAINING_SUITE ? 12 : 24;
 const LIVE_CAST_INTERVAL = 6;
 /** Frame time is also binned by seconds since the last cast: [0-2), [2-4), [4-6). */
 const LIVE_AGE_BINS = 3;
@@ -1170,7 +1191,7 @@ export class CrystalBench extends createSystem({}) {
       '[live] ## WINDOW ' + (this.liveWindow + 1) + '/' + LIVE_CONDITIONS.length * 2 +
         ' ' + cond.name,
     );
-    this.drawLiveBadge(11.1);
+    this.drawLiveBadge(0);
   }
 
   /**
@@ -1178,6 +1199,7 @@ export class CrystalBench extends createSystem({}) {
    * again whenever the game activates a new ability (pooled instances change).
    */
   private liveApply(cond: LiveCondition): void {
+    if (V2_SUITE || REMAINING_SUITE) this.cast!.setVfxV2(cond.v2?.mist ?? false, cond.v2?.frost ?? false);
     this.forEachIceInstance((ability) => {
       for (const mesh of (ability as unknown as { meshes: Array<{ visible: boolean }> }).meshes) {
         mesh.visible = cond.visible;
@@ -1415,18 +1437,37 @@ export class CrystalBench extends createSystem({}) {
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     if (this.liveDone) {
-      ctx.font = 'bold 120px sans-serif';
-      ctx.fillText('DONE', 256, 150);
+      ctx.font = 'bold 52px sans-serif';
+      ctx.fillText('TEST COMPLETE', 256, 60);
+      const original = this.liveResults.filter(r => r.name === 'CURRENT');
+      const v2 = this.liveResults.filter(r => r.name === 'BOTH_V2');
+      if (original.length && v2.length) {
+        const originalMs = original.reduce((sum, r) => sum + r.mean, 0) / original.length;
+        const v2Ms = v2.reduce((sum, r) => sum + r.mean, 0) / v2.length;
+        this.fitText('Original: ' + (1000 / originalMs).toFixed(1) + ' FPS avg', 256, 135, 42);
+        this.fitText('V2: ' + (1000 / v2Ms).toFixed(1) + ' FPS avg', 256, 205, 42);
+      } else {
+        const last = this.liveResults[this.liveResults.length - 1];
+        if (last) {
+          this.fitText(last.name, 256, 130, 40);
+          this.fitText((1000 / last.mean).toFixed(1) + ' FPS average', 256, 205, 42);
+        }
+      }
     } else {
-      ctx.font = 'bold 56px sans-serif';
-      ctx.fillText('LIVE ' + (this.liveWindow + 1) + '/' + LIVE_CONDITIONS.length * 2, 256, 62);
-      this.fitText(this.liveCond().name, 256, 150, 76);
-      ctx.font = '42px sans-serif';
-      ctx.fillText(
-        Math.round(1000 / meanMs) + ' fps   ' + Math.max(0, Math.round(LIVE_WINDOW_SECONDS - this.liveTime)) + ' s left',
-        256,
-        216,
-      );
+      const name = this.liveCond().name === 'CURRENT' ? 'ORIGINAL'
+        : this.liveCond().name === 'BOTH_V2' ? 'V2' : this.liveCond().name;
+      this.fitText(name + '  •  Run ' + (this.liveWindow + 1) + '/' + LIVE_CONDITIONS.length * 2, 256, 43, 38);
+      ctx.font = 'bold 76px sans-serif';
+      ctx.fillText(meanMs > 0 ? Math.round(1000 / meanMs) + ' FPS' : '— FPS', 256, 123);
+      ctx.font = '30px sans-serif';
+      ctx.fillText(Math.max(0, Math.round(LIVE_WINDOW_SECONDS - this.liveTime)) + ' seconds left', 256, 166);
+      const last = this.liveResults[this.liveResults.length - 1];
+      if (last) {
+        this.fitText('Previous ' + last.name + ': ' + (1000 / last.mean).toFixed(1) + ' FPS avg', 256, 207, 27);
+        this.fitText('p95 ' + last.p95 + ' ms  |  Worst ' + last.worst + ' ms', 256, 241, 26);
+      } else {
+        this.fitText('App FPS  •  Higher is smoother', 256, 223, 29);
+      }
     }
     this.badgeTex.needsUpdate = true;
   }

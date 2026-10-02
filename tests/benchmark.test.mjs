@@ -17,9 +17,9 @@ const js = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarg
 
 function setup(count = 0.75, rate = 0.6, enabled = true) {
   const settings = { global: { particleCount: count, emissionRate: rate } };
-  const Harness = new Function('settings', 'MODE_SPECS', 'DecalType', 'BENCH_ENABLED', `${js}; return Harness;`)(settings, {
+  const Harness = new Function('settings', 'MODE_SPECS', 'DecalType', 'BENCH_ENABLED', 'V2_SUITE', 'REMAINING_SUITE', `${js}; return Harness;`)(settings, {
     NO_PARTICLES: { suppress: ['particles'] },
-  }, { FROST: 6, SHOCKWAVE: 3 }, enabled);
+  }, { FROST: 6, SHOCKWAVE: 3 }, enabled, false, false);
   return { settings, harness: new Harness() };
 }
 

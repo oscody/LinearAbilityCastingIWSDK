@@ -1,5 +1,14 @@
 # Ice Crystal Performance Breakdown
 
+**V2 follow-up:** independent shader copies are now opt-in under `src/v2/`.
+V15-A reduces the stationary same-session mean from 64.14 to 30.94 ms. After
+a frost-detail correction, V15-B measures 28.94 to 13.52 ms at a different,
+partial-view pose; this is not an across-run comparison. Corrected head-facing
+overlap remains 59.68 ms mean / 75.2 ms p95 / 84.4 ms worst. V16/V16-B show
+remaining mist and frost still dominate. The frame budget is not met.
+See [V2 implementation and results](Phase_3_IceCrystalDebug/V2-Optimization.md).
+Original effect source/settings are preserved; worn fidelity approval is pending.
+
 **Current status (2026-09-30):** V14 identifies mist and FROST ground decals as the
 main contributors to GPU fragment cost in a stationary close-view Quest run.
 Removing both cuts mean frame intervals from 91.06 to 20.76 ms; this remains
@@ -11,7 +20,8 @@ and next-step lists are historical.
 
 **Branch:** `Phase_3_IceCrystalDebug` (from `master` @ `b112186`)
 **Harness:** `src/debug/CrystalBench.ts`, registered in `index.ts` at priority 50.
-Set `BENCH_ENABLED = false` in that file to run the app normally on this branch.
+Use `?bench=off` for the unchanged original, or `?vfx=v2&bench=off` for V2
+without the benchmark. Existing automatic debug casting still runs.
 
 ---
 

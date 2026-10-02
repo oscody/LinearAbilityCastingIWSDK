@@ -1,0 +1,914 @@
+{
+  "capturedAt": "2026-10-01T03:47:47.257Z",
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64; Quest 3) AppleWebKit/537.36 (KHTML, like Gecko) OculusBrowser/152.0.0.44.30.1069357998 Chrome/152.0.7977.64 VR Safari/537.36",
+  "url": "https://192.168.4.34:8081/?bench=remaining",
+  "status": {
+    "live": true,
+    "phase": "done",
+    "condition": "done",
+    "window": 19
+  },
+  "effects": [
+    {
+      "name": "BOTH_V2",
+      "mean": 14.27,
+      "p95": 20.8,
+      "slowPct": 43.7,
+      "castMean": 14.55,
+      "idleMean": 11.91,
+      "age": [
+        15.6,
+        16.3,
+        11.8
+      ],
+      "js": [
+        1.6,
+        1.6,
+        1.6
+      ],
+      "top": [
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.7 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.5 PanelUISystem:0.1"
+      ],
+      "worst": 28,
+      "windows": [
+        14.19,
+        14.34
+      ],
+      "vsCurrent": 0
+    },
+    {
+      "name": "V2_NO_MIST",
+      "mean": 11.25,
+      "p95": 12.4,
+      "slowPct": 1.8,
+      "castMean": 11.25,
+      "idleMean": 11.25,
+      "age": [
+        11.5,
+        11.1,
+        11.1
+      ],
+      "js": [
+        1.8,
+        1.8,
+        1.6
+      ],
+      "top": [
+        "InputSystem:0.8 CastSystem:0.7 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.7 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.5 PanelUISystem:0.1"
+      ],
+      "worst": 17.5,
+      "windows": [
+        11.23,
+        11.28
+      ],
+      "vsCurrent": -3.02
+    },
+    {
+      "name": "V2_NO_FROST",
+      "mean": 11.91,
+      "p95": 15.6,
+      "slowPct": 11.85,
+      "castMean": 11.98,
+      "idleMean": 11.14,
+      "age": [
+        12.1,
+        12.6,
+        11.1
+      ],
+      "js": [
+        1.9,
+        1.8,
+        1.6
+      ],
+      "top": [
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.7 PanelUISystem:0.1",
+        "InputSystem:0.9 CastSystem:0.5 PanelUISystem:0.1"
+      ],
+      "worst": 20.4,
+      "windows": [
+        11.49,
+        12.32
+      ],
+      "vsCurrent": -2.36
+    },
+    {
+      "name": "V2_NO_SHARDS",
+      "mean": 14.36,
+      "p95": 21.6,
+      "slowPct": 41.15,
+      "castMean": 14.62,
+      "idleMean": 12.19,
+      "age": [
+        15.7,
+        16.1,
+        12.1
+      ],
+      "js": [
+        1.8,
+        1.7,
+        1.6
+      ],
+      "top": [
+        "CastSystem:0.6 InputSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.5 PanelUISystem:0.1"
+      ],
+      "worst": 27.6,
+      "windows": [
+        13.62,
+        15.1
+      ],
+      "vsCurrent": 0.09
+    },
+    {
+      "name": "V2_NO_GLITTER",
+      "mean": 13.72,
+      "p95": 21.9,
+      "slowPct": 32.4,
+      "castMean": 13.99,
+      "idleMean": 11.45,
+      "age": [
+        15,
+        15.6,
+        11.4
+      ],
+      "js": [
+        1.9,
+        1.8,
+        1.6
+      ],
+      "top": [
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.7 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.5 PanelUISystem:0.1"
+      ],
+      "worst": 30.3,
+      "windows": [
+        13.92,
+        13.52
+      ],
+      "vsCurrent": -0.55
+    },
+    {
+      "name": "V2_NO_SHOCKWAVES",
+      "mean": 14.04,
+      "p95": 20.25,
+      "slowPct": 38.55,
+      "castMean": 14.24,
+      "idleMean": 12.29,
+      "age": [
+        14.6,
+        15.7,
+        12.3
+      ],
+      "js": [
+        1.9,
+        1.7,
+        1.6
+      ],
+      "top": [
+        "InputSystem:0.8 CastSystem:0.7 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.5 PanelUISystem:0.1"
+      ],
+      "worst": 25.1,
+      "windows": [
+        12.63,
+        15.45
+      ],
+      "vsCurrent": -0.23
+    },
+    {
+      "name": "V2_NO_BURSTS",
+      "mean": 14.29,
+      "p95": 21.85,
+      "slowPct": 37.5,
+      "castMean": 14.63,
+      "idleMean": 11.59,
+      "age": [
+        15.8,
+        16.4,
+        11.8
+      ],
+      "js": [
+        1.9,
+        1.8,
+        1.8
+      ],
+      "top": [
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.5 PanelUISystem:0.1"
+      ],
+      "worst": 27.6,
+      "windows": [
+        13.8,
+        14.78
+      ],
+      "vsCurrent": 0.02
+    },
+    {
+      "name": "V2_NO_CRYSTALS",
+      "mean": 14.09,
+      "p95": 21.75,
+      "slowPct": 37.95,
+      "castMean": 14.36,
+      "idleMean": 11.79,
+      "age": [
+        15.8,
+        15.3,
+        11.9
+      ],
+      "js": [
+        1.8,
+        1.6,
+        1.6
+      ],
+      "top": [
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.6 PanelUISystem:0.1",
+        "InputSystem:0.8 CastSystem:0.5 PanelUISystem:0.1"
+      ],
+      "worst": 48.4,
+      "windows": [
+        13.74,
+        14.43
+      ],
+      "vsCurrent": -0.18
+    },
+    {
+      "name": "NO_CAST",
+      "mean": 11.13,
+      "p95": 12.15,
+      "slowPct": 0.2,
+      "castMean": 0,
+      "idleMean": 11.13,
+      "age": [
+        0,
+        0,
+        0
+      ],
+      "js": [
+        0,
+        0,
+        0
+      ],
+      "top": [
+        "FrameUniformSystem:0.0 LocomotionSystem:0.0 InputSystem:0.0",
+        "FrameUniformSystem:0.0 LocomotionSystem:0.0 InputSystem:0.0",
+        "FrameUniformSystem:0.0 LocomotionSystem:0.0 InputSystem:0.0"
+      ],
+      "worst": 27.9,
+      "windows": [
+        11.12,
+        11.13
+      ],
+      "vsCurrent": -3.14
+    }
+  ],
+  "frames": {
+    "mode": "xr",
+    "gpuTimer": false,
+    "disjointCount": 0,
+    "skippedQueries": 0,
+    "pendingQueries": 0,
+    "windows": [
+      {
+        "w": 1,
+        "name": "BOTH_V2",
+        "interval": {
+          "count": 845,
+          "mean": 14.187,
+          "p95": 20.5,
+          "worst": 24.9
+        },
+        "cpuFrame": {
+          "count": 845,
+          "mean": 3.935,
+          "p95": 5.3,
+          "worst": 7.2
+        },
+        "update": {
+          "count": 845,
+          "mean": 1.671,
+          "p95": 2.3,
+          "worst": 4.9
+        },
+        "render": {
+          "count": 845,
+          "mean": 2.259,
+          "p95": 3.2,
+          "worst": 4.5
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 2,
+        "name": "V2_NO_MIST",
+        "interval": {
+          "count": 1069,
+          "mean": 11.226,
+          "p95": 12.1,
+          "worst": 17.1
+        },
+        "cpuFrame": {
+          "count": 1069,
+          "mean": 4.357,
+          "p95": 5.5,
+          "worst": 6.9
+        },
+        "update": {
+          "count": 1069,
+          "mean": 1.79,
+          "p95": 2.3,
+          "worst": 4.4
+        },
+        "render": {
+          "count": 1069,
+          "mean": 2.562,
+          "p95": 3.4,
+          "worst": 4.3
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 3,
+        "name": "V2_NO_FROST",
+        "interval": {
+          "count": 1045,
+          "mean": 11.489,
+          "p95": 13.9,
+          "worst": 18.7
+        },
+        "cpuFrame": {
+          "count": 1045,
+          "mean": 3.923,
+          "p95": 5,
+          "worst": 6.5
+        },
+        "update": {
+          "count": 1045,
+          "mean": 1.776,
+          "p95": 2.2,
+          "worst": 4.1
+        },
+        "render": {
+          "count": 1045,
+          "mean": 2.141,
+          "p95": 2.9,
+          "worst": 3.8
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 4,
+        "name": "V2_NO_SHARDS",
+        "interval": {
+          "count": 882,
+          "mean": 13.617,
+          "p95": 21.8,
+          "worst": 27.6
+        },
+        "cpuFrame": {
+          "count": 882,
+          "mean": 3.998,
+          "p95": 5.2,
+          "worst": 6.5
+        },
+        "update": {
+          "count": 882,
+          "mean": 1.59,
+          "p95": 2.1,
+          "worst": 4.4
+        },
+        "render": {
+          "count": 882,
+          "mean": 2.401,
+          "p95": 3.2,
+          "worst": 4.3
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 5,
+        "name": "V2_NO_GLITTER",
+        "interval": {
+          "count": 863,
+          "mean": 13.915,
+          "p95": 23.5,
+          "worst": 30.3
+        },
+        "cpuFrame": {
+          "count": 863,
+          "mean": 4.037,
+          "p95": 5.3,
+          "worst": 6.5
+        },
+        "update": {
+          "count": 863,
+          "mean": 1.631,
+          "p95": 2.2,
+          "worst": 3.1
+        },
+        "render": {
+          "count": 863,
+          "mean": 2.4,
+          "p95": 3.3,
+          "worst": 4.5
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 6,
+        "name": "V2_NO_SHOCKWAVES",
+        "interval": {
+          "count": 951,
+          "mean": 12.627,
+          "p95": 18.3,
+          "worst": 25.1
+        },
+        "cpuFrame": {
+          "count": 951,
+          "mean": 4.092,
+          "p95": 5.2,
+          "worst": 6.6
+        },
+        "update": {
+          "count": 951,
+          "mean": 1.668,
+          "p95": 2.2,
+          "worst": 4.7
+        },
+        "render": {
+          "count": 951,
+          "mean": 2.418,
+          "p95": 3.3,
+          "worst": 4.2
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 7,
+        "name": "V2_NO_BURSTS",
+        "interval": {
+          "count": 870,
+          "mean": 13.804,
+          "p95": 21,
+          "worst": 27.6
+        },
+        "cpuFrame": {
+          "count": 870,
+          "mean": 4.104,
+          "p95": 5.5,
+          "worst": 13.4
+        },
+        "update": {
+          "count": 870,
+          "mean": 1.684,
+          "p95": 2.2,
+          "worst": 5.1
+        },
+        "render": {
+          "count": 870,
+          "mean": 2.413,
+          "p95": 3.4,
+          "worst": 8.3
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 8,
+        "name": "V2_NO_CRYSTALS",
+        "interval": {
+          "count": 874,
+          "mean": 13.741,
+          "p95": 22.9,
+          "worst": 48.4
+        },
+        "cpuFrame": {
+          "count": 874,
+          "mean": 3.524,
+          "p95": 4.4,
+          "worst": 5.4
+        },
+        "update": {
+          "count": 874,
+          "mean": 1.695,
+          "p95": 2.2,
+          "worst": 3.5
+        },
+        "render": {
+          "count": 874,
+          "mean": 1.824,
+          "p95": 2.4,
+          "worst": 3.2
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 9,
+        "name": "NO_CAST",
+        "interval": {
+          "count": 1080,
+          "mean": 11.121,
+          "p95": 12.2,
+          "worst": 14.7
+        },
+        "cpuFrame": {
+          "count": 1080,
+          "mean": 2.97,
+          "p95": 3.6,
+          "worst": 5
+        },
+        "update": {
+          "count": 1080,
+          "mean": 1.444,
+          "p95": 1.8,
+          "worst": 3.3
+        },
+        "render": {
+          "count": 1080,
+          "mean": 1.519,
+          "p95": 2,
+          "worst": 2.5
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 10,
+        "name": "NO_CAST",
+        "interval": {
+          "count": 1079,
+          "mean": 11.132,
+          "p95": 12.1,
+          "worst": 27.9
+        },
+        "cpuFrame": {
+          "count": 1079,
+          "mean": 3.284,
+          "p95": 4.3,
+          "worst": 6
+        },
+        "update": {
+          "count": 1079,
+          "mean": 1.653,
+          "p95": 2.2,
+          "worst": 4.1
+        },
+        "render": {
+          "count": 1079,
+          "mean": 1.627,
+          "p95": 2.2,
+          "worst": 2.9
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 11,
+        "name": "V2_NO_CRYSTALS",
+        "interval": {
+          "count": 832,
+          "mean": 14.426,
+          "p95": 20.7,
+          "worst": 24.7
+        },
+        "cpuFrame": {
+          "count": 832,
+          "mean": 3.524,
+          "p95": 4.8,
+          "worst": 6.4
+        },
+        "update": {
+          "count": 832,
+          "mean": 1.698,
+          "p95": 2.4,
+          "worst": 3.7
+        },
+        "render": {
+          "count": 832,
+          "mean": 1.822,
+          "p95": 2.6,
+          "worst": 4.2
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 12,
+        "name": "V2_NO_BURSTS",
+        "interval": {
+          "count": 812,
+          "mean": 14.78,
+          "p95": 22.7,
+          "worst": 27.1
+        },
+        "cpuFrame": {
+          "count": 812,
+          "mean": 4.428,
+          "p95": 5.9,
+          "worst": 6.9
+        },
+        "update": {
+          "count": 812,
+          "mean": 1.918,
+          "p95": 2.6,
+          "worst": 3.9
+        },
+        "render": {
+          "count": 812,
+          "mean": 2.507,
+          "p95": 3.5,
+          "worst": 4.5
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 13,
+        "name": "V2_NO_SHOCKWAVES",
+        "interval": {
+          "count": 777,
+          "mean": 15.453,
+          "p95": 22.2,
+          "worst": 25
+        },
+        "cpuFrame": {
+          "count": 777,
+          "mean": 4.318,
+          "p95": 5.8,
+          "worst": 7.6
+        },
+        "update": {
+          "count": 777,
+          "mean": 1.877,
+          "p95": 2.5,
+          "worst": 4.2
+        },
+        "render": {
+          "count": 777,
+          "mean": 2.436,
+          "p95": 3.4,
+          "worst": 4.9
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 14,
+        "name": "V2_NO_GLITTER",
+        "interval": {
+          "count": 888,
+          "mean": 13.517,
+          "p95": 20.3,
+          "worst": 23.6
+        },
+        "cpuFrame": {
+          "count": 888,
+          "mean": 4.405,
+          "p95": 5.8,
+          "worst": 7.1
+        },
+        "update": {
+          "count": 888,
+          "mean": 1.931,
+          "p95": 2.6,
+          "worst": 3.9
+        },
+        "render": {
+          "count": 888,
+          "mean": 2.471,
+          "p95": 3.4,
+          "worst": 4.8
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 15,
+        "name": "V2_NO_SHARDS",
+        "interval": {
+          "count": 795,
+          "mean": 15.105,
+          "p95": 21.4,
+          "worst": 27.5
+        },
+        "cpuFrame": {
+          "count": 795,
+          "mean": 4.347,
+          "p95": 5.8,
+          "worst": 8.4
+        },
+        "update": {
+          "count": 795,
+          "mean": 1.901,
+          "p95": 2.6,
+          "worst": 3.6
+        },
+        "render": {
+          "count": 795,
+          "mean": 2.443,
+          "p95": 3.4,
+          "worst": 5.2
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 16,
+        "name": "V2_NO_FROST",
+        "interval": {
+          "count": 975,
+          "mean": 12.316,
+          "p95": 17.3,
+          "worst": 20.4
+        },
+        "cpuFrame": {
+          "count": 975,
+          "mean": 3.836,
+          "p95": 5,
+          "worst": 5.9
+        },
+        "update": {
+          "count": 975,
+          "mean": 1.785,
+          "p95": 2.4,
+          "worst": 3.8
+        },
+        "render": {
+          "count": 975,
+          "mean": 2.048,
+          "p95": 2.8,
+          "worst": 3.9
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 17,
+        "name": "V2_NO_MIST",
+        "interval": {
+          "count": 1064,
+          "mean": 11.284,
+          "p95": 12.6,
+          "worst": 17.4
+        },
+        "cpuFrame": {
+          "count": 1064,
+          "mean": 4.207,
+          "p95": 5.2,
+          "worst": 6.6
+        },
+        "update": {
+          "count": 1064,
+          "mean": 1.707,
+          "p95": 2.2,
+          "worst": 3.1
+        },
+        "render": {
+          "count": 1064,
+          "mean": 2.497,
+          "p95": 3.2,
+          "worst": 4.3
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 18,
+        "name": "BOTH_V2",
+        "interval": {
+          "count": 837,
+          "mean": 14.344,
+          "p95": 21.1,
+          "worst": 28
+        },
+        "cpuFrame": {
+          "count": 837,
+          "mean": 3.896,
+          "p95": 5.3,
+          "worst": 6.1
+        },
+        "update": {
+          "count": 837,
+          "mean": 1.574,
+          "p95": 2.2,
+          "worst": 2.9
+        },
+        "render": {
+          "count": 837,
+          "mean": 2.32,
+          "p95": 3.3,
+          "worst": 4.3
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      }
+    ]
+  },
+  "perf": {
+    "mode": "xr",
+    "views": 2,
+    "target": "1680x1760",
+    "fps": 73.1,
+    "msMedian": 12.3,
+    "msP95": 22.8,
+    "msWorst": 28,
+    "calls": 46,
+    "tris": 50270,
+    "points": 2600,
+    "programs": 32,
+    "geometries": 36,
+    "textures": 10,
+    "abilities": 1,
+    "instances": 190,
+    "particles": 1185,
+    "foveation": 1
+  }
+}

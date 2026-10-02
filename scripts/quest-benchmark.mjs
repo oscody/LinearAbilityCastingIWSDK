@@ -3,7 +3,7 @@ import { createWriteStream, existsSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 
 // adb forward tcp:9223 localabstract:chrome_devtools_remote
-// node scripts/quest-benchmark.mjs <unused output stem> [--reload] [--frost]
+// node scripts/quest-benchmark.mjs <unused output stem> [--reload|--frost|--v2|--remaining]
 const stem = process.argv[2];
 if (!stem) throw new Error('Pass an output stem for the captured log and JSON report.');
 if (existsSync(stem + '.log') || existsSync(stem + '.json')) throw new Error('Output already exists; choose a new stem.');
@@ -22,16 +22,23 @@ page.on('console', msg => {
 });
 page.on('pageerror', err => { log.write('PAGE ERROR ' + err.stack + '\n'); console.error(err.message); });
 try {
-  if (process.argv.includes('--frost')) {
+  const suite = process.argv.includes('--v2') ? 'v2'
+    : process.argv.includes('--remaining') ? 'remaining'
+    : process.argv.includes('--frost') ? 'frost' : null;
+  if (suite) {
     const url = new URL(page.url());
-    url.searchParams.set('bench', 'frost');
+    url.searchParams.set('bench', suite);
+    url.searchParams.delete('vfx');
     await page.goto(url.href, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    if (new URL(page.url()).searchParams.get('bench') !== suite) throw new Error('Navigation did not select the requested suite.');
   } else if (process.argv.includes('--reload')) {
     const url = new URL(page.url());
     url.searchParams.delete('bench');
+    url.searchParams.delete('vfx');
     await page.goto(url.href, { waitUntil: 'domcontentloaded', timeout: 30000 });
   }
   await page.waitForFunction(() => !!globalThis.__benchStatus, null, { timeout: 60000 });
+  console.log('Benchmark URL', page.url(), 'arguments', process.argv.slice(2));
   const session = await page.context().newCDPSession(page);
   const state = await session.send('Runtime.evaluate', {
     expression: '({status:globalThis.__benchStatus,session:globalThis.FRAMEWORK_MCP_RUNTIME.world.session?.visibilityState,visible:document.visibilityState})',
@@ -47,11 +54,16 @@ try {
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
   if (!done) throw new Error('Timed out waiting for a visible XR session and completed benchmark.');
+  if (invalid) throw new Error('Benchmark invalidated; no successful report will be written.');
   const report = await page.evaluate(() => ({
     capturedAt: new Date().toISOString(), userAgent: navigator.userAgent,
+    url: location.href,
     status: globalThis.__benchStatus, effects: globalThis.__bench,
     frames: globalThis.__benchFrames, perf: globalThis.__perf,
   }));
+  if (report.status?.condition !== 'done' || !report.effects?.length || !report.frames?.windows?.length) {
+    throw new Error('Benchmark did not produce a complete successful report.');
+  }
   await writeFile(stem + '.json', JSON.stringify(report, null, 2), { flag: 'wx' });
   console.log('Saved', stem + '.json');
 } finally {
