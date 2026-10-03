@@ -66,6 +66,13 @@ export class RenderFrameProbe {
       probe.previousStart = start;
     };
     this.wrappedRender = function (scene: Object3D, camera: Camera): void {
+      // Offscreen frost baking is work within a frame, not another XR frame.
+      // Update/interval timing still includes it; GPU/render metrics cover the
+      // main scene submission only (not offscreen passes).
+      if (probe.world.scene && scene !== probe.world.scene) {
+        probe.originalRender.call(this, scene, camera);
+        return;
+      }
       const slot = probe.beginGPU();
       const start = performance.now();
       try {

@@ -14,6 +14,10 @@ Plain URLs use the original services. This is not a second application scaffold.
   the relief normal instead of two additional full snow-height evaluations.
 - `cheapNoiseV2.glsl.js`: signed 2D value noise and its analytic gradient.
 - `VfxVersion.ts`: explicit URL opt-in; no settings preset is overwritten.
+- `FrostCacheV2.js`: opt-in extension of the approved V2 frost. It bakes static
+  coverage noise, snow height and normal slope once per spawned patch, then
+  samples that texture. Growth, lifetime, colour, animated glints and particle
+  settings stay live and unchanged. Finite texture resolution can soften detail.
 
 These are appearance-intent approximations, not pixel-identical shader results.
 Mist's noise pattern and frost's lighting detail change. Visual approval in the
@@ -27,6 +31,10 @@ headset remains required, especially for close views and moving heads.
   remaining mist, frost, shards, glitter, shockwaves, bursts, and crystals.
 - `?vfx=v2&bench=off`: both-v2 with the benchmark disabled; the existing automatic
   six-second debug casting continues. Original counterpart: `?bench=off`.
+- `?vfx=v2&bench=off&work=cache`: **new cached-frost candidate**, labelled
+  `V2 • CACHED FROST` in the headset. The approved V2 URL above remains available.
+- `?vfx=v2&bench=off&work=grid`: earlier, slower frost-grid experiment; not
+  recommended. Mist pruning is also experimental and still defaults to off.
 - `CastSystem.setVfxV2(mist, frost)` switches shader uniforms without recompiling
   or changing simulation settings. It requires one of the v2 opt-in URLs.
 
@@ -83,3 +91,38 @@ head poses, full-frame mean/p95/worst, and whether substantial turning and two
 active casts were actually observed. `--stationary` is a diagnostic dry run,
 not a substitute for worn validation. The runner restores its profiler and
 casting control in `finally`. Visual approval still needs the wearer.
+
+## Cached-frost comparison
+
+```sh
+node scripts/quest-v2-optimize.mjs <unused-cache-result.json> --cache
+node scripts/quest-v2-optimize.mjs <unused-residual-result.json> --cache-residual
+node scripts/quest-frost-cache-visual.mjs <unused-image-stem> <quest-serial>
+node scripts/quest-frost-cache-visual.mjs <unused-solo-stem> <quest-serial> --solo
+```
+
+The cache comparison runs approved procedural frost / cached frost / cached /
+procedural for singles, then overlaps. The residual test keeps cached frost on
+and toggles only mist visibility for four overlap windows; mist simulation and
+emission continue and visibility is restored afterwards. This is diagnostic
+removal, not a shipped quality setting. Both use direct page CDP on port 9223.
+
+The visual runner requires the cached-frost page already running in visible XR.
+It pauses before casting, advances 103 fixed 1/72-second frames in small batches,
+and captures actual Quest screenshots without advancing simulation between A/B.
+`--solo` temporarily hides the other VFX objects, then restores them. FPS shown
+in paused screenshots is **not performance evidence**; use the timed reports.
+
+Cache maps are RGBA16F, 256 square for trail patches and 512 square for impact
+patches larger than 5 m radius, with no mipmaps. Resources follow the existing
+decal pool and are rebaked for each new seed. A 64 MiB texture-data budget or
+unsupported float render targets falls back to procedural frost rather than
+dropping patches. This budget excludes driver overhead. Tests used about
+43–45 MiB at peak with no fallback. Disposal releases pooled cache targets.
+New bakes run inside the next world update, not inside an external toggle;
+this avoids using the XR render target outside an active frame.
+
+The frame probe ignores offscreen renders as separate frames. Full intervals
+still include baking; update timing includes bakes performed during update.
+Its GPU/render fields cover only the main scene submission, not all GPU passes.
+Quest GPU timer queries were unavailable in these runs.

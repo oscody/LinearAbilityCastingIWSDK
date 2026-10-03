@@ -1,0 +1,431 @@
+{
+  "capturedAt": "2026-10-02T23:30:01.019Z",
+  "url": "https://192.168.4.34:8081/?bench=off&vfx=v2&work=cache",
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64; Quest 3) AppleWebKit/537.36 (KHTML, like Gecko) OculusBrowser/152.0.0.44.30.1069357998 Chrome/152.0.7977.64 VR Safari/537.36",
+  "frames": {
+    "mode": "xr",
+    "gpuTimer": false,
+    "disjointCount": 0,
+    "skippedQueries": 0,
+    "pendingQueries": 0,
+    "windows": [
+      {
+        "w": 1,
+        "name": "APPROVED_V2_SINGLE",
+        "interval": {
+          "count": 278,
+          "mean": 43.591,
+          "p95": 60.2,
+          "worst": 88.5
+        },
+        "cpuFrame": {
+          "count": 278,
+          "mean": 2.799,
+          "p95": 4.1,
+          "worst": 4.9
+        },
+        "update": {
+          "count": 278,
+          "mean": 1.018,
+          "p95": 1.5,
+          "worst": 2.2
+        },
+        "render": {
+          "count": 278,
+          "mean": 1.774,
+          "p95": 2.7,
+          "worst": 3.4
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 2,
+        "name": "CACHED_FROST_SINGLE",
+        "interval": {
+          "count": 386,
+          "mean": 31.03,
+          "p95": 52.1,
+          "worst": 60.4
+        },
+        "cpuFrame": {
+          "count": 386,
+          "mean": 3.128,
+          "p95": 4.7,
+          "worst": 14.9
+        },
+        "update": {
+          "count": 386,
+          "mean": 1.062,
+          "p95": 1.7,
+          "worst": 4.9
+        },
+        "render": {
+          "count": 386,
+          "mean": 2.057,
+          "p95": 3.3,
+          "worst": 10
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 3,
+        "name": "CACHED_FROST_SINGLE",
+        "interval": {
+          "count": 409,
+          "mean": 29.53,
+          "p95": 50.9,
+          "worst": 58.8
+        },
+        "cpuFrame": {
+          "count": 409,
+          "mean": 2.854,
+          "p95": 4.3,
+          "worst": 5.6
+        },
+        "update": {
+          "count": 409,
+          "mean": 0.975,
+          "p95": 1.5,
+          "worst": 2.5
+        },
+        "render": {
+          "count": 409,
+          "mean": 1.871,
+          "p95": 2.9,
+          "worst": 3.8
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 4,
+        "name": "APPROVED_V2_SINGLE",
+        "interval": {
+          "count": 273,
+          "mean": 44.312,
+          "p95": 59.8,
+          "worst": 76.7
+        },
+        "cpuFrame": {
+          "count": 273,
+          "mean": 2.92,
+          "p95": 4.2,
+          "worst": 5.3
+        },
+        "update": {
+          "count": 273,
+          "mean": 0.993,
+          "p95": 1.5,
+          "worst": 1.9
+        },
+        "render": {
+          "count": 273,
+          "mean": 1.92,
+          "p95": 2.8,
+          "worst": 4
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 5,
+        "name": "APPROVED_V2_OVERLAP",
+        "interval": {
+          "count": 206,
+          "mean": 58.55,
+          "p95": 81.7,
+          "worst": 96.7
+        },
+        "cpuFrame": {
+          "count": 206,
+          "mean": 4.084,
+          "p95": 5.9,
+          "worst": 7.4
+        },
+        "update": {
+          "count": 206,
+          "mean": 1.325,
+          "p95": 1.9,
+          "worst": 2.7
+        },
+        "render": {
+          "count": 206,
+          "mean": 2.751,
+          "p95": 4.1,
+          "worst": 5.3
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 6,
+        "name": "CACHED_FROST_OVERLAP",
+        "interval": {
+          "count": 204,
+          "mean": 58.742,
+          "p95": 81.6,
+          "worst": 91.4
+        },
+        "cpuFrame": {
+          "count": 204,
+          "mean": 4.225,
+          "p95": 6,
+          "worst": 7.2
+        },
+        "update": {
+          "count": 204,
+          "mean": 1.368,
+          "p95": 2.1,
+          "worst": 2.9
+        },
+        "render": {
+          "count": 204,
+          "mean": 2.854,
+          "p95": 4.3,
+          "worst": 5.3
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 7,
+        "name": "CACHED_FROST_OVERLAP",
+        "interval": {
+          "count": 201,
+          "mean": 60.272,
+          "p95": 84.5,
+          "worst": 96.7
+        },
+        "cpuFrame": {
+          "count": 201,
+          "mean": 4.241,
+          "p95": 6.3,
+          "worst": 6.9
+        },
+        "update": {
+          "count": 201,
+          "mean": 1.355,
+          "p95": 2,
+          "worst": 2.6
+        },
+        "render": {
+          "count": 201,
+          "mean": 2.88,
+          "p95": 4.5,
+          "worst": 5.1
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      },
+      {
+        "w": 8,
+        "name": "APPROVED_V2_OVERLAP",
+        "interval": {
+          "count": 187,
+          "mean": 64.377,
+          "p95": 86.2,
+          "worst": 95.2
+        },
+        "cpuFrame": {
+          "count": 188,
+          "mean": 4.268,
+          "p95": 6.2,
+          "worst": 7.9
+        },
+        "update": {
+          "count": 188,
+          "mean": 1.374,
+          "p95": 2.1,
+          "worst": 3.4
+        },
+        "render": {
+          "count": 188,
+          "mean": 2.888,
+          "p95": 4.3,
+          "worst": 5.5
+        },
+        "gpu": {
+          "count": 0,
+          "mean": null,
+          "p95": null,
+          "worst": null
+        }
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "APPROVED_V2_SINGLE",
+      "fired": [
+        0,
+        6044.9000000059605
+      ],
+      "peak": 1284,
+      "maxActive": 1,
+      "moved": 0.0008997512477660813,
+      "turned": 0.055510156560256964,
+      "bakes": 0,
+      "cacheBytes": 15204352,
+      "cacheFallbacks": 0
+    },
+    {
+      "name": "CACHED_FROST_SINGLE",
+      "fired": [
+        0,
+        6056.800000011921
+      ],
+      "peak": 1320,
+      "maxActive": 1,
+      "moved": 0.0013125289440124462,
+      "turned": 0.06323828908584311,
+      "bakes": 45,
+      "cacheBytes": 27262976,
+      "cacheFallbacks": 0
+    },
+    {
+      "name": "CACHED_FROST_SINGLE",
+      "fired": [
+        0,
+        6037.800000011921
+      ],
+      "peak": 1301,
+      "maxActive": 1,
+      "moved": 0.0010282648598437486,
+      "turned": 0.06399237295497158,
+      "bakes": 45,
+      "cacheBytes": 27262976,
+      "cacheFallbacks": 0
+    },
+    {
+      "name": "APPROVED_V2_SINGLE",
+      "fired": [
+        0,
+        6047.9000000059605
+      ],
+      "peak": 1285,
+      "maxActive": 1,
+      "moved": 0.0009056123757516702,
+      "turned": 0.07215613193300047,
+      "bakes": 0,
+      "cacheBytes": 27262976,
+      "cacheFallbacks": 0
+    },
+    {
+      "name": "APPROVED_V2_OVERLAP",
+      "fired": [
+        0,
+        2007.1000000238419,
+        6025.100000023842,
+        8035.9000000059605
+      ],
+      "peak": 2002,
+      "maxActive": 2,
+      "moved": 0.0009133648825924713,
+      "turned": 0.07722970218395717,
+      "bakes": 0,
+      "cacheBytes": 27262976,
+      "cacheFallbacks": 0
+    },
+    {
+      "name": "CACHED_FROST_OVERLAP",
+      "fired": [
+        0,
+        2016.0999999940395,
+        6056,
+        8071.800000011921
+      ],
+      "peak": 2007,
+      "maxActive": 2,
+      "moved": 0.0014567400522373906,
+      "turned": 0.07249056805765144,
+      "bakes": 100,
+      "cacheBytes": 47185920,
+      "cacheFallbacks": 0
+    },
+    {
+      "name": "CACHED_FROST_OVERLAP",
+      "fired": [
+        0,
+        2010.7999999821186,
+        6039.9000000059605,
+        8062.5999999940395
+      ],
+      "peak": 2050,
+      "maxActive": 2,
+      "moved": 0.0012439275523625885,
+      "turned": 0.06456044744650338,
+      "bakes": 96,
+      "cacheBytes": 47185920,
+      "cacheFallbacks": 0
+    },
+    {
+      "name": "APPROVED_V2_OVERLAP",
+      "fired": [
+        0,
+        2015.2999999821186,
+        6042.199999988079,
+        8066.0999999940395
+      ],
+      "peak": 2046,
+      "maxActive": 2,
+      "moved": 0.0011836614776847422,
+      "turned": 0.0792537743890534,
+      "bakes": 0,
+      "cacheBytes": 47185920,
+      "cacheFallbacks": 0
+    }
+  ],
+  "head": [
+    -0.6554631590843201,
+    0.8366274107247591,
+    -0.27684536576271057
+  ],
+  "rotation": [
+    0.1225361914127845,
+    -0.6187569538266232,
+    0.09544611380298917,
+    0.7700745124673829
+  ],
+  "origin": [
+    -0.6554631590843201,
+    0,
+    -0.27684536576271057
+  ],
+  "direction": [
+    0.9767016787417366,
+    0,
+    -0.21460156276941125
+  ],
+  "foveation": 1,
+  "note": "Stationary ABBA, then overlap ABBA. Twelve seconds/window, same seeded casts and head-facing direction. HUD enabled throughout."
+}

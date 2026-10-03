@@ -18,7 +18,9 @@ import { patchOnBeforeCompile } from '../utils/shaderPatch.js';
 import { frame } from '../core/FrameUniforms.js';
 import { ParticleEngineV2 } from '../v2/ParticleEngineV2.js';
 import { DecalSystemV2 } from '../v2/GroundDecalsV2.js';
-import { V2_ENABLED } from '../v2/VfxVersion.js';
+import { V2_ENABLED, V2_FROST_GRID, V2_FROST_CACHE } from '../v2/VfxVersion.js';
+import { FrostGridV2 } from '../v2/FrostGridV2.js';
+import { FrostCacheV2 } from '../v2/FrostCacheV2.js';
 
 /**
  * Casting: the shared VFX services, the ability pool, and the per-frame order
@@ -77,7 +79,9 @@ export class CastSystem extends createSystem({}) {
 
     this.particles = V2_ENABLED ? new ParticleEngineV2(vfxScene) : new ParticleEngine(vfxScene);
     this.lights = new LightPool(vfxScene);
-    this.decals = V2_ENABLED ? new DecalSystemV2(vfxScene) : new DecalSystem(vfxScene);
+    this.decals = V2_FROST_CACHE ? new FrostCacheV2(vfxScene, this.world.renderer)
+      : V2_FROST_GRID ? new FrostGridV2(vfxScene)
+      : V2_ENABLED ? new DecalSystemV2(vfxScene) : new DecalSystem(vfxScene);
     this.fissures = new FissureSystem(vfxScene);
     this.bursts = new BurstSystem(vfxScene);
     this.flash = new ScreenFlash();
@@ -109,6 +113,8 @@ export class CastSystem extends createSystem({}) {
     this.abilities = new AbilityManager(this.ctx);
 
     if (V2_ENABLED) this.setVfxV2(true, true);
+    if (V2_FROST_GRID) (this.decals as FrostGridV2).setFrostGrid(true);
+    if (V2_FROST_CACHE) (this.decals as FrostCacheV2).setFrostCache(true);
 
     this.cleanupFuncs.push(() => {
       this.abilities.dispose();

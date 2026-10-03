@@ -142,6 +142,7 @@ export class ParticleSystemV2 {
         uFadeIn: { value: 0.08 },
         uFadeOut: { value: 0.55 },
         uMistV2: { value: 0 },
+        uMistPruning: { value: 0 },
         uOpacity: { value: 1 },
         uGlow: { value: 1 },
         uStretch: { value: 0.15 },
@@ -482,6 +483,7 @@ const PARTICLE_VERTEX = /* glsl */ `
 const PARTICLE_FRAGMENT = /* glsl */ `
   uniform float uTime;
   uniform float uMistV2;
+  uniform float uMistPruning;
   uniform float uOpacity;
   uniform float uGlow;
   uniform float uFadeIn;
@@ -554,12 +556,24 @@ const PARTICLE_FRAGMENT = /* glsl */ `
   void main() {
     if (vT < 0.0 || vT > 1.0) discard;
 
-    float mask = shapeMask(vUv);
-    if (mask <= 0.004) discard;
-
     // Alpha over lifetime.
     float fade = smoothstep(0.0, max(uFadeIn, 1e-3), vT) *
                  (1.0 - smoothstep(clamp(uFadeOut, 0.0, 0.999), 1.0, vT));
+
+    #if SHAPE == 1
+      if (uMistV2 > 0.5 && uMistPruning > 0.5) {
+        // Each value-noise octave is in [-1, 1], so the weighted sum is
+        // in [-0.75, 0.75]. Even the strongest erosion cannot exceed this
+        // mask. Reject only pixels the final alpha test would already drop.
+        // softFade is in [0, 1], so it cannot make them visible again.
+        float d = length((vUv - 0.5) * 2.0);
+        float maxMask = smoothstep(1.0, 0.05, d - 0.315) * 0.9;
+        if (maxMask * fade * max(uOpacity, 0.0) < 0.0038) discard;
+      }
+    #endif
+
+    float mask = shapeMask(vUv);
+    if (mask <= 0.004) discard;
 
     float alpha = mask * fade * uOpacity;
 

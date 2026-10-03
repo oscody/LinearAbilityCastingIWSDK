@@ -1,0 +1,27 @@
+[
+  {
+    "url": "https://192.168.4.34:8081/?bench=off&vfx=v2",
+    "session": "visible",
+    "errors": [
+      1280
+    ],
+    "class": "DecalSystemV2",
+    "mistVisible": true,
+    "controlled": false,
+    "shaderErrors": 0
+  },
+  {
+    "url": "https://192.168.4.34:8081/?bench=off&vfx=v2&work=cache",
+    "session": "visible",
+    "errors": [
+      1280
+    ],
+    "class": "FrostCacheV2",
+    "cache": true,
+    "bytes": 14680064,
+    "fallbacks": 0,
+    "mistVisible": true,
+    "controlled": false,
+    "shaderErrors": 0
+  }
+]

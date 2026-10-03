@@ -8,7 +8,7 @@
 import { CanvasTexture, createSystem, Mesh, MeshBasicMaterial, PlaneGeometry } from '@iwsdk/core';
 import { CastSystem } from '../abilities/CastSystem.js';
 import { frame } from './FrameUniforms.js';
-import { V2_ENABLED, V2_MANUAL } from '../v2/VfxVersion.js';
+import { V2_ENABLED, V2_MANUAL, V2_FROST_GRID, V2_FROST_CACHE } from '../v2/VfxVersion.js';
 
 /** Seconds between reports. */
 const REPORT_INTERVAL = 5;
@@ -98,7 +98,7 @@ export class PerfSystem extends createSystem({}) {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#d5e7ff';
     ctx.font = 'bold 38px sans-serif';
-    ctx.fillText(V2_ENABLED ? 'V2  •  LIVE VIEW' : 'ORIGINAL  •  LIVE VIEW', 384, 48);
+    ctx.fillText(V2_FROST_CACHE ? 'V2  •  CACHED FROST' : V2_FROST_GRID ? 'V2  •  FROST GRID' : V2_ENABLED ? 'V2  •  LIVE VIEW' : 'ORIGINAL  •  LIVE VIEW', 384, 48);
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 104px sans-serif';
     ctx.fillText(this.liveFps > 0 ? Math.round(this.liveFps) + ' FPS' : '— FPS', 384, 157);

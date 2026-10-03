@@ -33,7 +33,9 @@ test('V2 mist leaves motion, emission, lifetime, geometry and gradients unchange
     assert.equal(method(particleV2, name), method(particle, name), name);
   }
   const oldConstructor = method(particle, 'constructor');
-  const newConstructor = method(particleV2, 'constructor').replace('uMistV2: { value: 0 },\n        ', '');
+  const newConstructor = method(particleV2, 'constructor')
+    .replace('uMistV2: { value: 0 },\n        ', '')
+    .replace('uMistPruning: { value: 0 },\n        ', '');
   assert.equal(newConstructor, oldConstructor);
   assert.match(particleV2, /if \(uMistV2 > 0\.5\)/);
   assert.match(particleV2, /n = fbm3\(vec3\(c \* 1\.6, vSeed \* 21\.0 \+ uTime \* 0\.25\)\)/);

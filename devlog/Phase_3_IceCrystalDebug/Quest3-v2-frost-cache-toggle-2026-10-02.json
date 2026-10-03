@@ -1,0 +1,96 @@
+[
+  {
+    "phase": "toggle",
+    "enabled": false,
+    "result": {
+      "error": 0,
+      "bakes": 478
+    }
+  },
+  {
+    "phase": "after",
+    "enabled": false,
+    "result": {
+      "url": "https://192.168.4.34:8081/?bench=off&vfx=v2&work=cache",
+      "session": "visible",
+      "error": 0,
+      "bakes": 478,
+      "cache": false,
+      "class": "FrostCacheV2",
+      "bytes": 48758784,
+      "fallbacks": 0,
+      "cachedActive": 0,
+      "frostActive": 26,
+      "mistVisible": true,
+      "pruning": 0,
+      "controlled": false,
+      "shaderErrors": 0,
+      "perf": {
+        "mode": "xr",
+        "views": 2,
+        "target": "1680x1760",
+        "fps": 23.3,
+        "msMedian": 41.6,
+        "msP95": 53.5,
+        "msWorst": 60.5,
+        "calls": 45,
+        "tris": 44674,
+        "points": 2600,
+        "programs": 41,
+        "geometries": 36,
+        "textures": 87,
+        "abilities": 1,
+        "instances": 190,
+        "particles": 999,
+        "foveation": 1
+      }
+    }
+  },
+  {
+    "phase": "toggle",
+    "enabled": true,
+    "result": {
+      "error": 0,
+      "bakes": 478
+    }
+  },
+  {
+    "phase": "after",
+    "enabled": true,
+    "result": {
+      "url": "https://192.168.4.34:8081/?bench=off&vfx=v2&work=cache",
+      "session": "visible",
+      "error": 0,
+      "bakes": 528,
+      "cache": true,
+      "class": "FrostCacheV2",
+      "bytes": 45613056,
+      "fallbacks": 0,
+      "cachedActive": 24,
+      "frostActive": 24,
+      "mistVisible": true,
+      "pruning": 0,
+      "controlled": false,
+      "shaderErrors": 0,
+      "perf": {
+        "mode": "xr",
+        "views": 2,
+        "target": "1680x1760",
+        "fps": 39.3,
+        "msMedian": 22.8,
+        "msP95": 49.9,
+        "msWorst": 57.3,
+        "calls": 70,
+        "tris": 45222,
+        "points": 2600,
+        "programs": 41,
+        "geometries": 36,
+        "textures": 87,
+        "abilities": 1,
+        "instances": 190,
+        "particles": 1315,
+        "foveation": 1
+      }
+    }
+  }
+]

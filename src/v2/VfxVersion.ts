@@ -3,3 +3,5 @@ const params = new URLSearchParams(location.search);
 export const V2_ENABLED = params.get('vfx') === 'v2'
   || params.get('bench') === 'v2' || params.get('bench') === 'remaining';
 export const V2_MANUAL = params.get('bench') === 'off';
+export const V2_FROST_GRID = V2_ENABLED && params.get('work') === 'grid';
+export const V2_FROST_CACHE = V2_ENABLED && params.get('work') === 'cache';

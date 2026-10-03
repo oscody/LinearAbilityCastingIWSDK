@@ -149,3 +149,26 @@ test('GPU clock discontinuities discard outstanding timings', () => {
   assert.equal(result.pendingQueries, 0);
   probe.dispose();
 });
+
+test('offscreen cache renders are included in update time but are not extra frames', (t) => {
+  let clock = 1000;
+  t.mock.method(performance, 'now', () => clock);
+  const scene = {}, offscreen = {};
+  const renderer = { getContext: () => ({ getExtension: () => null }), xr: { isPresenting: true },
+    render() { clock += 7; } };
+  const world = { scene, update() { clock += 3; renderer.render(offscreen, {}); } };
+  const probe = new RenderFrameProbe(world, renderer, 1);
+  probe.setWindow(0, 'CACHE');
+  world.update(0.01, 1);
+  renderer.render(scene, {});
+  clock = 1050;
+  world.update(0.01, 1.05);
+  renderer.render(scene, {});
+  const w = probe.report().windows[0];
+  assert.equal(w.cpuFrame.count, 2);
+  assert.equal(w.cpuFrame.mean, 17);
+  assert.equal(w.update.mean, 10);
+  assert.equal(w.render.mean, 7);
+  assert.equal(w.interval.mean, 50);
+  probe.dispose();
+});
